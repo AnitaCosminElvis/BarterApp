@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "12353447805",
+    "firebase_url": "https://barter-afb2f.firebaseio.com",
+    "project_id": "barter-afb2f",
+    "storage_bucket": "barter-afb2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12353447805:android:9530a1bad154a5df898e14",
+        "android_client_info": {
+          "package_name": "com.example.barterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12353447805-gidrck4vedvrt5bc63fjqmvtegg8klbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.barterapp",
+            "certificate_hash": "37ccc13d4995fcbbfebe7f9d93f6a95d68676196"
+          }
+        },
+        {
+          "client_id": "12353447805-gacfc4eu182olqlo2q7k27063u9pmmjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGh52NP1gXG9RpZwcYS-Muvtlw4PjruLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12353447805-gacfc4eu182olqlo2q7k27063u9pmmjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
