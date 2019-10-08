@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = menuItem.getItemId();
         Intent intent = null;
         switch (id){
-            case R.id.nav_login:
+            case R.id.nav_signin:
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_products:
+            case R.id.nav_about:
                 intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;

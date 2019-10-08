@@ -5,21 +5,38 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_login"
+            android:id="@+id/nav_account"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="@string/menu_login" />
+            android:title="@string/menu_account" />
         <item
-            android:id="@+id/nav_products"
-            android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="@string/menu_products" />
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="@string/menu_add" />
+        <item
+            android:id="@+id/nav_signin"
+            android:icon="@drawable/ic_signin_black_24dp"
+            android:title="@string/menu_sign_in" />
+        <item
+            android:id="@+id/nav_signup"
+            android:icon="@drawable/ic_register_account_black_24dp"
+            android:title="@string/menu_sign_up" />
+
     </group>
 
     <item android:title="">
         <menu>
             <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_exit_to_app_black_24dp"
-                android:title="@string/menu_logout" />
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_signout_black_24dp"
+                android:title="@string/menu_sign_out" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about_black_24dp"
+                android:title="@string/menu_about" />
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/ic_contact_mail_black_24dp"
+                android:title="@string/menu_contact" />
         </menu>
     </item>
 
