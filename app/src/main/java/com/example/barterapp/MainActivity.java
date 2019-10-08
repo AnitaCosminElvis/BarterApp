@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.barterapp.ui.login.LoginActivity;
+import com.example.barterapp.ui.register.RegisterActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -107,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_about:
-                intent = new Intent(MainActivity.this, MainActivity.class);
+            case R.id.nav_signup:
+                intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 break;
         }
