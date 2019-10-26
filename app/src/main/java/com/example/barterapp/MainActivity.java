@@ -3,42 +3,55 @@ package com.example.barterapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.barterapp.ui.login.LoginActivity;
-import com.example.barterapp.ui.register.RegisterActivity;
+import com.example.barterapp.data.Response;
+import com.example.barterapp.view_models.MainViewModel;
+import com.example.barterapp.view_models.ViewModelFactory;
+import com.example.barterapp.views.AccountActivity;
+import com.example.barterapp.views.LoginActivity;
+import com.example.barterapp.views.RegisterActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
 import android.view.MenuItem;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-    private AppBarConfiguration     mAppBarConfiguration;
-    private DrawerLayout            mDrawer;
-    private NavigationView          mNavigationView;
-    private Toolbar                 mToolbar                = null;
+    private MainViewModel                   mMainViewModel;
+    private MutableLiveData<Response>       mLoginLiveData;
+    private DrawerLayout                    mDrawer;
+    private NavigationView                  mNavigationView;
+    private Toolbar                         mToolbar                = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mMainViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(MainViewModel.class);
+
+        mLoginLiveData = mMainViewModel.getLoginLiveData();
+
+        mLoginLiveData.observe(this, new Observer<Response>(){
+            @Override
+            public void onChanged(@Nullable Response response){
+                if (null != response){ setNavViewUserEmail();}
+            }
+        });
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -59,19 +72,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        //sign out from any logged account
+        mMainViewModel.signOut();
+    }
 
 
-
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        mAppBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-//                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-//                .setDrawerLayout(drawer)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(navigationView, navController);
+    @Override
+    public void onDestroy(){
+        //sign out from any logged account
+        mMainViewModel.signOut();
+        super.onDestroy();
     }
 
     @Override
@@ -102,8 +112,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        Intent intent = null;
+        Intent intent;
         switch (id){
+            case R.id.nav_account:
+                if (!mMainViewModel.isUserSignedIn()) {
+                    Toast.makeText(MainActivity.this, "Please Sign in." , Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                intent = new Intent(MainActivity.this, AccountActivity.class);
+                startActivity(intent);
+                break;
             case R.id.nav_signin:
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -112,7 +131,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_signout:
+                mMainViewModel.signOut();
+                setNavViewUserEmail();
+                break;
         }
-        return false;
+
+        return true;
+    }
+
+    private void setNavViewUserEmail(){
+        TextView tvUserEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_alias);
+        tvUserEmail.setText(mMainViewModel.getUserEmail());
     }
 }

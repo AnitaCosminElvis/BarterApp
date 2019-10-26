@@ -7,19 +7,20 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
-    <string name="title_activity_login">Sign in/up</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
+    <string name="action_continue">Continue</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Products</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_email">anonymous@user.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="nav_drawer_open">Open</string>
@@ -40,6 +41,7 @@
     <string name="filter_tools">Tools</string>
     <string name="filter_bikes">Bikes</string>
 
+    <string name="prompt_title">Title</string>
     <string name="prompt_alias">Alias</string>
     <string name="prompt_first_name">First Name</string>
     <string name="prompt_surname">Surname</string>
@@ -47,7 +49,14 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_password_retype">Retype Password</string>
-
+    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="reset_email_info">Please enter your email address and press the button in order to change your password. If successful go into your email account and follow the link to verify email address.</string>
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="tab_text_profile">Profile</string>
+    <string name="tab_text_products">My Products</string>
+    <string name="tab_text_history">Offers</string>
+    <string name="tab_text_offers">History</string>
 
 
 </resources>

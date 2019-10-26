@@ -12,9 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.register.RegisterActivity"></activity>
+        <activity android:name=".views.AddProductActivity"></activity>
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".views.AccountActivity"
+            android:label="@string/title_activity_account"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.ForgotPassActivity" />
+        <activity
+            android:name=".views.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".views.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
             android:name=".MainActivity"
