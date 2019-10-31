@@ -13,7 +13,6 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class AccountActivity extends    AppCompatActivity
                              implements MyProductsFragment.OnListFragmentInteractionListener,
                                         OffersFragment.OnListFragmentInteractionListener,

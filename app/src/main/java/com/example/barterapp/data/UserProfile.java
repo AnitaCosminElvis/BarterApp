@@ -1,5 +1,8 @@
 package com.example.barterapp.data;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class UserProfile {
     private String        mFirstName;
     private String        mSurname;

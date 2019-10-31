@@ -14,25 +14,41 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/top"
-        android:layout_marginEnd="@dimen/margin"        android:baselineAligned="false"
-        android:gravity="center"
+        android:layout_marginEnd="@dimen/margin"
+        android:baselineAligned="false"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_load_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/thumbnail_img_dim"
+            android:layout_height="@dimen/thumbnail_img_dim"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/image_border"
+            android:padding="16dp"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_add_a_photo_purple_100dp" />
 
-        <ImageButton
+        <RelativeLayout
+            android:layout_width="@dimen/margin"
+            android:layout_height="match_parent">
+        </RelativeLayout>
+
+        <ImageView
             android:id="@+id/ib_load_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_add_a_photo_purple_100dp" />
+            android:layout_width="@dimen/thumbnail_img_dim"
+            android:layout_height="@dimen/thumbnail_img_dim"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/image_border"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_add_a_video_purple_100dp" />
     </LinearLayout>
 
     <EditText
@@ -40,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/top"
+        android:layout_marginTop="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
         android:hint="@string/prompt_title"
         android:inputType="textEmailAddress"
@@ -53,7 +69,7 @@
     <EditText
         android:id="@+id/ed_description"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="200dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
@@ -69,13 +85,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginBottom="@dimen/top"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_description"></Spinner>
+
     <Button
         android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
         android:layout_marginBottom="@dimen/top"
         android:background="@color/colorAccent"
@@ -84,8 +112,9 @@
         android:textColor="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_description"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_category"
+        app:layout_constraintVertical_bias="0.119" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

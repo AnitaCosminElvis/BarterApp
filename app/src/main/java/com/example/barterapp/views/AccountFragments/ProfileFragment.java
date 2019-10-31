@@ -81,14 +81,7 @@ public class ProfileFragment extends Fragment {
         mRatingValueTextView = root.findViewById(R.id.tv_rating_value);
         mUserRatingBar = root.findViewById(R.id.rb_user_rating);
 
-//        pageViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
-        boolean b = mProfileViewModel.getUserProfile();
+        mProfileViewModel.getUserProfile();
         return root;
     }
 }

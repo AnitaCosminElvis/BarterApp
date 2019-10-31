@@ -12,7 +12,7 @@
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
-    <string name="action_continue">Continue</string>
+    <string name="action_continue">Apply</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -57,6 +57,18 @@
     <string name="tab_text_products">My Products</string>
     <string name="tab_text_history">Offers</string>
     <string name="tab_text_offers">History</string>
+
+    <string name="category_prompt">Choose a category</string>
+    <string name="cat_gadgets">Gadgets</string>
+    <string name="cat_clothes">Clothes</string>
+    <string name="cat_tools">Tools</string>
+    <string name="cat_bikes">Bicycles</string>
+    <string-array name="category_arrays">
+        <item>@string/cat_gadgets</item>
+        <item>@string/cat_clothes</item>
+        <item>@string/cat_tools</item>
+        <item>@string/cat_bikes</item>
+    </string-array>
 
 
 </resources>

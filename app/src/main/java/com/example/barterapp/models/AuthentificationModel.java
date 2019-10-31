@@ -63,26 +63,26 @@ public class AuthentificationModel {
     //Registers the a new user according to the profile and password
     public void signUp(UserProfile userProfile, String pass) {
         mAuth.createUserWithEmailAndPassword(userProfile.getmEmail(), pass)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign up success
-                            mCurrentUser = mAuth.getCurrentUser();
+        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign up success
+                    mCurrentUser = mAuth.getCurrentUser();
 
-                            mRegisterResponseLiveData.setValue(
-                                    new Response("Signed up successfully.",true));
+                    mRegisterResponseLiveData.setValue(
+                            new Response("Signed up successfully.",true));
 
-                            String uId = mCurrentUser.getUid();
-                            // Populate the user's profile
-                            mDatabase.collection("Users").document(uId).set(userProfile);
-                        } else {
-                            // Sign up failed
-                            mRegisterResponseLiveData.setValue(
-                                    new Response("Signed up failed.",false));
-                        }
-                    }
-                });
+                    String uId = mCurrentUser.getUid();
+                    // Populate the user's profile
+                    mDatabase.collection("Users").document(uId).set(userProfile);
+                } else {
+                    // Sign up failed
+                    mRegisterResponseLiveData.setValue(
+                            new Response("Signed up failed.",false));
+                }
+            }
+        });
     }
 
     //Resets the password on the desired email address
