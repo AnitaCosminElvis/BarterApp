@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     mLoadingProgressBar.setVisibility(View.VISIBLE);
-                    mLoginViewModel.login(sEmail, sPass);
+                    mLoginViewModel.login(sEmail,sPass);
                 }catch (Exception ex){
                     Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }

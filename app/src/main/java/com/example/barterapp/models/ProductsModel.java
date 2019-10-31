@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -182,39 +183,88 @@ public class ProductsModel {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // Handle successful image uploading
 
-                //Get the download URI
-                Task<Uri> taskImgUri = continueToGetTheDownloadUrl(imgRef);
+                //Get the img download URI
+                mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
 
-                if (null != vidUri) {// if the video exists continue and upload it
-                    StorageReference vidRef = mStorageRef.child(key).child("vid");
-                    mUploadTask = vidRef.putFile(vidUri);
+                        // Continue with the task to get the download URL
+                        return imgRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri imgDownloadUri = task.getResult();
 
-                    // add listeners to the upload video action
-                    mUploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful video upload
+                            //set the products img download uri
+                            product.setImgUriPath(imgDownloadUri.toString());
+
+                            if (null != vidUri) {// if the video exists continue and upload it
+                                StorageReference vidRef = mStorageRef.child(key).child("vid");
+                                mUploadTask = vidRef.putFile(vidUri);
+
+                                // add listeners to the upload video action
+                                mUploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle unsuccessful video upload
+                                        mAddProductResponseLiveData.setValue(
+                                                new Response("Unable to upload video.",false));
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        //video has successfully uploaded
+
+                                        //Get the download URI
+                                        mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                            @Override
+                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                if (!task.isSuccessful()) {
+                                                    throw task.getException();
+                                                }
+
+                                                // Continue with the task to get the download URL
+                                                return vidRef.getDownloadUrl();
+                                            }
+                                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Uri> task) {
+                                                if (task.isSuccessful()) {
+                                                    Uri vidDownloadUri = task.getResult();
+
+                                                    //set the products video download uri
+                                                    product.setVidUriPath(vidDownloadUri.toString());
+                                                    //add the product in the realtime db
+                                                    saveProductIntoDatabase(product,dbRef,key);
+                                                } else {
+                                                    //skip saving the product if there is no video uri
+                                                    mAddProductResponseLiveData.setValue(
+                                                            new Response("Unable to upload video, product inserted only with image.",
+                                                            false));
+                                                    saveProductIntoDatabase(product,dbRef,key);
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }else {//if no video was selected
+                                // add the product in the realtime db
+                                saveProductIntoDatabase(product,dbRef,key);
+                            }
+                        } else {
+                            //skip saving the product if there is no img uri
                             mAddProductResponseLiveData.setValue(
-                                    new Response("Unable to upload video.",false));
+                                    new Response("Img url not found, product was not inserted.",
+                                            false));
                         }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //video has successfully uploaded
-
-                            //Get the download URI
-                            Task<Uri> taskVidUri = continueToGetTheDownloadUrl(vidRef);
-                            //Set the download URI
-                            product.setImgUriPath(taskVidUri.getResult().toString());
-
-                            //add the product in the realtime db
-                            saveProductIntoDatabase(product,dbRef,key);
-                        }
-                    });
-                }else {//if no video was selected
-                    // add the product in the realtime db
-                    saveProductIntoDatabase(product,dbRef,key);
-                }
+                    }
+                });
             }
         });
 
