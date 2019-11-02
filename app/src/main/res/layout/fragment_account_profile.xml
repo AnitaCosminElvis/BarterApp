@@ -10,30 +10,29 @@
     <RatingBar
         android:id="@+id/rb_user_rating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="182dp"
+        android:layout_height="34dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:max="5"
         android:numStars="5"
         android:stepSize="0.1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_rating_value"
-        android:layout_width="match_parent"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
-        android:text="0.0"
         android:gravity="right"
+        android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.994"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rb_user_rating" />
 

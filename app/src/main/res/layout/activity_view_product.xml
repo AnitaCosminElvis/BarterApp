@@ -81,4 +81,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_title" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="243dp"
+        android:layout_height="38dp"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="428dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
