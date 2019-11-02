@@ -14,19 +14,20 @@ import com.example.barterapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder> {
     private Context                 mContext;
     private ArrayList<Product>      mProductsList;
+    private ItemClickListener       mClickListener;
+    private String                  mCategory;
 
-    public ProductsAdapter(Context context, ArrayList<Product> productList){
+    public ProductsAdapter(Context context, ArrayList<Product> productList, String category){
         mContext = context;
         mProductsList = productList;
+        mCategory = category;
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder{
+    public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView     mTitleTextView;
         public ImageView    mProductImageView;
 
@@ -34,6 +35,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
             super(itemView);
             mTitleTextView = itemView.findViewById(R.id.tv_product_title);
             mProductImageView = itemView.findViewById(R.id.iv_product_image);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(),"");
         }
     }
 
@@ -55,5 +61,15 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     @Override
     public int getItemCount() {
         return mProductsList.size();
+    }
+
+    // sets the click listener
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int adapterPosition, String category);
     }
 }

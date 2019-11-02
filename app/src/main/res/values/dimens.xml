@@ -11,4 +11,5 @@
     <dimen name="margin">24dp</dimen>
     <dimen name="top">16dp</dimen>
     <dimen name="thumbnail_img_dim">100dp</dimen>
+    <integer name="products_columns">2</integer>
 </resources>
