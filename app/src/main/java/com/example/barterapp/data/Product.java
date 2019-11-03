@@ -1,8 +1,10 @@
 package com.example.barterapp.data;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Product {
+public class Product  implements Parcelable {
     private String      mUserId;
     private String      mTitle;
     private String      mDescription;
@@ -23,6 +25,27 @@ public class Product {
         this.mVidUri = vidUri;
         this.mTimeStamp = timeStamp;
     }
+
+    public Product(Parcel in) {
+        mUserId = in.readString();
+        mTitle = in.readString();
+        mDescription = in.readString();
+        mCategory = in.readString();
+        mImgUri = in.readString();
+        mVidUri = in.readString();
+        mTimeStamp = in.readLong();
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getmUserId() {
         return mUserId;
@@ -59,4 +82,20 @@ public class Product {
     public long getmTimeStamp() { return mTimeStamp; }
 
     public void setmTimeStamp(long mTimeStamp) { this.mTimeStamp = mTimeStamp; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mUserId);
+        parcel.writeString(mTitle);
+        parcel.writeString(mDescription);
+        parcel.writeString(mCategory);
+        parcel.writeString(mImgUri);
+        parcel.writeString(mVidUri);
+        parcel.writeLong(mTimeStamp);
+    }
 }

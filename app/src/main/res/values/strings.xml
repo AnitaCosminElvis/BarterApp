@@ -12,6 +12,7 @@
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
+    <string name="action_barter">Barter</string>
     <string name="action_continue">Apply</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -50,6 +51,7 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_password_retype">Retype Password</string>
     <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="view_user_s_other_products">View user\'s products</string>
     <string name="reset_pass">Reset Password</string>
     <string name="reset_email_info">Please enter your email address and press the button in order to change your password. If successful go into your email account and follow the link to verify email address.</string>
     <string name="title_activity_account">AccountActivity</string>
@@ -57,7 +59,7 @@
     <string name="tab_text_products">My Products</string>
     <string name="tab_text_history">Offers</string>
     <string name="tab_text_offers">History</string>
-
+    <string name="product_info_tag">PRODUCT_INFORMATION></string>
     <string name="category_prompt">Choose a category</string>
     <string name="cat_gadgets">Gadgets</string>
     <string name="cat_clothes">Clothes</string>

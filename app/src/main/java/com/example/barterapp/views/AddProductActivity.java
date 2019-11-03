@@ -7,27 +7,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.view_models.AddProductViewModel;
-import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
-
-import java.security.Provider;
 
 public class AddProductActivity extends AppCompatActivity {
     private static final int            PICK_IMG_REQUEST        = 1000;
@@ -136,11 +130,10 @@ public class AddProductActivity extends AppCompatActivity {
                 if (RESULT_OK == resultCode){
                     if ((null != data) && (null != data.getData())){
                         mVideoUri = data.getData();
-                        Bitmap bitmap;
                         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                         mediaMetadataRetriever.setDataSource(this,mVideoUri);
-                        bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
-                        mVideoView.setImageBitmap(bitmap);
+                        mVideoView.setImageBitmap(
+                                mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
                     }
                 }
                 break;

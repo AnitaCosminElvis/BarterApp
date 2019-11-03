@@ -27,9 +27,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/image_border"
-            android:padding="16dp"
+            android:padding="9dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_add_a_photo_purple_100dp" />
+            app:srcCompat="@drawable/ic_view_image_violet_100dp" />
 
         <RelativeLayout
             android:layout_width="@dimen/margin"
@@ -45,17 +45,16 @@
             android:background="@drawable/image_border"
             android:padding="1dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_add_a_video_purple_100dp" />
+            app:srcCompat="@drawable/ic_view_video_violet_100dp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/et_title"
+        android:id="@+id/tv_view_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
-        android:hint="@string/prompt_title"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,14 +63,13 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
-        android:id="@+id/ed_description"
+        android:id="@+id/tv_view_product_description"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
         android:ems="10"
-        android:hint="Description"
         android:inputType="textImeMultiLine"
         android:lines="20"
         android:minLines="5"
@@ -80,12 +78,78 @@
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_view_product_title" />
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="243dp"
-        android:layout_height="38dp"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="428dp" />
+    <LinearLayout
+        android:id="@+id/linearLayoutUserReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/top"
+        android:layout_marginEnd="@dimen/margin"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="1dp"
+        android:background="@drawable/image_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_view_product_description">
+
+        <RatingBar
+            android:id="@+id/rb_prod_view_user_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:max="5"
+            android:rating="0"
+            android:stepSize="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_description" />
+
+        <TextView
+            android:id="@+id/tv_prod_view_user_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:text="0.0"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rb_prod_view_user_rating" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_other_products"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top"
+        android:text="@string/view_user_s_other_products"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutUserReview" />
+
+    <Button
+        android:id="@+id/btn_barter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:background="@color/colorAccent"
+        android:enabled="true"
+        android:text="@string/action_barter"
+        android:textColor="@color/colorBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_other_products"
+        app:layout_constraintVertical_bias="0.393" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

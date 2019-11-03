@@ -33,13 +33,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mTitleTextView = itemView.findViewById(R.id.tv_product_title);
             mProductImageView = itemView.findViewById(R.id.iv_product_image);
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(),"");
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(),mCategory);
         }
     }
 
@@ -63,9 +64,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         return mProductsList.size();
     }
 
+    public void setProductsList(ArrayList<Product> productsList){
+        mProductsList = productsList;
+    }
+
     // sets the click listener
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
+    }
+
+    public Product getProductByPosition(int position){
+        return mProductsList.get(position);
     }
 
     // parent activity will implement this method to respond to click events

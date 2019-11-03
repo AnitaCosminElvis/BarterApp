@@ -13,6 +13,7 @@ import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
 import com.example.barterapp.views.LoginActivity;
 import com.example.barterapp.views.RegisterActivity;
+import com.example.barterapp.views.ViewProductActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.MenuItem;
@@ -96,25 +97,25 @@ public class MainActivity   extends     AppCompatActivity
         //create observers for the products
         mGadgetsLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) setAdapterByCategory(CAT_GADGETS, productsList);
+                if (null != productsList) mGadgetsAdapter.setProductsList(productsList);
             }
         });
 
         mClothesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) setAdapterByCategory(CAT_CLOTHES, productsList);
+                if (null != productsList) mClothesAdapter.setProductsList(productsList);
             }
         });
 
         mToolsLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) setAdapterByCategory(CAT_TOOLS, productsList);
+                if (null != productsList) mToolsAdapter.setProductsList(productsList);
             }
         });
 
         mBikesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) setAdapterByCategory(CAT_BIKES, productsList);
+                if (null != productsList) mBikesAdapter.setProductsList(productsList);
             }
         });
 
@@ -232,13 +233,6 @@ public class MainActivity   extends     AppCompatActivity
         return bIsSignedIn;
     }
 
-    private void setAdapterByCategory(String cat, ArrayList<Product> productsList){
-        if (cat.equals(CAT_GADGETS)) mGadgetsAdapter = new ProductsAdapter(this,productsList,CAT_GADGETS);
-        else if (cat.equals(CAT_CLOTHES)) mClothesAdapter = new ProductsAdapter(this,productsList, CAT_CLOTHES);
-        else if (cat.equals(CAT_TOOLS)) mToolsAdapter = new ProductsAdapter(this,productsList,CAT_TOOLS);
-        else if (cat.equals(CAT_BIKES)) mBikesAdapter = new ProductsAdapter(this,productsList,CAT_BIKES);
-    }
-
     private void startIntentActionWithUserLoggedInCheck(Class destClass){
         if (false == checkUserIsLoggedIn()) return;
 
@@ -250,6 +244,10 @@ public class MainActivity   extends     AppCompatActivity
         //ToDo: inflate product description by category
         switch(category){
             case CAT_GADGETS:{
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getText(R.string.product_info_tag).toString() ,
+                        mGadgetsAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
                 break;
             }
             case CAT_CLOTHES:{

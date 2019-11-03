@@ -37,7 +37,7 @@ public class ProductsModel {
     private StorageReference                    mStorageRef;
     private UploadTask                          mUploadTask;
     private MutableLiveData<Response>           mAddProductResponseLiveData         = new MutableLiveData<>();
-    private MutableLiveData<Response>           mListProductsResponseLiveData        = new MutableLiveData<>();
+    private MutableLiveData<Response>           mListProductsResponseLiveData       = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mGadgetsLiveData                    = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mClothesLiveData                    = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mToolsLiveData                      = new MutableLiveData<>();
