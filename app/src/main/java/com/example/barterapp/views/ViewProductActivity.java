@@ -1,6 +1,7 @@
 package com.example.barterapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
@@ -8,17 +9,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
+import com.example.barterapp.utility.DateUtility;
+import com.example.barterapp.view_models.ProductInfoViewModel;
+import com.example.barterapp.view_models.ViewModelFactory;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 public class ViewProductActivity extends AppCompatActivity {
+    final String                DATE_FORMAT                     = "EEE MMM dd hh:mm:ss yyyy ";
+    ProductInfoViewModel        mProductInfoViewModel;
+    TextView                    mDateTextView;
+    TextView                    mAliasTextView;
     TextView                    mTitleTextView;
     TextView                    mDescriptionTextView;
     TextView                    mUserReviewValue;
@@ -33,6 +40,11 @@ public class ViewProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product);
 
+        mProductInfoViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(ProductInfoViewModel.class);
+
+        mDateTextView = findViewById(R.id.tv_product_view_date);
+        mAliasTextView = findViewById(R.id.tv_product_view_user);
         mTitleTextView = findViewById(R.id.tv_view_product_title);
         mDescriptionTextView = findViewById(R.id.tv_view_product_description);
         mUserReviewValue = findViewById(R.id.tv_prod_view_user_value);
@@ -43,6 +55,9 @@ public class ViewProductActivity extends AppCompatActivity {
         mViewUsersProductsButton = findViewById(R.id.btn_other_products);
 
         Product product  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
+
+        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(product.getmTimeStamp(),DATE_FORMAT));
+        mAliasTextView.setText(product.getAlias());
 
         mTitleTextView.setText(product.getmTitle());
         mDescriptionTextView.setText(product.getmDescription());
@@ -56,7 +71,6 @@ public class ViewProductActivity extends AppCompatActivity {
         mediaMetadataRetriever.setDataSource(product.getVidUriPath(), new HashMap<String,String>());
         mProductVidImageView.setImageBitmap(
                 mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
-
 
     }
 }

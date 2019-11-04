@@ -32,6 +32,6 @@ public class MainViewModel extends ViewModel {
 
     public boolean isUserSignedIn() { return mAuthModel.isUserSignedIn(); }
 
-    public void setSingleEventByProductCategory(String category) { mProdModel.setSingleEventByProductCategory(category); }
+    public void triggerGetProductsByKeyFilter(String key, String filterValue) { mProdModel.triggerGetProductsByKeyFilter(key,filterValue); }
 
 }

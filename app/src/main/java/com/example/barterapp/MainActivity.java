@@ -82,7 +82,6 @@ public class MainActivity   extends     AppCompatActivity
         //set the default adapter
         mProductsRecyclerView.setAdapter(mGadgetsAdapter);
 
-
         //create the view model
         mMainViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(MainViewModel.class);
@@ -94,37 +93,10 @@ public class MainActivity   extends     AppCompatActivity
         mBikesLiveData = mMainViewModel.getBikesLiveData();
         mLoginLiveData = mMainViewModel.getLoginResponseLiveData();
 
-        //create observers for the products
-        mGadgetsLiveData.observe(this, new Observer<ArrayList<Product>>() {
-            @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) mGadgetsAdapter.setProductsList(productsList);
-            }
-        });
+        //initialize the gadgets list
+        mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_GADGETS);
 
-        mClothesLiveData.observe(this, new Observer<ArrayList<Product>>() {
-            @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) mClothesAdapter.setProductsList(productsList);
-            }
-        });
-
-        mToolsLiveData.observe(this, new Observer<ArrayList<Product>>() {
-            @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) mToolsAdapter.setProductsList(productsList);
-            }
-        });
-
-        mBikesLiveData.observe(this, new Observer<ArrayList<Product>>() {
-            @Override public void onChanged(ArrayList<Product> productsList) {
-                if (null != productsList) mBikesAdapter.setProductsList(productsList);
-            }
-        });
-
-        //create observer for login response
-        mLoginLiveData.observe(this, new Observer<Response>(){
-            @Override public void onChanged(@Nullable Response response){
-                if (null != response){ setNavViewUserEmail();}
-            }
-        });
+        createObserversForMutableLiveData();
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -174,6 +146,52 @@ public class MainActivity   extends     AppCompatActivity
         });
         //sign out from any logged account
         mMainViewModel.signOut();
+    }
+
+    private void createObserversForMutableLiveData() {
+        //create observers for the products
+        mGadgetsLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList) {
+                    mGadgetsAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mGadgetsAdapter);
+                }
+            }
+        });
+
+        mClothesLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList){
+                    mClothesAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mClothesAdapter);
+                }
+            }
+        });
+
+        mToolsLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList){
+                    mToolsAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mToolsAdapter);
+                }
+            }
+        });
+
+        mBikesLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList) {
+                    mBikesAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mBikesAdapter);
+                }
+            }
+        });
+
+        //create observer for login response
+        mLoginLiveData.observe(this, new Observer<Response>(){
+            @Override public void onChanged(@Nullable Response response){
+                if (null != response){ setNavViewUserEmail();}
+            }
+        });
     }
 
 

@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -76,6 +77,11 @@ public class AuthentificationModel {
                     String uId = mCurrentUser.getUid();
                     // Populate the user's profile
                     mDatabase.collection("Users").document(uId).set(userProfile);
+
+                    //set the display name for the user in
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(userProfile.getmAlias()).build();
+                    mCurrentUser.updateProfile(profileUpdates);
                 } else {
                     // Sign up failed
                     mRegisterResponseLiveData.setValue(
@@ -139,6 +145,16 @@ public class AuthentificationModel {
         }
 
         return userEmail;
+    }
+
+    public String getUserAlias(){
+        String userAlias = "anonymous";
+
+        if (null != mAuth.getCurrentUser()){
+            userAlias = mAuth.getCurrentUser().getDisplayName();
+        }
+
+        return userAlias;
     }
 
     public boolean isUserSignedIn(){

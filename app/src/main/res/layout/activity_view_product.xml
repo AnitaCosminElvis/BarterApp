@@ -48,19 +48,76 @@
             app:srcCompat="@drawable/ic_view_video_violet_100dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout_timestamp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/top"
+        android:layout_marginEnd="@dimen/margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Added on "
+            android:gravity="right">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_product_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01.01.1777"
+            android:gravity="left">
+        </TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_timestamp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="By  "></TextView>
+
+        <TextView
+            android:id="@+id/tv_product_view_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="anonymous@yahoo.com"></TextView>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_view_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
-        android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_user" />
 
     <TextView
         android:id="@+id/tv_view_product_description"
@@ -100,7 +157,9 @@
             android:id="@+id/rb_prod_view_user_rating"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:isIndicator="true"
             android:max="5"
+            android:numStars="5"
             android:rating="0"
             android:stepSize="0.1"
             app:layout_constraintEnd_toEndOf="parent"

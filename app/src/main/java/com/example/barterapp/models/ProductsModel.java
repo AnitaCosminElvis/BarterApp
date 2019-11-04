@@ -13,12 +13,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -30,10 +31,7 @@ import static com.example.barterapp.utility.DefinesUtility.*;
 public class ProductsModel {
     private static volatile ProductsModel       mInstance;
     private FirebaseAuth                        mAuth;
-    private DatabaseReference                   mDbGadgetsRef;
-    private DatabaseReference                   mDbToolsRef;
-    private DatabaseReference                   mDbClothesRef;
-    private DatabaseReference                   mDbBikesRef;
+    private CollectionReference                 mDbProductsCollection;
     private StorageReference                    mStorageRef;
     private UploadTask                          mUploadTask;
     private MutableLiveData<Response>           mAddProductResponseLiveData         = new MutableLiveData<>();
@@ -42,6 +40,7 @@ public class ProductsModel {
     private MutableLiveData<ArrayList<Product>> mClothesLiveData                    = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mToolsLiveData                      = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mBikesLiveData                      = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Product>> mUsersProductsLiveData              = new MutableLiveData<>();
 
 
     public MutableLiveData<Response> getMutableLiveDataAddProductResponse(){ return mAddProductResponseLiveData; }
@@ -50,60 +49,22 @@ public class ProductsModel {
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() { return mClothesLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() { return mToolsLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() { return mBikesLiveData; }
-
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProductsChanged() { return mUsersProductsLiveData; }
 
     // private constructor : singleton access
     private ProductsModel() {
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("ProductsMultimedia");
-        mDbGadgetsRef = FirebaseDatabase.getInstance().getReference("Products/" + CAT_GADGETS);
-        mDbBikesRef = FirebaseDatabase.getInstance().getReference("Products/" + CAT_BIKES);
-        mDbClothesRef = FirebaseDatabase.getInstance().getReference("Products/" + CAT_CLOTHES);
-        mDbToolsRef = FirebaseDatabase.getInstance().getReference("Products/" + CAT_TOOLS);
+        mDbProductsCollection = FirebaseFirestore.getInstance().collection("Products");
 
         //add listener for gadgets
-        mDbGadgetsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateMutableLiveData(mGadgetsLiveData,dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
+        setListenerForProductsByKey(CATEGORY_KEY, CAT_GADGETS);
         //add listener for bikes
-        mDbBikesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateMutableLiveData(mBikesLiveData,dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
+        setListenerForProductsByKey(CATEGORY_KEY, CAT_BIKES);
         //add listener for clothes
-        mDbClothesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateMutableLiveData(mClothesLiveData,dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
+        setListenerForProductsByKey(CATEGORY_KEY, CAT_CLOTHES);
         //add listener for tools
-        mDbToolsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateMutableLiveData(mToolsLiveData,dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+        setListenerForProductsByKey(CATEGORY_KEY, CAT_TOOLS);
 
     }
 
@@ -114,59 +75,69 @@ public class ProductsModel {
         return mInstance;
     }
 
-    public void setSingleEventByProductCategory(String categoryType){
+    public void triggerGetProductsByKeyFilter(String key, String filterVal){
         final MutableLiveData<ArrayList<Product>> productsLiveData;
-        Query query                                                     = null;
-
-        if (categoryType.equals(CAT_GADGETS)){
-                query = mDbGadgetsRef.orderByChild("mTimeStamp");
-                productsLiveData = mGadgetsLiveData;
-        }else if (categoryType.equals(CAT_CLOTHES)){
-                query = mDbClothesRef.orderByChild("mTimeStamp");
-                productsLiveData = mClothesLiveData;
-        }else if (categoryType.equals(CAT_TOOLS)){
-                query = mDbToolsRef.orderByChild("mTimeStamp");
-                productsLiveData = mToolsLiveData;
-        }else if (categoryType.equals(CAT_BIKES)){
-                query = mDbBikesRef.orderByChild("mTimeStamp");
-                productsLiveData = mBikesLiveData;
-        }else return;
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDbProductsCollection.whereEqualTo(key, filterVal)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    updateMutableLiveData(productsLiveData,dataSnapshot);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        products.add(document.toObject(Product.class));
+                    }
+                    setLiveDataByFilter(products,filterVal);
+                } else {
+                    mListProductsResponseLiveData.setValue(
+                            new Response(task.getException().getMessage(),false));
                 }
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                mListProductsResponseLiveData.setValue(new Response("Unable to list products.", false));
-            }
         });
+
+    }
+
+    private void setLiveDataByFilter(ArrayList<Product> products, String key) {
+        switch(key){
+            case CAT_GADGETS:{
+                mGadgetsLiveData.setValue(products);
+                break;
+            }
+            case CAT_CLOTHES:{
+                mClothesLiveData.setValue(products);
+                break;
+            }
+            case CAT_TOOLS:{
+                mToolsLiveData.setValue(products);
+                break;
+            }
+            case CAT_BIKES:{
+                mBikesLiveData.setValue(products);
+                break;
+            }
+            case CAT_USER_LIST:{
+                mUsersProductsLiveData.setValue(products);
+                break;
+            }
+            default: return;
+        }
     }
 
     public void addProductWithMultimedia(Product product, Uri imgUri, Uri vidUri){
         //return if task in progress
         if ((null != mUploadTask) && (true == mUploadTask.isInProgress())) return;
 
-        final DatabaseReference dbRef;
-
         //set the user uid in the product object
         product.setmUserId(mAuth.getCurrentUser().getUid());
-        if (product.getmCategory().equals(CAT_GADGETS)){
-            dbRef = mDbGadgetsRef;
-        }else if (product.getmCategory().equals(CAT_CLOTHES)){
-            dbRef = mDbClothesRef;
-        }else if (product.getmCategory().equals(CAT_TOOLS)){
-            dbRef = mDbToolsRef;
-        }else if (product.getmCategory().equals(CAT_BIKES)){
-            dbRef = mDbBikesRef;
-        }else return;
 
-        String key = dbRef.push().getKey();
+        //set the alias
+        product.setAlias(mAuth.getCurrentUser().getDisplayName());
+
+        //get a unique generated id
+        String key = mDbProductsCollection.document().getId();
+
+        //use the unique to create path for image
         StorageReference imgRef = mStorageRef.child(key).child("img");
+
         // upload image
         mUploadTask = imgRef.putFile(imgUri);
 
@@ -240,13 +211,13 @@ public class ProductsModel {
                                                     //set the products video download uri
                                                     product.setVidUriPath(vidDownloadUri.toString());
                                                     //add the product in the realtime db
-                                                    saveProductIntoDatabase(product,dbRef,key);
+                                                    saveProductIntoDatabase(key,product);
                                                 } else {
                                                     //skip saving the product if there is no video uri
                                                     mAddProductResponseLiveData.setValue(
                                                             new Response("Unable to upload video, product inserted only with image.",
                                                             false));
-                                                    saveProductIntoDatabase(product,dbRef,key);
+                                                    saveProductIntoDatabase(key,product);
 
                                                 }
                                             }
@@ -255,7 +226,7 @@ public class ProductsModel {
                                 });
                             }else {//if no video was selected
                                 // add the product in the realtime db
-                                saveProductIntoDatabase(product,dbRef,key);
+                                saveProductIntoDatabase(key,product);
                             }
                         } else {
                             //skip saving the product if there is no img uri
@@ -271,43 +242,36 @@ public class ProductsModel {
         //ToDo: set other product dependencies
     }
 
-    private Task<Uri> continueToGetTheDownloadUrl(StorageReference imgRef) {
-        return mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
+    private void saveProductIntoDatabase(String key, Product product){
+
+        mDbProductsCollection.document(key).set(product)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    mAddProductResponseLiveData.setValue(new Response("Product added successfully.",true));
                 }
-                return imgRef.getDownloadUrl();
-            }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    mAddProductResponseLiveData.setValue(new Response(e.getMessage(),false));
+                }
         });
     }
 
-    private void saveProductIntoDatabase(Product product, DatabaseReference dbRef, String key){
-        dbRef.child(key).setValue(product)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+    private void setListenerForProductsByKey(String key, String filterVal) {
+
+        mDbProductsCollection.whereEqualTo(key, filterVal)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        mAddProductResponseLiveData.setValue(new Response("Product added successfully.",true));
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) return;
+
+                        ArrayList<Product> products = new ArrayList<>();
+                        products = (ArrayList<Product>)value.toObjects(Product.class);
+                        setLiveDataByFilter(products,key);
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                mAddProductResponseLiveData.setValue(new Response(e.getMessage(),false));
-            }
-        });
+                });
     }
 
-    private void updateMutableLiveData(MutableLiveData<ArrayList<Product>> productsLiveData,
-                                       DataSnapshot dataSnapshot){
-        Iterable<DataSnapshot> productCollection =  dataSnapshot.getChildren();
-        ArrayList<Product> auxList = new ArrayList<>();
-
-        for (DataSnapshot productDataSnapshot : productCollection){
-            Product product = productDataSnapshot.getValue(Product.class);
-            auxList.add(product);
-        }
-
-        productsLiveData.setValue(auxList);
-    }
 }

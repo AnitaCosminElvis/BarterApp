@@ -105,7 +105,7 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
-                mProductViewModel.addProduct(new Product("",sTitle,sDescription,
+                mProductViewModel.addProduct(new Product("","",sTitle,sDescription,
                         mCategorySpinner.getSelectedItem().toString(),"","",
                         System.currentTimeMillis()), mImgUri, mVideoUri);
             }

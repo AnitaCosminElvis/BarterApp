@@ -1,11 +1,11 @@
 package com.example.barterapp.data;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Product  implements Parcelable {
     private String      mUserId;
+    private String      mAlias;
     private String      mTitle;
     private String      mDescription;
     private String      mCategory;
@@ -15,9 +15,10 @@ public class Product  implements Parcelable {
 
     public Product(){}
 
-    public Product(String mUserId, String mTitle, String mDescription, String mCategory,
+    public Product(String mUserId, String alias, String mTitle, String mDescription, String mCategory,
                    String imgUri, String vidUri, long timeStamp) {
         this.mUserId = mUserId;
+        this.mAlias = alias;
         this.mTitle = mTitle;
         this.mDescription = mDescription;
         this.mCategory = mCategory;
@@ -28,6 +29,7 @@ public class Product  implements Parcelable {
 
     public Product(Parcel in) {
         mUserId = in.readString();
+        mAlias = in.readString();
         mTitle = in.readString();
         mDescription = in.readString();
         mCategory = in.readString();
@@ -52,6 +54,12 @@ public class Product  implements Parcelable {
     }
 
     public void setmUserId(String userId) { this.mUserId = userId; }
+
+    public String getAlias() {
+        return mAlias;
+    }
+
+    public void setAlias(String alias) { this.mAlias = alias; }
 
     public String getmTitle() {
         return mTitle;
@@ -91,6 +99,7 @@ public class Product  implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mUserId);
+        parcel.writeString(mAlias);
         parcel.writeString(mTitle);
         parcel.writeString(mDescription);
         parcel.writeString(mCategory);

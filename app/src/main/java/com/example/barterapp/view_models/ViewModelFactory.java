@@ -36,6 +36,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         else if (modelClass.isAssignableFrom(AddProductViewModel.class)) {
             return (T) new AddProductViewModel(ProductsModel.getInstance());
         }
+        else if (modelClass.isAssignableFrom(ProductInfoViewModel.class)) {
+            return (T) new ProductInfoViewModel(AuthentificationModel.getInstance());
+        }//
         else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }
