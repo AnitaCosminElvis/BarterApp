@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Product  implements Parcelable {
     private String      mUserId;
+    private String      mProductId;
     private String      mAlias;
     private String      mTitle;
     private String      mDescription;
@@ -18,6 +19,7 @@ public class Product  implements Parcelable {
     public Product(String mUserId, String alias, String mTitle, String mDescription, String mCategory,
                    String imgUri, String vidUri, long timeStamp) {
         this.mUserId = mUserId;
+        this.mProductId =
         this.mAlias = alias;
         this.mTitle = mTitle;
         this.mDescription = mDescription;

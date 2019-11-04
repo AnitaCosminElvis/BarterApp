@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
 import com.example.barterapp.models.AuthentificationModel;
+import com.example.barterapp.models.OffersModel;
 import com.example.barterapp.models.ProductsModel;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
 
@@ -38,7 +39,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         else if (modelClass.isAssignableFrom(ProductInfoViewModel.class)) {
             return (T) new ProductInfoViewModel(AuthentificationModel.getInstance());
-        }//
+        }
+        else if (modelClass.isAssignableFrom(MakeOfferViewModel.class)) {
+            return (T) new MakeOfferViewModel(OffersModel.getInstance());
+        }
         else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }
