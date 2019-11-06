@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,15 +31,19 @@ public class OfferActivity extends AppCompatActivity {
     private MutableLiveData<Response>           mMakeOfferResponseLiveData;
     private String                              mUserId;
     private String                              mProductId;
+    private String                              mProductImgUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Intent intent = getIntent();
-        mUserId = intent.getStringExtra("User_id");
-        mProductId = intent.getStringExtra("Product_id");
+        mUserId = intent.getStringExtra(getString(R.string.offer_user_id_tag));
+        mProductId = intent.getStringExtra(getString(R.string.offer_product_id_tag));
+        mProductImgUri = intent.getStringExtra(getString(R.string.offer_product_img__uri_tag));
 
         mEmailEditText = findViewById(R.id.et_offer_email);
         mMessageEditText = findViewById(R.id.et_offer_message);
@@ -80,8 +85,11 @@ public class OfferActivity extends AppCompatActivity {
                     return;
                 }
 
-                mMakeOfferViewModel.makeOffer(new Offer(mUserId,mProductId,sEmail,sMessage));
+                Offer offer = new Offer(mUserId,"","","",
+                                        mProductId,mProductImgUri,sEmail,sMessage,
+                                        true,false);
 
+                mMakeOfferViewModel.makeOffer(offer);
             }
         });
     }

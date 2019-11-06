@@ -16,10 +16,10 @@ public class Product  implements Parcelable {
 
     public Product(){}
 
-    public Product(String mUserId, String alias, String mTitle, String mDescription, String mCategory,
+    public Product(String mUserId, String productId, String alias, String mTitle, String mDescription, String mCategory,
                    String imgUri, String vidUri, long timeStamp) {
         this.mUserId = mUserId;
-        this.mProductId =
+        this.mProductId = productId;
         this.mAlias = alias;
         this.mTitle = mTitle;
         this.mDescription = mDescription;
@@ -31,6 +31,7 @@ public class Product  implements Parcelable {
 
     public Product(Parcel in) {
         mUserId = in.readString();
+        mProductId = in.readString();
         mAlias = in.readString();
         mTitle = in.readString();
         mDescription = in.readString();
@@ -51,22 +52,20 @@ public class Product  implements Parcelable {
         }
     };
 
-    public String getmUserId() {
-        return mUserId;
-    }
-
+    public String getmUserId() { return mUserId; }
     public void setmUserId(String userId) { this.mUserId = userId; }
+
+    public String getProductId() { return mProductId; }
+    public void setProductId(String productId) { this.mProductId = productId; }
 
     public String getAlias() {
         return mAlias;
     }
-
     public void setAlias(String alias) { this.mAlias = alias; }
 
     public String getmTitle() {
         return mTitle;
     }
-
     public void setmTitle(String mTitle) {
         this.mTitle = mTitle;
     }
@@ -74,23 +73,18 @@ public class Product  implements Parcelable {
     public String getmDescription() {
         return mDescription;
     }
-
     public void setmDescription(String mDescription) { this.mDescription = mDescription; }
 
     public String getmCategory() { return mCategory; }
-
     public void setmCategory(String mCategory) { this.mCategory = mCategory; }
 
     public String getImgUriPath() { return mImgUri; }
-
     public void setImgUriPath(String uriPath) { this.mImgUri = uriPath; }
 
     public String getVidUriPath() { return mVidUri; }
-
     public void setVidUriPath(String uriPath) { this.mVidUri = uriPath; }
 
     public long getmTimeStamp() { return mTimeStamp; }
-
     public void setmTimeStamp(long mTimeStamp) { this.mTimeStamp = mTimeStamp; }
 
     @Override
@@ -101,6 +95,7 @@ public class Product  implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mUserId);
+        parcel.writeString(mProductId);
         parcel.writeString(mAlias);
         parcel.writeString(mTitle);
         parcel.writeString(mDescription);

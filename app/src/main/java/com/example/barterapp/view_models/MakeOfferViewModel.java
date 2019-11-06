@@ -8,7 +8,7 @@ import com.example.barterapp.data.Response;
 import com.example.barterapp.models.OffersModel;
 
 public class MakeOfferViewModel extends ViewModel {
-    OffersModel     mOffersModel;
+    OffersModel                 mOffersModel;
 
     MakeOfferViewModel(OffersModel offersModel){
         mOffersModel = offersModel;
@@ -16,7 +16,5 @@ public class MakeOfferViewModel extends ViewModel {
 
     public MutableLiveData<Response> getMutableLiveDataOfferResponse(){ return mOffersModel.getMutableLiveDataOfferResponse();}
 
-    public void makeOffer(Offer offer) {
-        mOffersModel.createOffer(offer);
-    }
+    public void makeOffer(Offer offer) { mOffersModel.createOffer(offer); }
 }

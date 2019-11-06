@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
@@ -34,11 +37,14 @@ public class ViewProductActivity extends AppCompatActivity {
     RatingBar                   mUserReviewRatingBar;
     Button                      mBarterButton;
     Button                      mViewUsersProductsButton;
+    Product                     mProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mProductInfoViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProductInfoViewModel.class);
@@ -54,23 +60,43 @@ public class ViewProductActivity extends AppCompatActivity {
         mBarterButton = findViewById(R.id.btn_barter);
         mViewUsersProductsButton = findViewById(R.id.btn_other_products);
 
-        Product product  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
+        mProduct  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
-        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(product.getmTimeStamp(),DATE_FORMAT));
-        mAliasTextView.setText(product.getAlias());
+        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp(),DATE_FORMAT));
+        mAliasTextView.setText(mProduct.getAlias());
 
-        mTitleTextView.setText(product.getmTitle());
-        mDescriptionTextView.setText(product.getmDescription());
+        mTitleTextView.setText(mProduct.getmTitle());
+        mDescriptionTextView.setText(mProduct.getmDescription());
 
-        Picasso.get().load(product.getImgUriPath()).fit().centerCrop().
-                tag(this).into(mProductPhotoImageView);
-        mProductPhotoImageView.setPadding(1,1,1,1);
+        if ((null != mProduct.getImgUriPath()) && (false == mProduct.getImgUriPath().isEmpty())) {
+            Picasso.get().load(mProduct.getImgUriPath()).fit().centerCrop().
+                    tag(this).into(mProductPhotoImageView);
+            mProductPhotoImageView.setPadding(1, 1, 1, 1);
+        }
 
-        Uri vidUri = Uri.parse(product.getVidUriPath());
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(product.getVidUriPath(), new HashMap<String,String>());
-        mProductVidImageView.setImageBitmap(
-                mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
+        if ((null != mProduct.getVidUriPath()) && (false == mProduct.getVidUriPath().isEmpty())) {
+            Uri vidUri = Uri.parse(mProduct.getVidUriPath());
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(mProduct.getVidUriPath(), new HashMap<String, String>());
+            mProductVidImageView.setImageBitmap(
+                    mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
+        }
 
+        mBarterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!mProductInfoViewModel.isSignedIn()){
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in." , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(ViewProductActivity.this, OfferActivity.class);
+                intent.putExtra(getString(R.string.offer_user_id_tag), mProduct.getmUserId());
+                intent.putExtra(getString(R.string.offer_product_id_tag), mProduct.getProductId());
+                intent.putExtra(getString(R.string.offer_product_img__uri_tag), mProduct.getImgUriPath());
+                startActivity(intent);
+            }
+        });
     }
 }

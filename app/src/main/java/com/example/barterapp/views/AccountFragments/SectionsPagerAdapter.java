@@ -22,8 +22,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[]      TAB_TITLES = new int[]{R.string.tab_text_profile,
                                                     R.string.tab_text_products,
-                                                    R.string.tab_text_offers,
-                                                    R.string.tab_text_history};
+                                                    R.string.tab_text_history,
+                                                    R.string.tab_text_offers};
     private static final int        TAB_COUNT = 4;
     private final Context           mContext;
 
@@ -38,13 +38,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position){
             case 0:
-                return ProfileFragment.newInstance(position + 1);
+                return ProfileFragment.getInstance();
             case 1:
-                return MyProductsFragment.newInstance(position + 1);
+                return MyProductsFragment.getInstance();
             case 2:
-                return OffersFragment.newInstance(position + 1);
+                return OffersFragment.getInstance();
             case 3:
-                return HistoryFragment.newInstance(position + 1);
+                return HistoryFragment.getInstance();
         }
 
         return null;

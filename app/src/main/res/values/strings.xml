@@ -12,6 +12,8 @@
     <string name="action_sign_in">Sign In</string>
     <string name="action_make_offer">Make Offer</string>
     <string name="action_register">Register</string>
+    <string name="action_offer_accept">Accept</string>
+    <string name="action_offer_refuse">Refuse</string>
     <string name="action_barter">Barter</string>
     <string name="action_continue">Apply</string>
     <string name="welcome">"Welcome !"</string>
@@ -59,7 +61,11 @@
     <string name="tab_text_products">My Products</string>
     <string name="tab_text_history">Offers</string>
     <string name="tab_text_offers">History</string>
-    <string name="product_info_tag">PRODUCT_INFORMATION></string>
+    <string name="product_info_tag">PRODUCT_INFORMATION</string>
+    <string name="view_offer_info_tag">VIEW_OFFER_INFORMATION</string>
+    <string name="offer_user_id_tag">OFFER_USER_ID</string>
+    <string name="offer_product_id_tag">OFFER_PRODUCT_ID</string>
+    <string name="offer_product_img__uri_tag">OFFER_PRODUCT_IMG_URI</string>
     <string name="category_prompt">Choose a category</string>
     <string name="cat_gadgets">Gadgets</string>
     <string name="cat_clothes">Clothes</string>

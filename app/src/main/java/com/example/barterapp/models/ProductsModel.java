@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
+import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,8 +55,8 @@ public class ProductsModel {
     // private constructor : singleton access
     private ProductsModel() {
         mAuth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("ProductsMultimedia");
-        mDbProductsCollection = FirebaseFirestore.getInstance().collection("Products");
+        mStorageRef = FirebaseStorage.getInstance().getReference(MULTIMEDIA_PATH);
+        mDbProductsCollection = FirebaseFirestore.getInstance().collection(PRODUCTS_COLLECTION);
 
         //add listener for gadgets
         setListenerForProductsByKey(CATEGORY_KEY, CAT_GADGETS);
@@ -93,7 +94,6 @@ public class ProductsModel {
                 }
             }
         });
-
     }
 
     private void setLiveDataByFilter(ArrayList<Product> products, String key) {
@@ -126,14 +126,14 @@ public class ProductsModel {
         //return if task in progress
         if ((null != mUploadTask) && (true == mUploadTask.isInProgress())) return;
 
-        //set the user uid in the product object
-        product.setmUserId(mAuth.getCurrentUser().getUid());
-
-        //set the alias
-        product.setAlias(mAuth.getCurrentUser().getDisplayName());
-
         //get a unique generated id
         String key = mDbProductsCollection.document().getId();
+        //set the user uid in the product object
+        product.setmUserId(mAuth.getCurrentUser().getUid());
+        //set the alias
+        product.setAlias(mAuth.getCurrentUser().getDisplayName());
+        //set product id
+        product.setProductId(key);
 
         //use the unique to create path for image
         StorageReference imgRef = mStorageRef.child(key).child("img");

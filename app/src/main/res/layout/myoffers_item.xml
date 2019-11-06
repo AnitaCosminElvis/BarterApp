@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/top"
+    android:paddingTop="@dimen/top"
+    android:paddingBottom="@dimen/top">
+
+    <ImageView
+        android:id="@+id/iv_offer_img"
+        android:layout_width="@dimen/thumbnail_img_dim"
+        android:layout_height="@dimen/thumbnail_img_dim"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="left|center"
+        android:background="@drawable/ic_view_image_violet_100dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="From"
+        android:layout_gravity="left|center"/>
+
+    <TextView
+        android:id="@+id/tv_offer_alias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="anonymous@at.com"
+        android:layout_gravity="left|center"/>
+
+</LinearLayout>

@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 
@@ -39,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mLoginViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -65,8 +69,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String sEmail = mEmailEditText.getText().toString();
                 String sPass= mPasswordEditText.getText().toString();
-
-
 
                 if (sEmail.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();

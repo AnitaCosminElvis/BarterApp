@@ -39,15 +39,16 @@
                 android:text="@string/cat_bikes" />
         </com.google.android.material.tabs.TabLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_products"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="auto_fit"
-            android:layout_below="@+id/tab_product_category"
-            android:layout_marginTop="2dp">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_products"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="auto_fit"
+                android:layout_below="@+id/tab_product_category"
+                android:layout_marginTop="2dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 

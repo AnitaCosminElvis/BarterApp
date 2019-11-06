@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +42,9 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mProductViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(AddProductViewModel.class);
         mAddProductResponseLiveData = mProductViewModel.getAddProductResponseLiveData();
         mAddProductResponseLiveData.observe(this, new Observer<Response>() {
@@ -105,7 +109,7 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
-                mProductViewModel.addProduct(new Product("","",sTitle,sDescription,
+                mProductViewModel.addProduct(new Product("","","",sTitle,sDescription,
                         mCategorySpinner.getSelectedItem().toString(),"","",
                         System.currentTimeMillis()), mImgUri, mVideoUri);
             }

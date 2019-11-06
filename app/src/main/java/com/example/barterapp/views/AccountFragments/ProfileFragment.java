@@ -23,24 +23,30 @@ import com.google.firebase.database.annotations.Nullable;
  * A placeholder fragment containing a simple view.
  */
 public class ProfileFragment extends Fragment {
-    private ProfileViewModel                mProfileViewModel;
-    private MutableLiveData<UserProfile>    mUserProfileLiveData;
-    private TextView                        mFirstNameTextView;
-    private TextView                        mSurnameTextView;
-    private TextView                        mTelNoTextView;
-    private TextView                        mAliasTextView;
-    private TextView                        mEmailTextView;
-    private TextView                        mRatingValueTextView;
-    private RatingBar                       mUserRatingBar;
+    private ProfileViewModel                    mProfileViewModel;
+    private MutableLiveData<UserProfile>        mUserProfileLiveData;
+    private TextView                            mFirstNameTextView;
+    private TextView                            mSurnameTextView;
+    private TextView                            mTelNoTextView;
+    private TextView                            mAliasTextView;
+    private TextView                            mEmailTextView;
+    private TextView                            mRatingValueTextView;
+    private RatingBar                           mUserRatingBar;
+    private static volatile ProfileFragment     mInstance;
 
-    public ProfileFragment(){}
+    private ProfileFragment() {
+    }
 
-    public static ProfileFragment newInstance(int index) {
-        ProfileFragment fragment = new ProfileFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putInt(ARG_SECTION_NUMBER, index);
-//        fragment.setArguments(bundle);
-        return fragment;
+    @SuppressWarnings("unused")
+    public static synchronized ProfileFragment getInstance() {
+        if (mInstance == null) {
+            mInstance = new ProfileFragment();
+        }
+        return mInstance;
+        // TODO: Customize parameter initialization
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_COLUMN_COUNT, columnCount);
+//        fragment.setArguments(args);
     }
 
     @Override
@@ -62,6 +68,7 @@ public class ProfileFragment extends Fragment {
                     mEmailTextView.setText(userProfile.getmEmail());
                     mRatingValueTextView.setText("10");
                     mUserRatingBar.setRating(10);
+                    //ToDo : populate profile
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.example.barterapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.example.barterapp.data.Product;
@@ -33,6 +34,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,13 +61,16 @@ public class MainActivity   extends     AppCompatActivity
     private DrawerLayout                            mDrawer;
     private NavigationView                          mNavigationView;
     private RecyclerView                            mProductsRecyclerView;
-    private Toolbar                                 mToolbar                = null;
+    private Toolbar                                 mToolbar                        = null;
     private TabLayout                               mProductsCatTabLayout;
+    private int                                     mCurrentTabPosition             = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mGadgetsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_GADGETS);
         mClothesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_CLOTHES);
@@ -121,31 +126,64 @@ public class MainActivity   extends     AppCompatActivity
 
         mProductsCatTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    case 0:{
-                        mProductsRecyclerView.setAdapter(mGadgetsAdapter);
-                        break;
-                    }
-                    case 1:{
-                        mProductsRecyclerView.setAdapter(mClothesAdapter);
-                        break;
-                    }
-                    case 2:{
-                        mProductsRecyclerView.setAdapter(mToolsAdapter);
-                        break;
-                    }
-                    case 3:{
-                        mProductsRecyclerView.setAdapter(mBikesAdapter);
-                        break;
-                    }
-                    default: return;
-                }
+                mCurrentTabPosition = tab.getPosition();
+                refreshProductsAdapterByCurrentPosition();
             }
             @Override public void onTabUnselected(TabLayout.Tab tab) { }
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
+
         //sign out from any logged account
         mMainViewModel.signOut();
+    }
+
+    private void refreshProductsAdapterByCurrentPosition() {
+        switch (mCurrentTabPosition){
+            case 0:{//Gadgets
+                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_GADGETS);
+                mProductsRecyclerView.setAdapter(mGadgetsAdapter);
+                break;
+            }
+            case 1:{//Clothes
+                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_CLOTHES);
+                mProductsRecyclerView.setAdapter(mClothesAdapter);
+                break;
+            }
+            case 2:{//Tools
+                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_TOOLS);
+                mProductsRecyclerView.setAdapter(mToolsAdapter);
+                break;
+            }
+            case 3:{//Bikes
+                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_BIKES);
+                mProductsRecyclerView.setAdapter(mBikesAdapter);
+                break;
+            }
+            default: return;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        refreshProductsAdapterByCurrentPosition();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy(){
+        //sign out from any logged account
+        mMainViewModel.signOut();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void createObserversForMutableLiveData() {
@@ -192,24 +230,6 @@ public class MainActivity   extends     AppCompatActivity
                 if (null != response){ setNavViewUserEmail();}
             }
         });
-    }
-
-
-    @Override
-    public void onDestroy(){
-        //sign out from any logged account
-        mMainViewModel.signOut();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -263,21 +283,30 @@ public class MainActivity   extends     AppCompatActivity
         switch(category){
             case CAT_GADGETS:{
                 Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
-                intent.putExtra(getText(R.string.product_info_tag).toString() ,
+                intent.putExtra(getString(R.string.product_info_tag) ,
                         mGadgetsAdapter.getProductByPosition(adapterPosition));
                 startActivity(intent);
                 break;
             }
             case CAT_CLOTHES:{
-                int i = 0;
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getString(R.string.product_info_tag) ,
+                        mClothesAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
                 break;
             }
             case CAT_TOOLS:{
-                int j = 1;
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getString(R.string.product_info_tag) ,
+                        mToolsAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
                 break;
             }
             case CAT_BIKES:{
-                int k = 2;
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getString(R.string.product_info_tag) ,
+                        mBikesAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
                 break;
             }
             default: return;

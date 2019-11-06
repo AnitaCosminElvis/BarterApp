@@ -7,39 +7,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.barterapp.views.AccountFragments.MyProductsFragment.OnListFragmentInteractionListener;
-import com.example.barterapp.views.AccountFragments.dummy.DummyContent.DummyItem;
+import com.example.barterapp.data.Product;
 
-import java.util.List;
+import java.util.ArrayList;
 import com.example.barterapp.R;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter} that can display a {@link Product} and makes a call to the
+ * specified {@link MyProductsFragment.OnMyProductInteractionListener}.
  */
 public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProductsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private ArrayList<Product> mValues         = new ArrayList<>();
+    private final MyProductsFragment.OnMyProductInteractionListener mListener;
 
-    public MyProductsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyProductsRecyclerViewAdapter(MyProductsFragment.OnMyProductInteractionListener listener) {
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_myproducts, parent, false);
+                .inflate(R.layout.myproduct_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+//        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +44,7 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.OnMyProductInteractionListener(holder.mItem);
                 }
             }
         });
@@ -62,7 +59,7 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Product mItem;
 
         public ViewHolder(View view) {
             super(view);

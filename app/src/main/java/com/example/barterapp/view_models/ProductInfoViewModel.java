@@ -14,4 +14,7 @@ public class ProductInfoViewModel extends ViewModel {
 
     public String getUserAlias() { return mAuthModel.getUserAlias(); }
 
+    public boolean isSignedIn(){ return mAuthModel.isUserSignedIn();}
+
+
 }
