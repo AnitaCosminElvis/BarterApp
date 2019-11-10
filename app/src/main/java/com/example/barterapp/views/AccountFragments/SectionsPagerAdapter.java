@@ -9,9 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.barterapp.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -22,8 +19,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[]      TAB_TITLES = new int[]{R.string.tab_text_profile,
                                                     R.string.tab_text_products,
-                                                    R.string.tab_text_history,
-                                                    R.string.tab_text_offers};
+                                                    R.string.tab_text_offers,
+                                                    R.string.tab_text_review};
     private static final int        TAB_COUNT = 4;
     private final Context           mContext;
 
@@ -44,7 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return OffersFragment.getInstance();
             case 3:
-                return HistoryFragment.getInstance();
+                return ReviewsFragment.getInstance();
         }
 
         return null;

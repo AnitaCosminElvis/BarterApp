@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".views.AccountFragments.OffersFragment"
-    tools:listitem="@layout/myoffers_item" />
+    tools:listitem="@layout/my_offers_item" />

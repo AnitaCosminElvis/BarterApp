@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.barterapp.data.Product;
 
 import java.util.ArrayList;
 import com.example.barterapp.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Product} and makes a call to the
@@ -28,15 +30,17 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.myproduct_item, parent, false);
+                .inflate(R.layout.my_product_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-//        holder.mIdView.setText(mValues.get(position).id);
-//        holder.mContentView.setText(mValues.get(position).content);
+        holder.mTitleTextView.setText(mValues.get(position).getmTitle());
+        String uri = mValues.get(position).getImgUriPath();
+
+        if (!uri.isEmpty()) Picasso.get().load(uri).fit().centerCrop().tag(this).into(holder.mImageView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,22 +59,26 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
         return mValues.size();
     }
 
+    public void setValues(ArrayList<Product> myProducts) {
+        mValues = myProducts;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Product mItem;
+        public final View       mView;
+        public final TextView   mTitleTextView;
+        public final ImageView  mImageView;
+        public Product          mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mTitleTextView = view.findViewById(R.id.tv_my_product_title);
+            mImageView = view.findViewById(R.id.iv_my_product_image);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + "My Products" + "'";
         }
     }
 }

@@ -8,21 +8,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
+import com.example.barterapp.views.AccountFragments.ReviewsFragment.OnHistoryInteractionListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import com.example.barterapp.R;
-import com.squareup.picasso.Picasso;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Offer} and makes a call to the
- * specified {@link OffersFragment.OnOfferInteractionListener}.
+ * specified {@link OnHistoryInteractionListener}.
  */
-public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<Offer>                                mValues;
-    private final OffersFragment.OnOfferInteractionListener mListener;
+public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecyclerViewAdapter.ViewHolder> {
 
-    public OffersRecyclerViewAdapter(ArrayList<Offer> values,OffersFragment.OnOfferInteractionListener listener) {
+    private ArrayList<Offer>                        mValues;
+    private final OnHistoryInteractionListener      mListener;
+
+    public ReviewsRecyclerViewAdapter(ArrayList<Offer> values, OnHistoryInteractionListener listener) {
         mListener = listener;
         mValues = values;
     }
@@ -30,21 +32,23 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_offers_item, parent, false);
+                .inflate(R.layout.my_review_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String alias = mValues.get(position).getmFromAlias();
+        holder.mFromAlias.setText(mValues.get(position).getmFromAlias());
+        holder.mToAlias.setText(mValues.get(position).getmToAlias());
         String uri = mValues.get(position).getmProductImgUri();
-
-        if (alias.isEmpty()) alias = mValues.get(position).getmContactEmail();
-
-        holder.mAliasTextView.setText(alias);
-
         if (!uri.isEmpty()) Picasso.get().load(uri).fit().centerCrop().tag(this).into(holder.mProductImageView);
+
+        if (mValues.get(position).ismIsAccepted()) {
+            holder.mOfferStateImageView.setImageResource(R.drawable.ic_accept_violet_50dp);
+        }else{
+            holder.mOfferStateImageView.setImageResource(R.drawable.ic_cancel_orange_50dp);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +56,7 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.OnOfferInteractionListener(holder.mItem);
+                    mListener.OnHistoryInteractionListener(holder.mItem);
                 }
             }
         });
@@ -66,21 +70,26 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
     public void setValues(ArrayList<Offer> values){ mValues = values;}
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View               mView;
-        public final TextView           mAliasTextView;
-        public final ImageView          mProductImageView;
-        public Offer                    mItem;
+        public final View mView;
+        public final TextView       mToAlias;
+        public final TextView       mFromAlias;
+        public final ImageView      mProductImageView;
+        public final ImageView      mOfferStateImageView;
+
+        public Offer mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mAliasTextView = view.findViewById(R.id.tv_offer_alias);
-            mProductImageView = view.findViewById(R.id.iv_offer_img);
+            mToAlias = view.findViewById(R.id.tv_review_to);
+            mFromAlias = view.findViewById(R.id.tv_review_from);
+            mProductImageView = view.findViewById(R.id.iv_review_prod_img);
+            mOfferStateImageView = view.findViewById(R.id.iv_review_state);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mAliasTextView.getText() + "'";
+            return super.toString() + " '" + "Review" + "'";
         }
     }
 }

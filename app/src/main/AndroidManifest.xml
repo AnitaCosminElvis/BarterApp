@@ -15,7 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ViewOfferActivity"></activity>
+        <activity
+            android:name=".views.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".views.ViewMyProductActivity" />
+        <activity android:name=".views.ViewReviewActivity" />
+        <activity android:name=".views.ViewOfferActivity" />
         <activity android:name=".views.OfferActivity" />
         <activity android:name=".views.ViewProductActivity" />
         <activity android:name=".views.AddProductActivity" />

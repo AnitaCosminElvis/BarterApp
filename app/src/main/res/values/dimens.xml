@@ -15,5 +15,7 @@
     <dimen name="btn_offer_accept_size">30sp</dimen>
     <dimen name="btn_space">2dp</dimen>
     <dimen name="img_offer_view_size">200dp</dimen>
+    <dimen name="padding">8dp</dimen>
     <integer name="products_columns">2</integer>
+    <dimen name="app_bar_height">180dp</dimen>
 </resources>

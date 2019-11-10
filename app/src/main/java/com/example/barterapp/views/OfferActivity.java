@@ -85,7 +85,7 @@ public class OfferActivity extends AppCompatActivity {
                     return;
                 }
 
-                Offer offer = new Offer(mUserId,"","","",
+                Offer offer = new Offer("",mUserId,"","","",
                                         mProductId,mProductImgUri,sEmail,sMessage,
                                         true,false);
 

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Offer implements Parcelable {
+    private String      mOfferId;
     private String      mToUserId;
     private String      mToAlias;
     private String      mFromUserId;
@@ -17,9 +18,10 @@ public class Offer implements Parcelable {
 
     public Offer(){}
 
-    public Offer(String mToUserId, String mToAlias, String mFromUserId, String mFromAlias,
+    public Offer(String offerId, String mToUserId, String mToAlias, String mFromUserId, String mFromAlias,
                  String mProductId, String mProductImgUri, String mContactEmail, String mMessage,
                  boolean mIsPending, boolean mIsAccepted) {
+        this.mOfferId = offerId;
         this.mToUserId = mToUserId;
         this.mToAlias = mToAlias;
         this.mFromUserId = mFromUserId;
@@ -33,6 +35,7 @@ public class Offer implements Parcelable {
     }
 
     protected Offer(Parcel in) {
+        mOfferId = in.readString();
         mToUserId = in.readString();
         mToAlias = in.readString();
         mFromUserId = in.readString();
@@ -53,6 +56,14 @@ public class Offer implements Parcelable {
         @Override
         public Offer[] newArray(int size) { return new Offer[size]; }
     };
+
+    public String getOfferId() {
+        return mOfferId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.mOfferId = offerId;
+    }
 
     public String getmToUserId() {
         return mToUserId;
@@ -114,13 +125,9 @@ public class Offer implements Parcelable {
         return mMessage;
     }
 
-    public void setmMessage(String mMessage) {
-        this.mMessage = mMessage;
-    }
+    public void setmMessage(String mMessage) { this.mMessage = mMessage; }
 
-    public boolean ismIsPending() {
-        return mIsPending;
-    }
+    public boolean ismIsPending() { return mIsPending; }
 
     public void setmIsPending(boolean mIsPending) {
         this.mIsPending = mIsPending;
@@ -141,6 +148,7 @@ public class Offer implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mOfferId);
         parcel.writeString(mToUserId);
         parcel.writeString(mToAlias);
         parcel.writeString(mFromUserId);

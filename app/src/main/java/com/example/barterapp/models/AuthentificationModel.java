@@ -161,4 +161,6 @@ public class AuthentificationModel {
         if (null != mAuth.getCurrentUser()) return true;
         else return false;
     }
+
+    public String getCurrentUserId() { return mAuth.getCurrentUser().getUid(); }
 }

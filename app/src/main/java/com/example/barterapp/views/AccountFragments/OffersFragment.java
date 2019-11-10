@@ -35,6 +35,7 @@ public class OffersFragment extends Fragment {
     private MyOffersViewModel                   mMyOffersViewModel;
     private MutableLiveData<ArrayList<Offer>>   mMyOffersLiveData;
     private RecyclerView                        mRecyclerView;
+    private OffersRecyclerViewAdapter           mAdapter;
 
     private OffersFragment() {
     }
@@ -45,6 +46,11 @@ public class OffersFragment extends Fragment {
                 mInstance = new OffersFragment();
             }
             return mInstance;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -60,7 +66,8 @@ public class OffersFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<Offer> myOffers){
                 if (null != myOffers){
-                    mRecyclerView.setAdapter(new OffersRecyclerViewAdapter(myOffers,mListener));
+                    mAdapter.setValues(myOffers);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
         });
@@ -76,7 +83,8 @@ public class OffersFragment extends Fragment {
             Context context = view.getContext();
             mRecyclerView = (RecyclerView) view;
             mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-            mRecyclerView.setAdapter(new OffersRecyclerViewAdapter(new ArrayList<>(),mListener));
+            mAdapter = new OffersRecyclerViewAdapter(new ArrayList<>(),mListener);
+            mRecyclerView.setAdapter(mAdapter);
             mMyOffersViewModel.triggerGetMyOffers();
         }
         return view;

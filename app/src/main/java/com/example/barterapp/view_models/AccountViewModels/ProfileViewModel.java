@@ -17,4 +17,5 @@ public class ProfileViewModel extends ViewModel {
 
     public boolean getUserProfile() { return mAuthModel.getUserProfile();}
 
+    public String getUserID() { return mAuthModel.getCurrentUserId(); }
 }

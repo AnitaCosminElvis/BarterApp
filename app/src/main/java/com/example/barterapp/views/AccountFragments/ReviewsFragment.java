@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
-import com.example.barterapp.view_models.AccountViewModels.MyHistoryViewModel;
+import com.example.barterapp.view_models.AccountViewModels.MyReviewsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 
 import java.util.ArrayList;
@@ -29,19 +29,21 @@ import javax.annotation.Nullable;
  * Activities containing this fragment MUST implement the {@link OnHistoryInteractionListener}
  * interface.
  */
-public class HistoryFragment extends Fragment {
+public class ReviewsFragment extends Fragment {
     private OnHistoryInteractionListener            mListener;
-    private static volatile HistoryFragment         mInstance;
-    private MyHistoryViewModel                      mMyHistoryViewModel;
-    private MutableLiveData<ArrayList<Offer>>       mMyHistoryLiveData;
+    private static volatile ReviewsFragment         mInstance;
+    private MyReviewsViewModel                      mMyReviewsViewModel;
+    private MutableLiveData<ArrayList<Offer>>       mMyOffersHistoryOffersLiveData;
+    private RecyclerView                            mRecyclerView;
+    private ReviewsRecyclerViewAdapter mAdapter;
 
-    private HistoryFragment() {
+    private ReviewsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static synchronized HistoryFragment getInstance() {
+    public static synchronized ReviewsFragment getInstance() {
         if (mInstance == null) {
-            mInstance = new HistoryFragment();
+            mInstance = new ReviewsFragment();
         }
         return mInstance;
     }
@@ -50,16 +52,18 @@ public class HistoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMyHistoryViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(MyHistoryViewModel.class);
+        mMyReviewsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(MyReviewsViewModel.class);
 
-        mMyHistoryLiveData = mMyHistoryViewModel.getMutableLiveDataMyHistoryList();
+        mMyOffersHistoryOffersLiveData = mMyReviewsViewModel.getMutableLiveDataMyOffersHistoryList();
 
-        mMyHistoryLiveData.observe(this, new Observer<ArrayList<Offer>>(){
+        mMyOffersHistoryOffersLiveData.observe(this, new Observer<ArrayList<Offer>>(){
             @Override
             public void onChanged(@Nullable ArrayList<Offer> myOffers){
                 if (null != myOffers){
-                    //ToDo: populate my history
+                    // TODO: check if reallocation is better
+                    mAdapter = new ReviewsRecyclerViewAdapter(myOffers,mListener);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
         });
@@ -68,14 +72,17 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_review_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new HistoryRecyclerViewAdapter(mListener));
+            mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            mAdapter = new ReviewsRecyclerViewAdapter(new ArrayList<Offer>(), mListener);
+            mRecyclerView.setAdapter(mAdapter);
+
+            mMyReviewsViewModel.triggerGetMyOffersHystory();
         }
 
         return view;

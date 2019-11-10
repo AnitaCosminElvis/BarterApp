@@ -16,12 +16,15 @@ import android.view.ViewGroup;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
+import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.view_models.AccountViewModels.MyProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
+
+import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * A fragment representing a list of Items.
@@ -34,6 +37,8 @@ public class MyProductsFragment extends Fragment {
     private static volatile MyProductsFragment      mInstance;
     private MyProductsViewModel                     mMyProductsViewModel;
     private MutableLiveData<ArrayList<Product>>     mMyProductsLiveData;
+    private RecyclerView                            mRecyclerView;
+    private MyProductsRecyclerViewAdapter           mAdapter;
 
     private MyProductsFragment() {
     }
@@ -57,10 +62,10 @@ public class MyProductsFragment extends Fragment {
 
         mMyProductsLiveData.observe(this, new Observer<ArrayList<Product>>(){
             @Override
-            public void onChanged(@Nullable ArrayList<Product> myOffers){
-                if (null != myOffers){
-                    //ToDo: populate my my products
-                }
+            public void onChanged(@Nullable ArrayList<Product> myProducts){
+                if (null != myProducts){
+                    mAdapter.setValues(myProducts);
+                    mRecyclerView.setAdapter(mAdapter);                }
             }
         });
     }
@@ -73,9 +78,11 @@ public class MyProductsFragment extends Fragment {
 //        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyProductsRecyclerViewAdapter(mListener));
+            mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            mAdapter = new MyProductsRecyclerViewAdapter(mListener);
+            mRecyclerView.setAdapter(mAdapter);
+            mMyProductsViewModel.triggerGetMyProducts();
         }
         return view;
     }

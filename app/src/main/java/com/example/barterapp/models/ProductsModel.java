@@ -41,6 +41,7 @@ public class ProductsModel {
     private MutableLiveData<ArrayList<Product>> mClothesLiveData                    = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mToolsLiveData                      = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mBikesLiveData                      = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Product>> mMyProductsLiveData                 = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mUsersProductsLiveData              = new MutableLiveData<>();
 
 
@@ -50,6 +51,7 @@ public class ProductsModel {
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() { return mClothesLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() { return mToolsLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() { return mBikesLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataMyProducts() { return mMyProductsLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProductsChanged() { return mUsersProductsLiveData; }
 
     // private constructor : singleton access
@@ -76,8 +78,26 @@ public class ProductsModel {
         return mInstance;
     }
 
+    public void triggerGetMyProducts(){
+        mDbProductsCollection.whereEqualTo(USER_ID_KEY, mAuth.getCurrentUser().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        products.add(document.toObject(Product.class));
+                    }
+                    mMyProductsLiveData.setValue(products);
+                } else {
+                    mListProductsResponseLiveData.setValue(
+                            new Response(task.getException().getMessage(),false));
+                }
+            }
+        });
+    }
+
     public void triggerGetProductsByKeyFilter(String key, String filterVal){
-        final MutableLiveData<ArrayList<Product>> productsLiveData;
         mDbProductsCollection.whereEqualTo(key, filterVal)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

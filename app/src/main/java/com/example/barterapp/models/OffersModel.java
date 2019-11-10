@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Response;
-import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,10 +23,11 @@ public class OffersModel {
     private static volatile OffersModel         mInstance;
     private CollectionReference                 mDbOffersCollection;
     private FirebaseAuth                        mAuth;
-    private MutableLiveData<Response>           mOfferResponseLiveData          = new MutableLiveData<>();
-    private MutableLiveData<Response>           mSetOfferStateResponseLiveData  = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Offer>>   mMyOffersListLiveData           = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Offer>>   mMyHistoryListLiveData          = new MutableLiveData<>();
+    private MutableLiveData<Response>           mOfferResponseLiveData                  = new MutableLiveData<>();
+    private MutableLiveData<Response>           mSetOfferStateResponseLiveData          = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Offer>>   mMyOffersListLiveData                   = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Offer>>   mMyOffersHistoryListLiveData            = new MutableLiveData<>();
+    private ArrayList<Offer>                    mMyOffersHistoryList                    = new ArrayList<>();
 
     private OffersModel() {
         mAuth = FirebaseAuth.getInstance();
@@ -43,14 +43,14 @@ public class OffersModel {
 
     public MutableLiveData<Response> getMutableLiveDataOfferResponse(){ return mOfferResponseLiveData; }
     public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersList(){ return mMyOffersListLiveData; }
-    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyHistoryList(){ return mMyHistoryListLiveData; }
+    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersHistoryList(){ return mMyOffersHistoryListLiveData; }
     public MutableLiveData<Response> getOfferStateResponseLiveData() { return mSetOfferStateResponseLiveData; }
 
     public void createOffer(Offer offer) {
         offer.setmFromUserId(mAuth.getCurrentUser().getUid());
         offer.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
-
-        mDbOffersCollection.document().set(offer)
+        offer.setOfferId(mDbOffersCollection.document().getId());
+        mDbOffersCollection.document(offer.getOfferId()).set(offer)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -65,16 +65,30 @@ public class OffersModel {
     }
 
     public void setOfferState(Offer offer, boolean isOfferAccepted){
+        offer.setmIsPending(false);
+        offer.setmIsAccepted(isOfferAccepted);
+        offer.setmToAlias(mAuth.getCurrentUser().getDisplayName());
 
+        mDbOffersCollection.document(offer.getOfferId())
+                .set(offer)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mSetOfferStateResponseLiveData.setValue(new Response("",true));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mSetOfferStateResponseLiveData.setValue(new Response(e.getMessage(),false));
+                    }
+                });
     }
 
     public void triggerGetMyOffers(){
-        triggerGetOffersByKeyFilter(TO_USER_ID_KEY,mAuth.getCurrentUser().getUid());
-    }
-
-    private void triggerGetOffersByKeyFilter(String key, String filterVal){
-        mDbOffersCollection.whereEqualTo(key, filterVal)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
+                            .whereEqualTo(IS_PENDING_KEY, true)
+        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -83,6 +97,36 @@ public class OffersModel {
                         offers.add(document.toObject(Offer.class));
                     }
                     mMyOffersListLiveData.setValue(offers);
+                }
+            }
+        });
+    }
+
+    public void triggerGetMyOffersHistory(){
+        mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
+                            .whereEqualTo(IS_PENDING_KEY, false)
+        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    mMyOffersHistoryList.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        mMyOffersHistoryList.add(document.toObject(Offer.class));
+                    }
+
+                    mDbOffersCollection.whereEqualTo(FROM_USER_ID_KEY, mAuth.getCurrentUser().getUid())
+                            .whereEqualTo(IS_PENDING_KEY, false)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    mMyOffersHistoryList.add(document.toObject(Offer.class));
+                                }
+                                mMyOffersHistoryListLiveData.setValue(mMyOffersHistoryList);
+                            }
+                        }
+                    });
                 }
             }
         });

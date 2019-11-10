@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.AddProductActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="57dp">
-
+    tools:context=".views.ViewProductActivity">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -24,15 +21,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ib_load_photo"
+            android:id="@+id/ib_view_photo"
             android:layout_width="@dimen/thumbnail_img_dim"
             android:layout_height="@dimen/thumbnail_img_dim"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/image_border"
-            android:padding="16dp"
+            android:padding="9dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_add_a_photo_purple_100dp" />
+            app:srcCompat="@drawable/ic_view_image_violet_100dp" />
 
         <RelativeLayout
             android:layout_width="@dimen/margin"
@@ -40,7 +37,7 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/ib_load_video"
+            android:id="@+id/ib_view_video"
             android:layout_width="@dimen/thumbnail_img_dim"
             android:layout_height="@dimen/thumbnail_img_dim"
             android:layout_alignParentEnd="true"
@@ -48,75 +45,98 @@
             android:background="@drawable/image_border"
             android:padding="1dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_add_a_video_purple_100dp" />
+            app:srcCompat="@drawable/ic_view_video_violet_100dp" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/et_title"
+    <LinearLayout
+        android:id="@+id/linearLayout_timestamp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/top"
+        android:layout_marginEnd="@dimen/margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Added on "
+            android:gravity="right">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_product_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01.01.1777"
+            android:gravity="left">
+        </TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_timestamp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="By  "></TextView>
+
+        <TextView
+            android:id="@+id/tv_product_view_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="anonymous@yahoo.com"></TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_view_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
-        android:hint="@string/prompt_title"
-        android:inputType="text"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_user" />
 
-    <EditText
-        android:id="@+id/ed_description"
+    <TextView
+        android:id="@+id/tv_view_product_description"
         android:layout_width="match_parent"
         android:layout_height="@dimen/max_multi_line_input_height"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/top"
         android:layout_marginEnd="@dimen/margin"
-        android:hint="Description"
         android:ems="10"
-        android:inputType="textMultiLine"
-        android:lines="20"
-        android:minLines="5"
-        android:maxLines="5"
-        android:maxLength="250"
         android:gravity="top|left"
-        android:scrollHorizontally="false"
+        android:lines="20"
+        android:maxLength="250"
+        android:maxLines="5"
+        android:minLines="5"
         android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textIsSelectable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_title" />
-
-    <Spinner
-        android:id="@+id/spinner_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/top"
-        android:entries="@array/category_arrays"
-        android:prompt="@string/category_prompt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_description"></Spinner>
-
-    <Button
-        android:id="@+id/btn_add_product"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/top"
-        android:background="@color/colorAccent"
-        android:enabled="true"
-        android:text="@string/action_continue"
-        android:textColor="@color/colorBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_category"
-        app:layout_constraintVertical_bias="0.119" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_view_product_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

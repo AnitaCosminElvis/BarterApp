@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Product;
-import com.example.barterapp.views.AccountFragments.HistoryFragment;
+import com.example.barterapp.views.AccountFragments.ReviewsFragment;
 import com.example.barterapp.views.AccountFragments.MyProductsFragment;
 import com.example.barterapp.views.AccountFragments.OffersFragment;
 import com.example.barterapp.views.AccountFragments.SectionsPagerAdapter;
@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AccountActivity extends    AppCompatActivity
                              implements MyProductsFragment.OnMyProductInteractionListener,
                                         OffersFragment.OnOfferInteractionListener,
-                                        HistoryFragment.OnHistoryInteractionListener{
+                                        ReviewsFragment.OnHistoryInteractionListener{
     private SectionsPagerAdapter    mSectionsPageAdapter;
     private ViewPager               mViewPager;
 
@@ -39,7 +39,9 @@ public class AccountActivity extends    AppCompatActivity
 
     @Override
     public void OnMyProductInteractionListener(Product item) {
-
+        Intent intent = new Intent(AccountActivity.this, ViewMyProductActivity.class);
+        intent.putExtra(getText(R.string.product_info_tag).toString(),item);
+        startActivity(intent);
     }
 
     @Override
@@ -51,6 +53,8 @@ public class AccountActivity extends    AppCompatActivity
 
     @Override
     public void OnHistoryInteractionListener(Offer item) {
-
+        Intent intent = new Intent(AccountActivity.this, ViewReviewActivity.class);
+        intent.putExtra(getString(R.string.view_review_info_tag),item);
+        startActivity(intent);
     }
 }

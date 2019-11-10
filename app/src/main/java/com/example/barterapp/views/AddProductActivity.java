@@ -61,7 +61,7 @@ public class AddProductActivity extends AppCompatActivity {
         mDescriptionText = findViewById(R.id.ed_description);
         mImageView = findViewById(R.id.ib_load_photo);
         mVideoView = findViewById(R.id.ib_load_video);
-        mContinueBtn = findViewById(R.id.btn_continue);
+        mContinueBtn = findViewById(R.id.btn_add_product);
         mCategorySpinner = findViewById(R.id.spinner_category);
 
         mImageView.setOnClickListener(new View.OnClickListener() {

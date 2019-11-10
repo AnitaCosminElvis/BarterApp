@@ -7,11 +7,11 @@ import androidx.annotation.NonNull;
 import com.example.barterapp.models.AuthentificationModel;
 import com.example.barterapp.models.OffersModel;
 import com.example.barterapp.models.ProductsModel;
-import com.example.barterapp.view_models.AccountViewModels.MyHistoryViewModel;
+import com.example.barterapp.models.ReviewsModel;
+import com.example.barterapp.view_models.AccountViewModels.MyReviewsViewModel;
 import com.example.barterapp.view_models.AccountViewModels.MyOffersViewModel;
 import com.example.barterapp.view_models.AccountViewModels.MyProductsViewModel;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
-import com.example.barterapp.views.AccountFragments.MyProductsFragment;
 
 /**
  * ViewModel provider factory to instantiate View Models.
@@ -50,8 +50,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         else if (modelClass.isAssignableFrom(MyOffersViewModel.class)) {
             return (T) new MyOffersViewModel(OffersModel.getInstance());
         }
-        else if (modelClass.isAssignableFrom(MyHistoryViewModel.class)) {
-            return (T) new MyHistoryViewModel(OffersModel.getInstance());
+        else if (modelClass.isAssignableFrom(MyReviewsViewModel.class)) {
+            return (T) new MyReviewsViewModel(OffersModel.getInstance());
         }
         else if (modelClass.isAssignableFrom(MyProductsViewModel.class)) {
             return (T) new MyProductsViewModel(ProductsModel.getInstance());
@@ -61,6 +61,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         else if (modelClass.isAssignableFrom(ViewOfferViewModel.class)) {
             return (T) new ViewOfferViewModel(OffersModel.getInstance());
+        }
+        else if (modelClass.isAssignableFrom(ViewReviewViewModel.class)) {
+            return (T) new ViewReviewViewModel(ReviewsModel.getInstance(),AuthentificationModel.getInstance());
         }
         else {
             throw new IllegalArgumentException("Unknown ViewModel class");
