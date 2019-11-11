@@ -70,7 +70,7 @@ public class ViewProductActivity extends AppCompatActivity {
         mTitleTextView = findViewById(R.id.tv_view_product_title);
         mDescriptionTextView = findViewById(R.id.tv_view_product_description);
         mUserReviewValue = findViewById(R.id.tv_prod_view_user_value);
-        mProductPhotoImageView  = findViewById(R.id.ib_view_photo);
+        mProductPhotoImageView = findViewById(R.id.ib_view_photo);
         mProductVidImageView = findViewById(R.id.ib_view_video);
         mNegativeRatingBar = findViewById(R.id.rb_prod_negative_val);
         mPozitiveRatingBar = findViewById(R.id.rb_prod_view_pozitive_val);
@@ -78,9 +78,9 @@ public class ViewProductActivity extends AppCompatActivity {
         mBarterButton = findViewById(R.id.btn_barter);
         mViewUsersProductsButton = findViewById(R.id.btn_other_products);
 
-        mProduct  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
+        mProduct = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
-        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp(),DATE_FORMAT));
+        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp(), DATE_FORMAT));
         mAliasTextView.setText(mProduct.getAlias());
 
         mTitleTextView.setText(mProduct.getmTitle());
@@ -112,7 +112,7 @@ public class ViewProductActivity extends AppCompatActivity {
                     if (0 > ratingAvg) {
                         mPozitiveRatingBar.setRating(0);
                         mNegativeRatingBar.setRating(1 + ratingAvg);
-                    }else{
+                    } else {
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(ratingAvg);
                     }
@@ -144,8 +144,8 @@ public class ViewProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!mProductsViewModel.isUserSignedIn()){
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in." , Toast.LENGTH_SHORT).show();
+                if (!mProductsViewModel.isUserSignedIn()) {
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -156,6 +156,27 @@ public class ViewProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+        mProductPhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mProduct.getImgUriPath().isEmpty()) return;
+
+                Intent intent = new Intent(ViewProductActivity.this, ViewImageActivity.class);
+                intent.putExtra(getString(R.string.view_image_info_tag), mProduct.getImgUriPath());
+                startActivity(intent);
+            }
+        });
+
+        mProductVidImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mProduct.getVidUriPath().isEmpty()) return;
+
+                Intent intent = new Intent(ViewProductActivity.this, ViewVideoActivity.class);
+                intent.putExtra(getString(R.string.view_video_info_tag), mProduct.getVidUriPath());
+                startActivity(intent);
+            }
+        });
+    }
 }

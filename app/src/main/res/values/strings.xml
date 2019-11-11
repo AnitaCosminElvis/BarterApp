@@ -67,6 +67,8 @@
     <string name="view_review_info_tag">VIEW_REVIEW_INFORMATION</string>
     <string name="view_reviews_info_tag">VIEW_REVIEWS_INFORMATION</string>
     <string name="view_products_info_tag">VIEW_PRODUCTS_INFORMATION</string>
+    <string name="view_image_info_tag">VIEW_IMAGE</string>
+    <string name="view_video_info_tag">VIEW_VIDEO</string>
     <string name="offer_user_id_tag">OFFER_USER_ID</string>
     <string name="offer_product_id_tag">OFFER_PRODUCT_ID</string>
     <string name="offer_product_img__uri_tag">OFFER_PRODUCT_IMG_URI</string>

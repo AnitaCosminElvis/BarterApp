@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.UserProductsActivity"></activity>
+        <activity android:name=".views.ViewVideoActivity"></activity>
+        <activity android:name=".views.ViewImageActivity" />
+        <activity android:name=".views.UserProductsActivity" />
         <activity android:name=".views.ReviewsActivity" />
         <activity android:name=".views.ViewMyProductActivity" />
         <activity android:name=".views.ViewReviewActivity" />
