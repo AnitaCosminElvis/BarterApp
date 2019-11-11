@@ -28,4 +28,7 @@ public class DefinesUtility {
     public static final String            CATEGORY_KEY              = "mCategory";
     public static final String            USER_ID_KEY               = "mUserId";
 
+    public static final float             USER_MIN_RATING_VALUE     = 0;
+    public static final int               USER_MAX_NO_OF_FLAGS      = 10;
+
 }

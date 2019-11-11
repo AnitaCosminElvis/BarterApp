@@ -21,22 +21,32 @@ import android.widget.Toast;
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
+import com.example.barterapp.data.UserReviewAggregationData;
+import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.view_models.AddProductViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
+import com.example.barterapp.view_models.ViewReviewViewModel;
+
+import static com.example.barterapp.utility.DefinesUtility.*;
 
 public class AddProductActivity extends AppCompatActivity {
-    private static final int            PICK_IMG_REQUEST        = 1000;
-    private static final int            PICK_VIDEO_REQUEST      = 2000;
-    private Uri                         mImgUri                 = null;
-    private Uri                         mVideoUri               = null;
-    private AddProductViewModel         mProductViewModel;
-    private MutableLiveData<Response>   mAddProductResponseLiveData;
-    private EditText                    mTitleEdtText;
-    private EditText                    mDescriptionText;
-    private Button                      mContinueBtn;
-    private ImageView                   mImageView;
-    private ImageView                   mVideoView;
-    private Spinner                     mCategorySpinner;
+    private static final int                                    PICK_IMG_REQUEST        = 1000;
+    private static final int                                    PICK_VIDEO_REQUEST      = 2000;
+    private Uri                                                 mImgUri                 = null;
+    private Uri                                                 mVideoUri               = null;
+    private AddProductViewModel                                 mProductViewModel;
+    private ViewReviewViewModel                                 mReviewViewModel;
+    private MutableLiveData<UserReviewAggregationData>          mRatingAggregationLiveData;
+    private MutableLiveData<Response>                           mAddProductResponseLiveData;
+    private EditText                                            mTitleEdtText;
+    private EditText                                            mDescriptionText;
+    private Button                                              mContinueBtn;
+    private ImageView                                           mImageView;
+    private ImageView                                           mVideoView;
+    private Spinner                                             mCategorySpinner;
+    private float                                               mAvgRatingValue;
+    private int                                                 mNoOfFlags;
+    private boolean                                             mIsUserRestricted       = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +56,26 @@ public class AddProductActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mProductViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(AddProductViewModel.class);
+        mReviewViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(ViewReviewViewModel.class);
+
+        mRatingAggregationLiveData = mReviewViewModel.getMutableLiveDataReviewAggregationData();
         mAddProductResponseLiveData = mProductViewModel.getAddProductResponseLiveData();
+
+        mRatingAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
+            @Override
+            public void onChanged(UserReviewAggregationData userReviewAggregationData) {
+                if (null != userReviewAggregationData){
+                    mNoOfFlags = userReviewAggregationData.getmNoOfFlaggs();
+                    mAvgRatingValue = userReviewAggregationData.getmUserRatingAvg();
+                    if ((USER_MAX_NO_OF_FLAGS < mNoOfFlags) || (USER_MIN_RATING_VALUE > mAvgRatingValue)){
+                        mIsUserRestricted = true;
+                        Toast.makeText(AddProductActivity.this,
+                                getString(R.string.user_restricted_access) , Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
         mAddProductResponseLiveData.observe(this, new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
@@ -87,6 +116,12 @@ public class AddProductActivity extends AppCompatActivity {
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mIsUserRestricted){
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.user_restricted_access) , Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 String sTitle = mTitleEdtText.getText().toString();
 
                 if (sTitle.isEmpty()) {

@@ -32,23 +32,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewProductActivity extends AppCompatActivity {
-    final String                                DATE_FORMAT                 = "EEE MMM dd hh:mm:ss yyyy ";
-    ProductsViewModel                           mProductsViewModel;
-    ViewReviewViewModel                         mReviewsModel;
-    MutableLiveData<UserReviewAggregationData>  mReviewAggregationLiveData;
-    TextView                                    mDateTextView;
-    TextView                                    mAliasTextView;
-    TextView                                    mTitleTextView;
-    TextView                                    mDescriptionTextView;
-    TextView                                    mUserReviewValue;
-    ImageView                                   mProductPhotoImageView;
-    ImageView                                   mProductVidImageView;
-    RatingBar                                   mNegativeRatingBar;
-    RatingBar                                   mPozitiveRatingBar;
-    LinearLayout                                mUserRatingLinearLayout;
-    Button                                      mBarterButton;
-    Button                                      mViewUsersProductsButton;
-    Product                                     mProduct;
+    private final String                                DATE_FORMAT                 = "EEE MMM dd hh:mm:ss yyyy ";
+    private ProductsViewModel                           mProductsViewModel;
+    private ViewReviewViewModel                         mReviewsModel;
+    private MutableLiveData<UserReviewAggregationData>  mReviewAggregationLiveData;
+    private TextView                                    mDateTextView;
+    private TextView                                    mAliasTextView;
+    private TextView                                    mTitleTextView;
+    private TextView                                    mDescriptionTextView;
+    private TextView                                    mUserReviewValue;
+    private ImageView                                   mProductPhotoImageView;
+    private ImageView                                   mProductVidImageView;
+    private RatingBar                                   mNegativeRatingBar;
+    private RatingBar                                   mPozitiveRatingBar;
+    private LinearLayout                                mUserRatingLinearLayout;
+    private Button                                      mBarterButton;
+    private Button                                      mViewUsersProductsButton;
+    private Product                                     mProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

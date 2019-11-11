@@ -78,6 +78,7 @@
     <string name="cat_tools">Tools</string>
     <string name="cat_bikes">Bicycles</string>
     <string name="cat_other">Other</string>
+    <string name="user_restricted_access">Restricted Access!</string>
     <string-array name="category_arrays">
         <item>@string/cat_gadgets</item>
         <item>@string/cat_clothes</item>

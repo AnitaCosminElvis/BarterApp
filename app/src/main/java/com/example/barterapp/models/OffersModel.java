@@ -22,6 +22,7 @@ import static com.example.barterapp.utility.DefinesUtility.*;
 public class OffersModel {
     private static volatile OffersModel         mInstance;
     private CollectionReference                 mDbOffersCollection;
+    private CollectionReference                 mDbProductsCollection;
     private FirebaseAuth                        mAuth;
     private MutableLiveData<Response>           mOfferResponseLiveData                  = new MutableLiveData<>();
     private MutableLiveData<Response>           mSetOfferStateResponseLiveData          = new MutableLiveData<>();
@@ -32,6 +33,7 @@ public class OffersModel {
     private OffersModel() {
         mAuth = FirebaseAuth.getInstance();
         mDbOffersCollection = FirebaseFirestore.getInstance().collection(OFFERS_COLLECTION);
+        mDbProductsCollection = FirebaseFirestore.getInstance().collection(PRODUCTS_COLLECTION);
     }
 
     public static synchronized OffersModel getInstance() {
@@ -74,6 +76,10 @@ public class OffersModel {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        if (isOfferAccepted){
+                            mDbProductsCollection.document(offer.getmProductId()).delete();
+                            //TODO do transaction
+                        }
                         mSetOfferStateResponseLiveData.setValue(new Response("",true));
                     }
                 })

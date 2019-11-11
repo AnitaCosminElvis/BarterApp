@@ -314,4 +314,7 @@ public class ProductsModel {
                 });
     }
 
+    public void deleteProductById(String getmProductId) {
+        mDbProductsCollection.document(getmProductId).delete();
+    }
 }
