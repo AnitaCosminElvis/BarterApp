@@ -66,6 +66,7 @@ public class ReviewsModel {
     }
 
     public void setUserReviewByUserIdAndProductId(UserReview userRev, String userId, String prodId) {
+        userRev.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
         mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION).document(prodId)
         .set(userRev).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

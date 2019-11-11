@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 String sEmail = mEmailEditText.getText().toString();
                 String sPass= mPasswordEditText.getText().toString();
 
-
                 if (sEmail.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();
                     return;

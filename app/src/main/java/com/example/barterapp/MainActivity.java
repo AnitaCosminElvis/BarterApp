@@ -7,8 +7,7 @@ import android.os.Bundle;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.ProductsAdapter;
 import com.example.barterapp.data.Response;
-import com.example.barterapp.utility.DefinesUtility;
-import com.example.barterapp.view_models.MainViewModel;
+import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
@@ -32,9 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +45,7 @@ import static com.example.barterapp.utility.DefinesUtility.*;
 public class MainActivity   extends     AppCompatActivity
                             implements  ProductsAdapter.ItemClickListener,
                                         NavigationView.OnNavigationItemSelectedListener{
-    private MainViewModel                           mMainViewModel;
+    private ProductsViewModel mProductsViewModel;
     private MutableLiveData<Response>               mLoginLiveData;
     private MutableLiveData<ArrayList<Product>>     mGadgetsLiveData;
     private MutableLiveData<ArrayList<Product>>     mClothesLiveData;
@@ -58,6 +55,7 @@ public class MainActivity   extends     AppCompatActivity
     private ProductsAdapter                         mClothesAdapter;
     private ProductsAdapter                         mToolsAdapter;
     private ProductsAdapter                         mBikesAdapter;
+    private ProductsAdapter                         mOtherProductsAdapter;
     private DrawerLayout                            mDrawer;
     private NavigationView                          mNavigationView;
     private RecyclerView                            mProductsRecyclerView;
@@ -88,18 +86,18 @@ public class MainActivity   extends     AppCompatActivity
         mProductsRecyclerView.setAdapter(mGadgetsAdapter);
 
         //create the view model
-        mMainViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(MainViewModel.class);
+        mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(ProductsViewModel.class);
 
         //getting products live data
-        mGadgetsLiveData = mMainViewModel.getGadgetsLiveData();
-        mClothesLiveData = mMainViewModel.getClothesLiveData();
-        mToolsLiveData = mMainViewModel.getToolsLiveData();
-        mBikesLiveData = mMainViewModel.getBikesLiveData();
-        mLoginLiveData = mMainViewModel.getLoginResponseLiveData();
+        mGadgetsLiveData = mProductsViewModel.getGadgetsLiveData();
+        mClothesLiveData = mProductsViewModel.getClothesLiveData();
+        mToolsLiveData = mProductsViewModel.getToolsLiveData();
+        mBikesLiveData = mProductsViewModel.getBikesLiveData();
+        mLoginLiveData = mProductsViewModel.getLoginResponseLiveData();
 
         //initialize the gadgets list
-        mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_GADGETS);
+        mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
 
         createObserversForMutableLiveData();
 
@@ -134,31 +132,37 @@ public class MainActivity   extends     AppCompatActivity
         });
 
         //sign out from any logged account
-        mMainViewModel.signOut();
+        mProductsViewModel.signOut();
     }
 
     private void refreshProductsAdapterByCurrentPosition() {
         switch (mCurrentTabPosition){
             case 0:{//Gadgets
-                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_GADGETS);
+                mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
                 mProductsRecyclerView.setAdapter(mGadgetsAdapter);
                 break;
             }
             case 1:{//Clothes
-                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_CLOTHES);
+                mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_CLOTHES);
                 mProductsRecyclerView.setAdapter(mClothesAdapter);
                 break;
             }
             case 2:{//Tools
-                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_TOOLS);
+                mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_TOOLS);
                 mProductsRecyclerView.setAdapter(mToolsAdapter);
                 break;
             }
             case 3:{//Bikes
-                mMainViewModel.triggerGetProductsByKeyFilter(CATEGORY_KEY, CAT_BIKES);
+                mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_BIKES);
                 mProductsRecyclerView.setAdapter(mBikesAdapter);
                 break;
             }
+            case 4:{//Other
+                mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_OTHER);
+                mProductsRecyclerView.setAdapter(mOtherProductsAdapter);
+                break;
+            }
+
             default: return;
         }
     }
@@ -172,7 +176,7 @@ public class MainActivity   extends     AppCompatActivity
     @Override
     public void onDestroy(){
         //sign out from any logged account
-        mMainViewModel.signOut();
+        mProductsViewModel.signOut();
         super.onDestroy();
     }
 
@@ -248,7 +252,7 @@ public class MainActivity   extends     AppCompatActivity
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                 break;
             case R.id.nav_signout:
-                mMainViewModel.signOut();
+                mProductsViewModel.signOut();
                 setNavViewUserEmail();
                 break;
         }
@@ -258,11 +262,11 @@ public class MainActivity   extends     AppCompatActivity
 
     private void setNavViewUserEmail(){
         TextView tvUserEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_alias);
-        tvUserEmail.setText(mMainViewModel.getUserEmail());
+        tvUserEmail.setText(mProductsViewModel.getUserEmail());
     }
 
     private boolean checkUserIsLoggedIn(){
-        boolean bIsSignedIn = mMainViewModel.isUserSignedIn();
+        boolean bIsSignedIn = mProductsViewModel.isUserSignedIn();
 
         if (!bIsSignedIn) {
             Toast.makeText(MainActivity.this, "Please Sign in." , Toast.LENGTH_SHORT).show();

@@ -1,9 +1,11 @@
 package com.example.barterapp.views.AccountFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -11,21 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.UserProfile;
+import com.example.barterapp.data.UserReview;
 import com.example.barterapp.data.UserReviewAggregationData;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 import com.google.firebase.database.annotations.Nullable;
 
+import java.util.ArrayList;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ProfileFragment extends Fragment {
+    private OnProfileInteractionListener                        mListener;
     private ProfileViewModel                                    mProfileViewModel;
     private ViewReviewViewModel                                 mReviewViewModel;
     private MutableLiveData<UserProfile>                        mUserProfileLiveData;
@@ -39,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private TextView                                            mRatingValueTextView;
     private RatingBar                                           mNegativeRatingBar;
     private RatingBar                                           mPozitiveRatingBar;
+    private LinearLayout                                        mViewReviewsLinearLayout;
 
     private static volatile ProfileFragment     mInstance;
 
@@ -51,10 +57,6 @@ public class ProfileFragment extends Fragment {
             mInstance = new ProfileFragment();
         }
         return mInstance;
-        // TODO: Customize parameter initialization
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class ProfileFragment extends Fragment {
 
         mUserProfileLiveData = mProfileViewModel.getUserProfileLiveData();
         mReviewAggregationLiveData = mReviewViewModel.getMutableLiveDataReviewAggregationData();
-        mReviewViewModel.triggerGetMyReviewData(mProfileViewModel.getUserID());
+        mReviewViewModel.triggerGetReviewDataByUserId(mProfileViewModel.getUserID());
 
         mReviewAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
             @Override
@@ -118,8 +120,37 @@ public class ProfileFragment extends Fragment {
         mNegativeRatingBar = root.findViewById(R.id.rb_profile_negative_val);
         mPozitiveRatingBar = root.findViewById(R.id.rb_profile_pozitive_val);
         mFlagValueTextView = root.findViewById(R.id.tv_profile_flag_value);
+        mViewReviewsLinearLayout = root.findViewById(R.id.ll_profile_user_rating);
+
+        mViewReviewsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.OnProfileInteractionListener(mReviewAggregationLiveData.getValue().getmUserReviewsList());
+            }
+        });
 
         mProfileViewModel.getUserProfile();
         return root;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnProfileInteractionListener) {
+            mListener = (OnProfileInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnProfileInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnProfileInteractionListener {
+        void OnProfileInteractionListener(ArrayList<UserReview> reviews);
     }
 }

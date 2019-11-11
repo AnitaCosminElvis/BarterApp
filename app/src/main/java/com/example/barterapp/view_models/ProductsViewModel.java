@@ -10,11 +10,11 @@ import com.example.barterapp.models.ProductsModel;
 
 import java.util.ArrayList;
 
-public class MainViewModel extends ViewModel {
+public class ProductsViewModel extends ViewModel {
     private AuthentificationModel   mAuthModel;
     private ProductsModel           mProdModel;
 
-    public MainViewModel(AuthentificationModel authModel, ProductsModel prodModel) {
+    public ProductsViewModel(AuthentificationModel authModel, ProductsModel prodModel) {
         mAuthModel = authModel;
         mProdModel = prodModel;
     }
@@ -25,13 +25,23 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Product>> getClothesLiveData() { return mProdModel.getMutableLiveDataClothesChanged(); }
     public MutableLiveData<ArrayList<Product>> getToolsLiveData() { return mProdModel.getMutableLiveDataToolsChanged(); }
     public MutableLiveData<ArrayList<Product>> getBikesLiveData() { return mProdModel.getMutableLiveDataBikesChanged(); }
+    public MutableLiveData<ArrayList<Product>> getOtherProductsLiveData() { return mProdModel.getMutableLiveDataOtherChanged(); }
+    public MutableLiveData<ArrayList<Product>> getUserProductsLiveData() { return mProdModel.getMutableLiveDataUserProducts(); }
 
     public void signOut() { mAuthModel.signOut(); }
 
     public String getUserEmail() { return mAuthModel.getUserEmail(); }
 
+    public String getUserAlias() { return mAuthModel.getUserAlias(); }
+
     public boolean isUserSignedIn() { return mAuthModel.isUserSignedIn(); }
 
-    public void triggerGetProductsByKeyFilter(String key, String filterValue) { mProdModel.triggerGetProductsByKeyFilter(key,filterValue); }
+    public void triggerGetProductsByUserId(String userIdKey, String userId) {
+        mProdModel.triggerGetProductsByUserId(userIdKey,userId);
+    }
+
+    public void triggerGetProductsByCategory(String categoryKey, String category) {
+        mProdModel.triggerGetProductsByCategory(categoryKey,category);
+    }
 
 }

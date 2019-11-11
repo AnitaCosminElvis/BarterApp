@@ -7,15 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.utility.DateUtility;
-import com.example.barterapp.view_models.ProductInfoViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +20,6 @@ import java.util.HashMap;
 
 public class ViewMyProductActivity extends AppCompatActivity {
     final String                DATE_FORMAT                     = "EEE MMM dd hh:mm:ss yyyy ";
-    ProductInfoViewModel        mProductInfoViewModel;
     TextView                    mDateTextView;
     TextView                    mAliasTextView;
     TextView                    mTitleTextView;
@@ -37,8 +33,6 @@ public class ViewMyProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_my_product);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mProductInfoViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(ProductInfoViewModel.class);
 
         mDateTextView = findViewById(R.id.tv_product_view_date);
         mAliasTextView = findViewById(R.id.tv_product_view_user);

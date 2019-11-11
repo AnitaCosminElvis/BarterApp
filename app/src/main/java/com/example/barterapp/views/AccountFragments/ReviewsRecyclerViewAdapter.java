@@ -70,7 +70,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
     public void setValues(ArrayList<Offer> values){ mValues = values;}
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
+        public final View           mView;
         public final TextView       mToAlias;
         public final TextView       mFromAlias;
         public final ImageView      mProductImageView;

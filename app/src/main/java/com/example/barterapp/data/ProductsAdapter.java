@@ -55,8 +55,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product currentProduct = mProductsList.get(position);
         holder.mTitleTextView.setText(currentProduct.getmTitle());
-        Picasso.get().load(currentProduct.getImgUriPath()).fit().centerCrop().
-                tag(mContext).into(holder.mProductImageView);
+        String imgUri = currentProduct.getImgUriPath();
+        if (!imgUri.isEmpty())
+            Picasso.get().load(imgUri).fit().centerCrop().tag(mContext).into(holder.mProductImageView);
     }
 
     @Override

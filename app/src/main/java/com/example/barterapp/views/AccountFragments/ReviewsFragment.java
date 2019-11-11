@@ -35,7 +35,7 @@ public class ReviewsFragment extends Fragment {
     private MyReviewsViewModel                      mMyReviewsViewModel;
     private MutableLiveData<ArrayList<Offer>>       mMyOffersHistoryOffersLiveData;
     private RecyclerView                            mRecyclerView;
-    private ReviewsRecyclerViewAdapter mAdapter;
+    private ReviewsRecyclerViewAdapter              mAdapter;
 
     private ReviewsFragment() {
     }

@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
-import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,8 +40,9 @@ public class ProductsModel {
     private MutableLiveData<ArrayList<Product>> mClothesLiveData                    = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mToolsLiveData                      = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mBikesLiveData                      = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Product>> mOtherProductsLiveData              = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mMyProductsLiveData                 = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Product>> mUsersProductsLiveData              = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Product>> mUserProductsLiveData              = new MutableLiveData<>();
 
 
     public MutableLiveData<Response> getMutableLiveDataAddProductResponse(){ return mAddProductResponseLiveData; }
@@ -51,8 +51,9 @@ public class ProductsModel {
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() { return mClothesLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() { return mToolsLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() { return mBikesLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataOtherChanged() { return mOtherProductsLiveData; }
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataMyProducts() { return mMyProductsLiveData; }
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProductsChanged() { return mUsersProductsLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProducts() { return mUserProductsLiveData; }
 
     // private constructor : singleton access
     private ProductsModel() {
@@ -97,7 +98,27 @@ public class ProductsModel {
         });
     }
 
-    public void triggerGetProductsByKeyFilter(String key, String filterVal){
+    public void triggerGetProductsByUserId(String userIdKey, String userId){
+        mDbProductsCollection.whereEqualTo(userIdKey, userId)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        products.add(document.toObject(Product.class));
+                    }
+                    mUserProductsLiveData.setValue(products);
+                } else {
+                    mListProductsResponseLiveData.setValue(
+                            new Response(task.getException().getMessage(),false));
+                }
+            }
+        });
+    }
+
+
+        public void triggerGetProductsByCategory(String key, String filterVal){
         mDbProductsCollection.whereEqualTo(key, filterVal)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -134,9 +155,8 @@ public class ProductsModel {
                 mBikesLiveData.setValue(products);
                 break;
             }
-            case CAT_USER_LIST:{
-                mUsersProductsLiveData.setValue(products);
-                break;
+            case CAT_OTHER:{
+                mOtherProductsLiveData.setValue(products);
             }
             default: return;
         }

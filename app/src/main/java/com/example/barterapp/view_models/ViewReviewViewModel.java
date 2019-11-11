@@ -34,5 +34,5 @@ public class ViewReviewViewModel extends ViewModel {
         mReviewsModel.setUserReviewByUserIdAndProductId(userRev,userId,prodId);
     }
 
-    public void triggerGetMyReviewData(String userID) { mReviewsModel.triggerGetUserReviewData(userID);}
+    public void triggerGetReviewDataByUserId(String userID) { mReviewsModel.triggerGetUserReviewData(userID);}
 }

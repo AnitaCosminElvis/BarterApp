@@ -149,7 +149,7 @@ public class ViewReviewActivity extends AppCompatActivity {
         mApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserReview userRev = new UserReview(mOffer.getmProductId(),mOffer.getmProductImgUri(),
+                UserReview userRev = new UserReview("", mOffer.getmProductId(),mOffer.getmProductImgUri(),
                                                     mRatingValue, mTextReviewEditText.getText().toString(),
                                                     mSetFlagSwitch.isChecked());
                 mViewReviewViewModel.setUserReviewByUserIdAndProductId(userRev,mReviewedUserId,

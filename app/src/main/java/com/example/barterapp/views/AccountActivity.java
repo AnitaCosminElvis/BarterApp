@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Product;
+import com.example.barterapp.data.UserReview;
+import com.example.barterapp.views.AccountFragments.ProfileFragment;
 import com.example.barterapp.views.AccountFragments.ReviewsFragment;
 import com.example.barterapp.views.AccountFragments.MyProductsFragment;
 import com.example.barterapp.views.AccountFragments.OffersFragment;
@@ -16,10 +18,13 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class AccountActivity extends    AppCompatActivity
                              implements MyProductsFragment.OnMyProductInteractionListener,
                                         OffersFragment.OnOfferInteractionListener,
-                                        ReviewsFragment.OnHistoryInteractionListener{
+                                        ReviewsFragment.OnHistoryInteractionListener,
+                                        ProfileFragment.OnProfileInteractionListener {
     private SectionsPagerAdapter    mSectionsPageAdapter;
     private ViewPager               mViewPager;
 
@@ -55,6 +60,13 @@ public class AccountActivity extends    AppCompatActivity
     public void OnHistoryInteractionListener(Offer item) {
         Intent intent = new Intent(AccountActivity.this, ViewReviewActivity.class);
         intent.putExtra(getString(R.string.view_review_info_tag),item);
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnProfileInteractionListener(ArrayList<UserReview> reviews) {
+        Intent intent = new Intent(AccountActivity.this, ReviewsActivity.class);
+        intent.putParcelableArrayListExtra(getString(R.string.view_reviews_info_tag),reviews);
         startActivity(intent);
     }
 }
