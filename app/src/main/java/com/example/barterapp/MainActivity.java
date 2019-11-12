@@ -58,6 +58,7 @@ public class MainActivity   extends     AppCompatActivity
     private MutableLiveData<ArrayList<Product>>     mClothesLiveData;
     private MutableLiveData<ArrayList<Product>>     mToolsLiveData;
     private MutableLiveData<ArrayList<Product>>     mBikesLiveData;
+    private MutableLiveData<ArrayList<Product>>     mOtherLiveData;
     private ProductsAdapter                         mGadgetsAdapter ;
     private ProductsAdapter                         mClothesAdapter;
     private ProductsAdapter                         mToolsAdapter;
@@ -77,14 +78,19 @@ public class MainActivity   extends     AppCompatActivity
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //allocate the adapters
         mGadgetsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_GADGETS);
         mClothesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_CLOTHES);
         mToolsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_TOOLS);
         mBikesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_BIKES);
+        mOtherProductsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_OTHER);
+
+        //set the listener to the adapters
         mGadgetsAdapter.setClickListener(this);
         mToolsAdapter.setClickListener(this);
         mClothesAdapter.setClickListener(this);
         mBikesAdapter.setClickListener(this);
+        mOtherProductsAdapter.setClickListener(this);
 
         mProductsRecyclerView = findViewById(R.id.rv_products);
         mProductsRecyclerView.setHasFixedSize(true);
@@ -109,6 +115,7 @@ public class MainActivity   extends     AppCompatActivity
         mClothesLiveData = mProductsViewModel.getClothesLiveData();
         mToolsLiveData = mProductsViewModel.getToolsLiveData();
         mBikesLiveData = mProductsViewModel.getBikesLiveData();
+        mOtherLiveData = mProductsViewModel.getOtherProductsLiveData();
 
         mLoginResponseLiveData = mLoginViewModel.getLoginResponseLiveData();
         mRegisterResposneLiveData = mRegisterViewModel.getRegisterResponseLiveData();
@@ -245,6 +252,15 @@ public class MainActivity   extends     AppCompatActivity
             }
         });
 
+        mOtherLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList) {
+                    mOtherProductsAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mOtherProductsAdapter);
+                }
+            }
+        });
+
         //create observer for login response
         mLoginResponseLiveData.observe(this, new Observer<Response>(){
             @Override public void onChanged(@Nullable Response response){
@@ -354,6 +370,13 @@ public class MainActivity   extends     AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
                 intent.putExtra(getString(R.string.product_info_tag) ,
                         mBikesAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
+                break;
+            }
+            case CAT_OTHER:{
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getString(R.string.product_info_tag) ,
+                        mOtherProductsAdapter.getProductByPosition(adapterPosition));
                 startActivity(intent);
                 break;
             }

@@ -85,6 +85,7 @@
         <item>@string/cat_clothes</item>
         <item>@string/cat_tools</item>
         <item>@string/cat_bikes</item>
+        <item>@string/cat_other</item>
     </string-array>
 
 

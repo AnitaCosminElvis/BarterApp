@@ -24,6 +24,7 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 import com.google.firebase.database.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
     private RatingBar                                           mNegativeRatingBar;
     private RatingBar                                           mPozitiveRatingBar;
     private LinearLayout                                        mViewReviewsLinearLayout;
+    private DecimalFormat                                       mDecFormat = new DecimalFormat("#.##");
 
     private static volatile ProfileFragment     mInstance;
 
@@ -85,7 +87,7 @@ public class ProfileFragment extends Fragment {
                 if (null != userReviewAggregationData){
                     mFlagValueTextView.setText(String.valueOf(userReviewAggregationData.getmNoOfFlaggs()));
                     float ratingAvg = userReviewAggregationData.getmUserRatingAvg();
-                    mRatingValueTextView.setText(String.valueOf(ratingAvg));
+                    mRatingValueTextView.setText(mDecFormat.format(ratingAvg));
                     if (0 > ratingAvg) {
                         mPozitiveRatingBar.setRating(0);
                         mNegativeRatingBar.setRating(2 + ratingAvg);
