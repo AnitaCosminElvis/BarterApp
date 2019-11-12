@@ -24,6 +24,7 @@ public class ForgotPassActivity extends AppCompatActivity {
     private MutableLiveData<Response>   mResetPassResponseLiveData;
     private EditText                    mEmailEdtTxt;
     private Button                      mResetPassBtn;
+    private boolean                     mIsInitialState = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class ForgotPassActivity extends AppCompatActivity {
         mResetPassResponseLiveData.observe(this, new Observer<Response>(){
             @Override
             public void onChanged(@Nullable Response resetResponse){
-                if (null != resetResponse){
+                if (null != resetResponse && !mIsInitialState){
                     Toast.makeText(ForgotPassActivity.this,
                             resetResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
                     mResetPassBtn.setEnabled(true);

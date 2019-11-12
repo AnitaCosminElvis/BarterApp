@@ -15,21 +15,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ViewVideoActivity"></activity>
-        <activity android:name=".views.ViewImageActivity" />
-        <activity android:name=".views.UserProductsActivity" />
-        <activity android:name=".views.ReviewsActivity" />
-        <activity android:name=".views.ViewMyProductActivity" />
-        <activity android:name=".views.ViewReviewActivity" />
-        <activity android:name=".views.ViewOfferActivity" />
-        <activity android:name=".views.OfferActivity" />
-        <activity android:name=".views.ViewProductActivity" />
-        <activity android:name=".views.AddProductActivity" />
+        <activity
+            android:name=".views.AboutActivity"
+            android:label="About" />
+        <activity
+            android:name=".views.ContactsActivity"
+            android:label="Contact" />
+        <activity
+            android:name=".views.ViewVideoActivity"
+            android:label="View Video" />
+        <activity
+            android:name=".views.ViewImageActivity"
+            android:label="Image" />
+        <activity
+            android:name=".views.UserProductsActivity"
+            android:label="Products" />
+        <activity
+            android:name=".views.ReviewsActivity"
+            android:label="Reviews" />
+        <activity
+            android:name=".views.ViewMyProductActivity"
+            android:label="Product" />
+        <activity
+            android:name=".views.ViewReviewActivity"
+            android:label="Review" />
+        <activity
+            android:name=".views.ViewOfferActivity"
+            android:label="Offer" />
+        <activity
+            android:name=".views.OfferActivity"
+            android:label="Make Offer" />
+        <activity
+            android:name=".views.ViewProductActivity"
+            android:label="Product" />
+        <activity
+            android:name=".views.AddProductActivity"
+            android:label="Add Product" />
         <activity
             android:name=".views.AccountActivity"
-            android:label="@string/title_activity_account"
+            android:label="My Account"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".views.ForgotPassActivity" />
+        <activity
+            android:name=".views.ForgotPassActivity"
+            android:label="Password Reset" />
         <activity
             android:name=".views.RegisterActivity"
             android:label="@string/title_activity_register" />

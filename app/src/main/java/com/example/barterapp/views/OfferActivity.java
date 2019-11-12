@@ -73,8 +73,6 @@ public class OfferActivity extends AppCompatActivity {
                 String sEmail = mEmailEditText.getText().toString();
                 String sMessage = mMessageEditText.getText().toString();
 
-                mInitialState = false;
-
                 if (sEmail.isEmpty()){
                     Toast.makeText(OfferActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();
                     return;
@@ -94,6 +92,7 @@ public class OfferActivity extends AppCompatActivity {
                                         mProductId,mProductImgUri,sEmail,sMessage,
                                         true,false);
 
+                mInitialState = false;
                 mMakeOfferBtn.setEnabled(false);
                 mMakeOfferViewModel.makeOffer(offer);
             }

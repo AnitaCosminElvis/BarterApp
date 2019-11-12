@@ -29,6 +29,9 @@ public class OffersModel {
     private MutableLiveData<ArrayList<Offer>>   mMyOffersListLiveData                   = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Offer>>   mMyOffersHistoryListLiveData            = new MutableLiveData<>();
     private ArrayList<Offer>                    mMyOffersHistoryList                    = new ArrayList<>();
+    private Task<QuerySnapshot>                 mGetMyOffersTask;
+    private Task<QuerySnapshot>                 mGetOffersHistoryTask;
+
 
     private OffersModel() {
         mAuth = FirebaseAuth.getInstance();
@@ -92,7 +95,9 @@ public class OffersModel {
     }
 
     public void triggerGetMyOffers(){
-        mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
+        if (null != mGetMyOffersTask && !mGetMyOffersTask.isComplete()) return;
+
+        mGetMyOffersTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
                             .whereEqualTo(IS_PENDING_KEY, true)
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -108,8 +113,10 @@ public class OffersModel {
         });
     }
 
-    public void triggerGetMyOffersHistory(){
-        mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
+    synchronized public void triggerGetMyOffersHistory(){
+        if (null != mGetOffersHistoryTask && !mGetOffersHistoryTask.isComplete()) return;
+
+        mGetOffersHistoryTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
                             .whereEqualTo(IS_PENDING_KEY, false)
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

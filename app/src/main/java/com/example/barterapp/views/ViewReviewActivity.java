@@ -64,7 +64,7 @@ public class ViewReviewActivity extends AppCompatActivity {
 
         String userId = mViewReviewViewModel.getCurrentUserId();
 
-        if (userId == mOffer.getmToUserId()){
+        if (userId.equals(mOffer.getmToUserId())){
             mAliasTextView.setText(mOffer.getmFromAlias());
             mReviewedUserId = mOffer.getmFromUserId();
         }
@@ -86,7 +86,7 @@ public class ViewReviewActivity extends AppCompatActivity {
 
                     if (0 > mRatingValue) {
                         mPositiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(1 + mRatingValue);
+                        mNegativeRatingBar.setRating((2 + mRatingValue));
                     }else{
                         mNegativeRatingBar.setRating(0);
                         mPositiveRatingBar.setRating(mRatingValue);

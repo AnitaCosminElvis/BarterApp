@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.ViewOfferActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_view_offer_img"
@@ -37,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_view_offer_alias" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_view_offer_contact" />
 
     <LinearLayout
         android:id="@+id/ll_view_offer_alias"
@@ -55,15 +61,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="From  "
+            android:text="From   "
             tools:layout_editor_absoluteX="130dp"
             tools:layout_editor_absoluteY="544dp" />
 
         <TextView
             android:id="@+id/tv_view_offer_alias"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="anonymous@mail.com"
+            tools:layout_editor_absoluteX="55dp"
+            tools:layout_editor_absoluteY="544dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_view_offer_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:gravity="left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_view_offer_alias">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email   "
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="544dp" />
+
+        <TextView
+            android:id="@+id/tv_view_offer_contact_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="contact@mail.com"
             tools:layout_editor_absoluteX="55dp"
             tools:layout_editor_absoluteY="544dp" />
 
@@ -85,7 +119,7 @@
         <Button
             android:id="@+id/btn_view_offer_reject"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="@dimen/thumbnail_img_dim"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:enabled="true"
@@ -101,7 +135,7 @@
         <Button
             android:id="@+id/btn_view_offer_accept"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="@dimen/thumbnail_img_dim"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:enabled="true"
@@ -113,3 +147,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

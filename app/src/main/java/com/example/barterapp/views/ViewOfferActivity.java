@@ -25,6 +25,7 @@ public class ViewOfferActivity extends AppCompatActivity {
     private Offer                       mOffer;
     private TextView                    mMessageTextView;
     private TextView                    mAliasTextView;
+    private TextView                    mContactMailTextView;
     private ImageView                   mProductPhotoImageView;
     private Button                      mRejectBtn;
     private Button                      mAcceptBtn;
@@ -44,12 +45,15 @@ public class ViewOfferActivity extends AppCompatActivity {
 
         mMessageTextView = findViewById(R.id.tv_view_offer_message);
         mAliasTextView = findViewById(R.id.tv_view_offer_alias);
+        mContactMailTextView = findViewById(R.id.tv_view_offer_contact_email);
         mProductPhotoImageView = findViewById(R.id.iv_view_offer_img);
         mRejectBtn = findViewById(R.id.btn_view_offer_reject);
         mAcceptBtn = findViewById(R.id.btn_view_offer_accept);
 
         mMessageTextView.setText(mOffer.getmMessage());
         mAliasTextView.setText(mOffer.getmFromAlias());
+        mContactMailTextView.setText(mOffer.getmContactEmail());
+
         String uri = mOffer.getmProductImgUri();
         if (!uri.isEmpty())
             Picasso.get().load(uri).fit().centerCrop().tag(this).into(mProductPhotoImageView);

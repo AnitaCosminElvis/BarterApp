@@ -85,8 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
     public void onRegisterBtnClicked(View v) {
         String sFirstName = mFirstNameEdtTxt.getText().toString();
 
-        mIsInitialState = false;
-
         if (sFirstName.isEmpty()){
             Toast.makeText(this, "First Name Empty!", Toast.LENGTH_LONG).show();
             return;
@@ -157,6 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
         UserProfile userProfile = new UserProfile(sFirstName,sSurname,sTelNo,sAlias,sEmail);
 
         try {
+            mIsInitialState = false;
             mRegisterBtn.setEnabled(false);
             mRegisterViewModel.register(userProfile, sPass);
         }catch (Exception ex){

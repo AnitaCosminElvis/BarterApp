@@ -11,8 +11,10 @@ import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.RegisterViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
+import com.example.barterapp.views.AboutActivity;
 import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
+import com.example.barterapp.views.ContactsActivity;
 import com.example.barterapp.views.LoginActivity;
 import com.example.barterapp.views.RegisterActivity;
 import com.example.barterapp.views.ViewProductActivity;
@@ -261,23 +263,36 @@ public class MainActivity   extends     AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_account:
+            case R.id.nav_account: {
                 startIntentActionWithUserLoggedInCheck(AccountActivity.class);
                 break;
-            case R.id.nav_add:
+            }
+            case R.id.nav_add: {
                 startIntentActionWithUserLoggedInCheck(AddProductActivity.class);
                 break;
-            case R.id.nav_signin:
+            }
+            case R.id.nav_signin: {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
-            case R.id.nav_signup:
+            }
+            case R.id.nav_signup: {
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                 break;
-            case R.id.nav_signout:
+            }
+            case R.id.nav_signout: {
                 mProductsViewModel.signOut();
-                setNavViewUserEmail(new Response("",false));
-                Toast.makeText(MainActivity.this, "Signed out." , Toast.LENGTH_SHORT).show();
+                setNavViewUserEmail(new Response("", false));
+                Toast.makeText(MainActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
                 break;
+            }
+            case R.id.nav_about: {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                break;
+            }
+            case R.id.nav_contact: {
+                startActivity(new Intent(MainActivity.this, ContactsActivity.class));
+                break;
+            }
         }
 
         return true;

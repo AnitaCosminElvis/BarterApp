@@ -88,7 +88,7 @@ public class ProfileFragment extends Fragment {
                     mRatingValueTextView.setText(String.valueOf(ratingAvg));
                     if (0 > ratingAvg) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(1 + ratingAvg);
+                        mNegativeRatingBar.setRating(2 + ratingAvg);
                     }else{
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(ratingAvg);

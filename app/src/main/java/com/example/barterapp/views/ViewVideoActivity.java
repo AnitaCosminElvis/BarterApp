@@ -2,9 +2,12 @@ package com.example.barterapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.example.barterapp.R;
@@ -12,7 +15,7 @@ import com.example.barterapp.R;
 public class ViewVideoActivity extends AppCompatActivity {
     String              mVideoUri;
     VideoView           mVideoView;
-
+    ProgressBar         mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,8 @@ public class ViewVideoActivity extends AppCompatActivity {
         mVideoUri = getIntent().getStringExtra(getString(R.string.view_video_info_tag));
 
         mVideoView = findViewById(R.id.vv_view_video);
+        mProgressBar = findViewById(R.id.pb_view_video);
+
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(mVideoView);
         mVideoView.setMediaController(mediaController);
@@ -28,7 +33,24 @@ public class ViewVideoActivity extends AppCompatActivity {
         if ((null != mVideoUri) && (!mVideoUri.isEmpty())) {
             Uri uri = Uri.parse(mVideoUri);
             mVideoView.setVideoURI(uri);
-            mVideoView.requestFocus();
+            mVideoView.start();
+
+            mProgressBar.setVisibility(View.VISIBLE);
+
+            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.start();
+                    mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                        @Override
+                        public void onVideoSizeChanged(MediaPlayer mp, int arg1,
+                                                       int arg2) {
+                            mProgressBar.setVisibility(View.GONE);
+                            mp.start();
+                        }
+                    });
+                }
+            });
         }
 
 

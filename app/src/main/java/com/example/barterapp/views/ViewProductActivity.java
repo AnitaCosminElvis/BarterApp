@@ -114,7 +114,7 @@ public class ViewProductActivity extends AppCompatActivity {
 
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(1 + mAvgRatingValue);
+                        mNegativeRatingBar.setRating(2 + mAvgRatingValue);
                     } else {
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(mAvgRatingValue);

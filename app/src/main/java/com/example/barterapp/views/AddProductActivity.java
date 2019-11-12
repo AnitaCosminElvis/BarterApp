@@ -149,6 +149,7 @@ public class AddProductActivity extends AppCompatActivity {
                 }
 
                 try {
+                    mIsInitialState = false;
                     mContinueBtn.setEnabled(false);
                     mProductViewModel.addProduct(new Product("","","",sTitle,sDescription,
                             mCategorySpinner.getSelectedItem().toString(),"","",
