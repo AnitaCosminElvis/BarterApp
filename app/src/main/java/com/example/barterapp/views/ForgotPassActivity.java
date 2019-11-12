@@ -68,6 +68,7 @@ public class ForgotPassActivity extends AppCompatActivity {
                 }
 
                 try {
+                    mIsInitialState = false;
                     mResetPassBtn.setEnabled(false);
                     mForgotPassViewModel.resetPass(sEmail);
                 }catch (Exception ex){
