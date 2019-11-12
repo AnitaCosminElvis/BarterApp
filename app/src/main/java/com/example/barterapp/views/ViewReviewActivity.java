@@ -23,6 +23,8 @@ import com.example.barterapp.data.UserReview;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 
+import java.text.DecimalFormat;
+
 
 public class ViewReviewActivity extends AppCompatActivity {
     private ViewReviewViewModel         mViewReviewViewModel;
@@ -40,7 +42,7 @@ public class ViewReviewActivity extends AppCompatActivity {
     private boolean                     mIsInitialState                         = true;
     private Offer                       mOffer;
     private String                      mReviewedUserId;
-
+    private DecimalFormat               mDecFormat                              = new DecimalFormat("#.##");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +84,7 @@ public class ViewReviewActivity extends AppCompatActivity {
                     if (!mOffer.getmProductId().equals(userReview.getmProductId())) return;
 
                     mRatingValue = userReview.getmRatingValue();
-                    mRatingValueTextView.setText(String.valueOf(mRatingValue));
+                    mRatingValueTextView.setText(mDecFormat.format(mRatingValue));
 
                     if (0 > mRatingValue) {
                         mPositiveRatingBar.setRating(0);

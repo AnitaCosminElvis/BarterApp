@@ -28,6 +28,7 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,6 +56,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private float                                       mAvgRatingValue;
     private int                                         mNoOfFlags;
     private boolean                                     mIsUserRestricted       = false;
+    private DecimalFormat                               mDecFormat              = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +112,7 @@ public class ViewProductActivity extends AppCompatActivity {
                 if (null != aggregationData) {
                     mAvgRatingValue = aggregationData.getmUserRatingAvg();
                     mNoOfFlags = aggregationData.getmNoOfFlaggs();
-                    mUserReviewValue.setText(String.valueOf(mAvgRatingValue));
+                    mUserReviewValue.setText(mDecFormat.format(mAvgRatingValue));
 
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
