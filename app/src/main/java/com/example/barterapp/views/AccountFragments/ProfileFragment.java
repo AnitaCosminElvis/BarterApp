@@ -60,6 +60,12 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        mReviewViewModel.triggerGetReviewDataByUserId(mProfileViewModel.getUserID());
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -70,6 +76,7 @@ public class ProfileFragment extends Fragment {
 
         mUserProfileLiveData = mProfileViewModel.getUserProfileLiveData();
         mReviewAggregationLiveData = mReviewViewModel.getMutableLiveDataReviewAggregationData();
+
         mReviewViewModel.triggerGetReviewDataByUserId(mProfileViewModel.getUserID());
 
         mReviewAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
@@ -99,7 +106,6 @@ public class ProfileFragment extends Fragment {
                     mAliasTextView.setText(userProfile.getmAlias());
                     mTelNoTextView.setText(userProfile.getmTelNo());
                     mEmailTextView.setText(userProfile.getmEmail());
-                    //ToDo : populate profile
                 }
             }
         });

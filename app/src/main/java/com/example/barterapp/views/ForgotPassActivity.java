@@ -38,10 +38,12 @@ public class ForgotPassActivity extends AppCompatActivity {
         mResetPassResponseLiveData = mForgotPassViewModel.getForgotPassResponseLiveData();
         mResetPassResponseLiveData.observe(this, new Observer<Response>(){
             @Override
-            public void onChanged(@Nullable Response loginResponse){
-                if (null != loginResponse){
+            public void onChanged(@Nullable Response resetResponse){
+                if (null != resetResponse){
                     Toast.makeText(ForgotPassActivity.this,
-                            loginResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                            resetResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                    mResetPassBtn.setEnabled(true);
+                    if (resetResponse.getmIsSuccessfull()) finish();
                 }
             }
         });
@@ -65,8 +67,10 @@ public class ForgotPassActivity extends AppCompatActivity {
                 }
 
                 try {
+                    mResetPassBtn.setEnabled(false);
                     mForgotPassViewModel.resetPass(sEmail);
                 }catch (Exception ex){
+                    mResetPassBtn.setEnabled(true);
                     Toast.makeText(ForgotPassActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

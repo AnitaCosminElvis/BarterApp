@@ -7,7 +7,9 @@ import android.os.Bundle;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.ProductsAdapter;
 import com.example.barterapp.data.Response;
+import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ProductsViewModel;
+import com.example.barterapp.view_models.RegisterViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
@@ -45,8 +47,11 @@ import static com.example.barterapp.utility.DefinesUtility.*;
 public class MainActivity   extends     AppCompatActivity
                             implements  ProductsAdapter.ItemClickListener,
                                         NavigationView.OnNavigationItemSelectedListener{
-    private ProductsViewModel mProductsViewModel;
-    private MutableLiveData<Response>               mLoginLiveData;
+    private ProductsViewModel                       mProductsViewModel;
+    private LoginViewModel                          mLoginViewModel;
+    private RegisterViewModel                       mRegisterViewModel;
+    private MutableLiveData<Response>               mLoginResponseLiveData;
+    private MutableLiveData<Response>               mRegisterResposneLiveData;
     private MutableLiveData<ArrayList<Product>>     mGadgetsLiveData;
     private MutableLiveData<ArrayList<Product>>     mClothesLiveData;
     private MutableLiveData<ArrayList<Product>>     mToolsLiveData;
@@ -89,12 +94,22 @@ public class MainActivity   extends     AppCompatActivity
         mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProductsViewModel.class);
 
+        //create login view model
+        mLoginViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(LoginViewModel.class);
+
+        //create register view model
+        mRegisterViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(RegisterViewModel.class);
+
         //getting products live data
         mGadgetsLiveData = mProductsViewModel.getGadgetsLiveData();
         mClothesLiveData = mProductsViewModel.getClothesLiveData();
         mToolsLiveData = mProductsViewModel.getToolsLiveData();
         mBikesLiveData = mProductsViewModel.getBikesLiveData();
-        mLoginLiveData = mProductsViewModel.getLoginResponseLiveData();
+
+        mLoginResponseLiveData = mLoginViewModel.getLoginResponseLiveData();
+        mRegisterResposneLiveData = mRegisterViewModel.getRegisterResponseLiveData();
 
         //initialize the gadgets list
         mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
@@ -229,9 +244,16 @@ public class MainActivity   extends     AppCompatActivity
         });
 
         //create observer for login response
-        mLoginLiveData.observe(this, new Observer<Response>(){
+        mLoginResponseLiveData.observe(this, new Observer<Response>(){
             @Override public void onChanged(@Nullable Response response){
-                if (null != response){ setNavViewUserEmail();}
+                if (null != response){ setNavViewUserEmail(response);}
+            }
+        });
+
+        //create observer for login response
+        mRegisterResposneLiveData.observe(this, new Observer<Response>(){
+            @Override public void onChanged(@Nullable Response response){
+                if (null != response){ setNavViewUserEmail(response);}
             }
         });
     }
@@ -253,16 +275,23 @@ public class MainActivity   extends     AppCompatActivity
                 break;
             case R.id.nav_signout:
                 mProductsViewModel.signOut();
-                setNavViewUserEmail();
+                setNavViewUserEmail(new Response("",false));
+                Toast.makeText(MainActivity.this, "Signed out." , Toast.LENGTH_SHORT).show();
                 break;
         }
 
         return true;
     }
 
-    private void setNavViewUserEmail(){
+    private void setNavViewUserEmail(Response response){
         TextView tvUserEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_alias);
-        tvUserEmail.setText(mProductsViewModel.getUserEmail());
+        if (null != response) {
+            if (response.getmIsSuccessfull()) {
+                tvUserEmail.setText(mProductsViewModel.getUserEmail());
+            } else {
+                tvUserEmail.setText(getString(R.string.nav_header_email));
+            }
+        }
     }
 
     private boolean checkUserIsLoggedIn(){

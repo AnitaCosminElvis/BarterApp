@@ -31,6 +31,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
+import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
+
 public class ViewProductActivity extends AppCompatActivity {
     private final String                                DATE_FORMAT                 = "EEE MMM dd hh:mm:ss yyyy ";
     private ProductsViewModel                           mProductsViewModel;
@@ -49,6 +52,9 @@ public class ViewProductActivity extends AppCompatActivity {
     private Button                                      mBarterButton;
     private Button                                      mViewUsersProductsButton;
     private Product                                     mProduct;
+    private float                                       mAvgRatingValue;
+    private int                                         mNoOfFlags;
+    private boolean                                     mIsUserRestricted       = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,26 +101,29 @@ public class ViewProductActivity extends AppCompatActivity {
         }
 
         if ((null != mProduct.getVidUriPath()) && (false == mProduct.getVidUriPath().isEmpty())) {
-            Uri vidUri = Uri.parse(mProduct.getVidUriPath());
-            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(mProduct.getVidUriPath(), new HashMap<String, String>());
-            mProductVidImageView.setImageBitmap(
-                    mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
+            mProductVidImageView.setImageResource(R.drawable.ic_view_video_violet_100dp);
         }
 
         mReviewAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
             @Override
             public void onChanged(UserReviewAggregationData aggregationData) {
                 if (null != aggregationData) {
-                    float ratingAvg = aggregationData.getmUserRatingAvg();
-                    mUserReviewValue.setText(String.valueOf(ratingAvg));
+                    mAvgRatingValue = aggregationData.getmUserRatingAvg();
+                    mNoOfFlags = aggregationData.getmNoOfFlaggs();
+                    mUserReviewValue.setText(String.valueOf(mAvgRatingValue));
 
-                    if (0 > ratingAvg) {
+                    if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(1 + ratingAvg);
+                        mNegativeRatingBar.setRating(1 + mAvgRatingValue);
                     } else {
                         mNegativeRatingBar.setRating(0);
-                        mPozitiveRatingBar.setRating(ratingAvg);
+                        mPozitiveRatingBar.setRating(mAvgRatingValue);
+                    }
+
+                    if ((USER_MIN_RATING_VALUE > mAvgRatingValue) || (USER_MAX_NO_OF_FLAGS < mNoOfFlags)){
+                        mIsUserRestricted = true;
+                        Toast.makeText(ViewProductActivity.this,
+                                getString(R.string.user_restricted_access) , Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -143,12 +152,27 @@ public class ViewProductActivity extends AppCompatActivity {
         mBarterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
                     Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //if same user, deny barter access
+                if (mProduct.getmUserId().equals(mProductsViewModel.getCurrentUserId())){
+                    Toast.makeText(ViewProductActivity.this,
+                            getString(R.string.barter_same_user), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //if user is restricted return
+                if (mIsUserRestricted) {
+                    Toast.makeText(ViewProductActivity.this,
+                            getString(R.string.user_restricted_access), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //go to Offer Activity
                 Intent intent = new Intent(ViewProductActivity.this, OfferActivity.class);
                 intent.putExtra(getString(R.string.offer_user_id_tag), mProduct.getmUserId());
                 intent.putExtra(getString(R.string.offer_product_id_tag), mProduct.getProductId());

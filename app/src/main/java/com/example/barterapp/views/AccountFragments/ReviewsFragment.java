@@ -49,6 +49,12 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        mMyReviewsViewModel.triggerGetMyOffersHystory();
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

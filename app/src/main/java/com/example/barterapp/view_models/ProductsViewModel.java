@@ -30,6 +30,8 @@ public class ProductsViewModel extends ViewModel {
 
     public void signOut() { mAuthModel.signOut(); }
 
+    public String getCurrentUserId() { return mAuthModel.getCurrentUserId(); }
+
     public String getUserEmail() { return mAuthModel.getUserEmail(); }
 
     public String getUserAlias() { return mAuthModel.getUserAlias(); }

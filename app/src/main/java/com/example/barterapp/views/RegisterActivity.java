@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText            mPassEdtTxt;
     private EditText            mPassRetypeEdtTxt;
     private CheckBox            mAgreeCkBox;
-
+    private boolean             mIsInitialState                 = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +49,11 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterResponseLiveData.observe(this, new Observer<Response>(){
             @Override
             public void onChanged(@Nullable Response registerResponse){
-                if (null != registerResponse){
+                if (null != registerResponse && !mIsInitialState){
                     Toast.makeText(RegisterActivity.this,
                             registerResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                    mRegisterBtn.setEnabled(true);
+                    if (registerResponse.getmIsSuccessfull()) finish();
                 }
             }
         });
@@ -82,6 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public void onRegisterBtnClicked(View v) {
         String sFirstName = mFirstNameEdtTxt.getText().toString();
+
+        mIsInitialState = false;
 
         if (sFirstName.isEmpty()){
             Toast.makeText(this, "First Name Empty!", Toast.LENGTH_LONG).show();
@@ -153,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         UserProfile userProfile = new UserProfile(sFirstName,sSurname,sTelNo,sAlias,sEmail);
 
         try {
+            mRegisterBtn.setEnabled(false);
             mRegisterViewModel.register(userProfile, sPass);
         }catch (Exception ex){
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();

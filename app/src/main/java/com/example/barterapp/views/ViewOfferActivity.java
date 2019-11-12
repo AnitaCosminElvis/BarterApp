@@ -28,7 +28,7 @@ public class ViewOfferActivity extends AppCompatActivity {
     private ImageView                   mProductPhotoImageView;
     private Button                      mRejectBtn;
     private Button                      mAcceptBtn;
-    private boolean                     mWereButtonsPressed                            = false;
+    private boolean                     mCanFinish                            = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class ViewOfferActivity extends AppCompatActivity {
         mViewOfferViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ViewOfferViewModel.class);
         mSetOfferStateResponseLiveData = mViewOfferViewModel.getOfferStateResponseLiveData();
+        mSetOfferStateResponseLiveData.removeObservers(this);
 
         mOffer = getIntent().getParcelableExtra(getString(R.string.view_offer_info_tag));
 
@@ -62,7 +63,7 @@ public class ViewOfferActivity extends AppCompatActivity {
                                 setOfferStateresponse.getmResponseText(), Toast.LENGTH_SHORT).show();
                         setButtonsEnabled(true);
                     }else{
-                        if (mWereButtonsPressed) finish();
+                        if (mCanFinish) finish();
                     }
                 }
             }
@@ -70,7 +71,7 @@ public class ViewOfferActivity extends AppCompatActivity {
 
         mRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                mWereButtonsPressed = true;
+                mCanFinish = true;
                 mViewOfferViewModel.setOfferState(mOffer, false);
                 setButtonsEnabled(false);
             }
@@ -78,7 +79,7 @@ public class ViewOfferActivity extends AppCompatActivity {
 
         mAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                mWereButtonsPressed = true;
+                mCanFinish = true;
                 mViewOfferViewModel.setOfferState(mOffer, true);
                 setButtonsEnabled(false);
             }

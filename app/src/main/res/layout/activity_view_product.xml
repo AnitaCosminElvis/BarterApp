@@ -50,7 +50,7 @@
                 android:background="@drawable/image_border"
                 android:padding="1dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_view_video_violet_100dp" />
+                app:srcCompat="@drawable/ic_view_no_video_violet_100dp" />
         </LinearLayout>
 
         <LinearLayout

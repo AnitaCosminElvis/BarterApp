@@ -32,6 +32,7 @@ public class OfferActivity extends AppCompatActivity {
     private String                              mUserId;
     private String                              mProductId;
     private String                              mProductImgUri;
+    private boolean                             mInitialState               = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +58,11 @@ public class OfferActivity extends AppCompatActivity {
         mMakeOfferResponseLiveData.observe(this, new Observer<Response>(){
             @Override
             public void onChanged(@Nullable Response offerResponse){
-                if (null != offerResponse){
+                if (null != offerResponse && !mInitialState){
                     Toast.makeText(OfferActivity.this,
                             offerResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                    mMakeOfferBtn.setEnabled(true);
+                    if (offerResponse.getmIsSuccessfull()) finish();
                 }
             }
         });
@@ -69,6 +72,8 @@ public class OfferActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String sEmail = mEmailEditText.getText().toString();
                 String sMessage = mMessageEditText.getText().toString();
+
+                mInitialState = false;
 
                 if (sEmail.isEmpty()){
                     Toast.makeText(OfferActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();
@@ -89,6 +94,7 @@ public class OfferActivity extends AppCompatActivity {
                                         mProductId,mProductImgUri,sEmail,sMessage,
                                         true,false);
 
+                mMakeOfferBtn.setEnabled(false);
                 mMakeOfferViewModel.makeOffer(offer);
             }
         });

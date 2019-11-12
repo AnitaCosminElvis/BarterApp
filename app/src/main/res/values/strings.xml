@@ -79,6 +79,7 @@
     <string name="cat_bikes">Bicycles</string>
     <string name="cat_other">Other</string>
     <string name="user_restricted_access">Restricted Access!</string>
+    <string name="barter_same_user">Can\'t barter with yourself!</string>
     <string-array name="category_arrays">
         <item>@string/cat_gadgets</item>
         <item>@string/cat_clothes</item>

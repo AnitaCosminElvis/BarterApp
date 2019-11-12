@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button                      mLoginButton;
     private ProgressBar                 mLoadingProgressBar;
     private Button                      mResetPassButton;
+    private Button                      mGoogleAccountLoginButton;
+    private boolean                     mIsInitialState                  = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,25 +53,41 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Response loginResponse){
                 mLoadingProgressBar.setVisibility(View.INVISIBLE);
-                if (null != loginResponse){
+                if (null != loginResponse && !mIsInitialState){
                     Toast.makeText(LoginActivity.this,
                             loginResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                    mLoginButton.setEnabled(true);
+                    if (loginResponse.getmIsSuccessfull()) finish();
                 }
             }
         });
 
         mEmailEditText = findViewById(R.id.username);
         mPasswordEditText = findViewById(R.id.password);
-
         mLoginButton = findViewById(R.id.btn_sign_in);
         mLoadingProgressBar = findViewById(R.id.loading);
+        mGoogleAccountLoginButton = findViewById(R.id.btn_gmail);
+
+        mGoogleAccountLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    mIsInitialState = false;
+                    mLoadingProgressBar.setVisibility(View.VISIBLE);
+                    mLoginViewModel.login("one@barter.com", "1234567");
+                }catch (Exception ex){
+                    Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sEmail = mEmailEditText.getText().toString();
                 String sPass= mPasswordEditText.getText().toString();
-                
+
+                mIsInitialState = false;
 
                 if (sEmail.isEmpty()){
                     Toast.makeText(LoginActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();
@@ -94,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     mLoadingProgressBar.setVisibility(View.VISIBLE);
+                    mLoginButton.setEnabled(false);
                     mLoginViewModel.login(sEmail, sPass);
                 }catch (Exception ex){
                     Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -107,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                mIsInitialState = false;
                 Intent intent = new Intent(LoginActivity.this, ForgotPassActivity.class);
                 startActivity(intent);
             }
