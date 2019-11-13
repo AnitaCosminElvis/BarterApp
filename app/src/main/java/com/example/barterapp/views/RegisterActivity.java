@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private RegisterViewModel   mRegisterViewModel;
     private MutableLiveData     mRegisterResponseLiveData;
     private Button              mRegisterBtn;
+    private Button              mTermsAndConditions;
     private EditText            mFirstNameEdtTxt;
     private EditText            mSurnameEdtTxt;
     private EditText            mTelNoEdtTxt;
@@ -35,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText            mPassEdtTxt;
     private EditText            mPassRetypeEdtTxt;
     private CheckBox            mAgreeCkBox;
-
+    private boolean             mIsInitialState                 = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +51,11 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterResponseLiveData.observe(this, new Observer<Response>(){
             @Override
             public void onChanged(@Nullable Response registerResponse){
-                if (null != registerResponse){
+                if (null != registerResponse && !mIsInitialState){
                     Toast.makeText(RegisterActivity.this,
                             registerResponse.getmResponseText() , Toast.LENGTH_SHORT).show();
+                    mRegisterBtn.setEnabled(true);
+                    if (registerResponse.getmIsSuccessfull()) finish();
                 }
             }
         });
@@ -65,11 +69,19 @@ public class RegisterActivity extends AppCompatActivity {
         mPassEdtTxt = findViewById(R.id.edt_txt_password);
         mPassRetypeEdtTxt = findViewById(R.id.edt_txt_password1);
         mAgreeCkBox = findViewById(R.id.chk_box_agree);
+        mTermsAndConditions = findViewById(R.id.btn_terms);
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onRegisterBtnClicked(v);
+            }
+        });
+
+        mTermsAndConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, TermsAndConditionsActivity.class));
             }
         });
     }
@@ -153,6 +165,8 @@ public class RegisterActivity extends AppCompatActivity {
         UserProfile userProfile = new UserProfile(sFirstName,sSurname,sTelNo,sAlias,sEmail);
 
         try {
+            mIsInitialState = false;
+            mRegisterBtn.setEnabled(false);
             mRegisterViewModel.register(userProfile, sPass);
         }catch (Exception ex){
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();

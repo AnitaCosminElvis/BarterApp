@@ -66,7 +66,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         holder.mFromAliasTextView.setText(currentReview.getmFromAlias());
         if (0 > currentReview.getmRatingValue()) {
             holder.mPositiveRatingBar.setRating(0);
-            holder.mNegativeRatingBar.setRating(1 + currentReview.getmRatingValue());
+            holder.mNegativeRatingBar.setRating(2 + currentReview.getmRatingValue());
         }else{
             holder.mNegativeRatingBar.setRating(0);
             holder.mPositiveRatingBar.setRating(currentReview.getmRatingValue());

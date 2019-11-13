@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.TermsAndConditionsActivity">
+
+    <TextView
+        android:id="@+id/et_view_review_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="You agree not to use the App in any way that:
+
+is unlawful, illegal or unauthorised;
+is defamatory of any other person;
+is obscene or offensive;
+promotes discrimination based on race, sex, religion, nationality, disability, sexual orientation or age;
+infringes any copyright, database right or trade mark of any other person;
+is likely to harass, upset, embarrass, alarm or annoy any other person;
+is likely to disrupt our service in any way; or
+advocates, promotes or assists any unlawful act such as (by way of example only) copyright infringement or computer misuse."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

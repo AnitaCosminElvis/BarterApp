@@ -111,7 +111,7 @@ public class AuthentificationModel {
     //Gets the Users Profile
     public boolean getUserProfile(){
 
-        //if not signed in no use of continuing
+        //if not signed in, no use of continuing
         if (!isUserSignedIn()) return false;
 
         DocumentReference docRef = mDatabase.collection("Users").document(mCurrentUser.getUid());

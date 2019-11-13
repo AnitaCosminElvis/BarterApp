@@ -49,6 +49,12 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        mMyReviewsViewModel.triggerGetMyOffersHystory();
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -62,7 +68,7 @@ public class ReviewsFragment extends Fragment {
             public void onChanged(@Nullable ArrayList<Offer> myOffers){
                 if (null != myOffers){
                     // TODO: check if reallocation is better
-                    mAdapter = new ReviewsRecyclerViewAdapter(myOffers,mListener);
+                    mAdapter.setValues(myOffers);// = new ReviewsRecyclerViewAdapter(myOffers,mListener);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }

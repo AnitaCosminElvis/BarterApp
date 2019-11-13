@@ -25,10 +25,11 @@ public class ViewOfferActivity extends AppCompatActivity {
     private Offer                       mOffer;
     private TextView                    mMessageTextView;
     private TextView                    mAliasTextView;
+    private TextView                    mContactMailTextView;
     private ImageView                   mProductPhotoImageView;
     private Button                      mRejectBtn;
     private Button                      mAcceptBtn;
-    private boolean                     mWereButtonsPressed                            = false;
+    private boolean                     mCanFinish                            = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +39,21 @@ public class ViewOfferActivity extends AppCompatActivity {
         mViewOfferViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ViewOfferViewModel.class);
         mSetOfferStateResponseLiveData = mViewOfferViewModel.getOfferStateResponseLiveData();
+        mSetOfferStateResponseLiveData.removeObservers(this);
 
         mOffer = getIntent().getParcelableExtra(getString(R.string.view_offer_info_tag));
 
         mMessageTextView = findViewById(R.id.tv_view_offer_message);
         mAliasTextView = findViewById(R.id.tv_view_offer_alias);
+        mContactMailTextView = findViewById(R.id.tv_view_offer_contact_email);
         mProductPhotoImageView = findViewById(R.id.iv_view_offer_img);
         mRejectBtn = findViewById(R.id.btn_view_offer_reject);
         mAcceptBtn = findViewById(R.id.btn_view_offer_accept);
 
         mMessageTextView.setText(mOffer.getmMessage());
         mAliasTextView.setText(mOffer.getmFromAlias());
+        mContactMailTextView.setText(mOffer.getmContactEmail());
+
         String uri = mOffer.getmProductImgUri();
         if (!uri.isEmpty())
             Picasso.get().load(uri).fit().centerCrop().tag(this).into(mProductPhotoImageView);
@@ -62,7 +67,7 @@ public class ViewOfferActivity extends AppCompatActivity {
                                 setOfferStateresponse.getmResponseText(), Toast.LENGTH_SHORT).show();
                         setButtonsEnabled(true);
                     }else{
-                        if (mWereButtonsPressed) finish();
+                        if (mCanFinish) finish();
                     }
                 }
             }
@@ -70,7 +75,7 @@ public class ViewOfferActivity extends AppCompatActivity {
 
         mRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                mWereButtonsPressed = true;
+                mCanFinish = true;
                 mViewOfferViewModel.setOfferState(mOffer, false);
                 setButtonsEnabled(false);
             }
@@ -78,7 +83,7 @@ public class ViewOfferActivity extends AppCompatActivity {
 
         mAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                mWereButtonsPressed = true;
+                mCanFinish = true;
                 mViewOfferViewModel.setOfferState(mOffer, true);
                 setButtonsEnabled(false);
             }

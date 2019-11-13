@@ -7,10 +7,14 @@ import android.os.Bundle;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.ProductsAdapter;
 import com.example.barterapp.data.Response;
+import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ProductsViewModel;
+import com.example.barterapp.view_models.RegisterViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
+import com.example.barterapp.views.AboutActivity;
 import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
+import com.example.barterapp.views.ContactsActivity;
 import com.example.barterapp.views.LoginActivity;
 import com.example.barterapp.views.RegisterActivity;
 import com.example.barterapp.views.ViewProductActivity;
@@ -45,12 +49,16 @@ import static com.example.barterapp.utility.DefinesUtility.*;
 public class MainActivity   extends     AppCompatActivity
                             implements  ProductsAdapter.ItemClickListener,
                                         NavigationView.OnNavigationItemSelectedListener{
-    private ProductsViewModel mProductsViewModel;
-    private MutableLiveData<Response>               mLoginLiveData;
+    private ProductsViewModel                       mProductsViewModel;
+    private LoginViewModel                          mLoginViewModel;
+    private RegisterViewModel                       mRegisterViewModel;
+    private MutableLiveData<Response>               mLoginResponseLiveData;
+    private MutableLiveData<Response>               mRegisterResposneLiveData;
     private MutableLiveData<ArrayList<Product>>     mGadgetsLiveData;
     private MutableLiveData<ArrayList<Product>>     mClothesLiveData;
     private MutableLiveData<ArrayList<Product>>     mToolsLiveData;
     private MutableLiveData<ArrayList<Product>>     mBikesLiveData;
+    private MutableLiveData<ArrayList<Product>>     mOtherLiveData;
     private ProductsAdapter                         mGadgetsAdapter ;
     private ProductsAdapter                         mClothesAdapter;
     private ProductsAdapter                         mToolsAdapter;
@@ -70,14 +78,19 @@ public class MainActivity   extends     AppCompatActivity
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //allocate the adapters
         mGadgetsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_GADGETS);
         mClothesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_CLOTHES);
         mToolsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_TOOLS);
         mBikesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_BIKES);
+        mOtherProductsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_OTHER);
+
+        //set the listener to the adapters
         mGadgetsAdapter.setClickListener(this);
         mToolsAdapter.setClickListener(this);
         mClothesAdapter.setClickListener(this);
         mBikesAdapter.setClickListener(this);
+        mOtherProductsAdapter.setClickListener(this);
 
         mProductsRecyclerView = findViewById(R.id.rv_products);
         mProductsRecyclerView.setHasFixedSize(true);
@@ -89,12 +102,23 @@ public class MainActivity   extends     AppCompatActivity
         mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProductsViewModel.class);
 
+        //create login view model
+        mLoginViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(LoginViewModel.class);
+
+        //create register view model
+        mRegisterViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(RegisterViewModel.class);
+
         //getting products live data
         mGadgetsLiveData = mProductsViewModel.getGadgetsLiveData();
         mClothesLiveData = mProductsViewModel.getClothesLiveData();
         mToolsLiveData = mProductsViewModel.getToolsLiveData();
         mBikesLiveData = mProductsViewModel.getBikesLiveData();
-        mLoginLiveData = mProductsViewModel.getLoginResponseLiveData();
+        mOtherLiveData = mProductsViewModel.getOtherProductsLiveData();
+
+        mLoginResponseLiveData = mLoginViewModel.getLoginResponseLiveData();
+        mRegisterResposneLiveData = mRegisterViewModel.getRegisterResponseLiveData();
 
         //initialize the gadgets list
         mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
@@ -228,10 +252,26 @@ public class MainActivity   extends     AppCompatActivity
             }
         });
 
+        mOtherLiveData.observe(this, new Observer<ArrayList<Product>>() {
+            @Override public void onChanged(ArrayList<Product> productsList) {
+                if (null != productsList) {
+                    mOtherProductsAdapter.setProductsList(productsList);
+                    mProductsRecyclerView.setAdapter(mOtherProductsAdapter);
+                }
+            }
+        });
+
         //create observer for login response
-        mLoginLiveData.observe(this, new Observer<Response>(){
+        mLoginResponseLiveData.observe(this, new Observer<Response>(){
             @Override public void onChanged(@Nullable Response response){
-                if (null != response){ setNavViewUserEmail();}
+                if (null != response){ setNavViewUserEmail(response);}
+            }
+        });
+
+        //create observer for login response
+        mRegisterResposneLiveData.observe(this, new Observer<Response>(){
+            @Override public void onChanged(@Nullable Response response){
+                if (null != response){ setNavViewUserEmail(response);}
             }
         });
     }
@@ -239,30 +279,50 @@ public class MainActivity   extends     AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_account:
+            case R.id.nav_account: {
                 startIntentActionWithUserLoggedInCheck(AccountActivity.class);
                 break;
-            case R.id.nav_add:
+            }
+            case R.id.nav_add: {
                 startIntentActionWithUserLoggedInCheck(AddProductActivity.class);
                 break;
-            case R.id.nav_signin:
+            }
+            case R.id.nav_signin: {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
-            case R.id.nav_signup:
+            }
+            case R.id.nav_signup: {
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                 break;
-            case R.id.nav_signout:
+            }
+            case R.id.nav_signout: {
                 mProductsViewModel.signOut();
-                setNavViewUserEmail();
+                setNavViewUserEmail(new Response("", false));
+                Toast.makeText(MainActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
                 break;
+            }
+            case R.id.nav_about: {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                break;
+            }
+            case R.id.nav_contact: {
+                startActivity(new Intent(MainActivity.this, ContactsActivity.class));
+                break;
+            }
         }
 
         return true;
     }
 
-    private void setNavViewUserEmail(){
+    private void setNavViewUserEmail(Response response){
         TextView tvUserEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_alias);
-        tvUserEmail.setText(mProductsViewModel.getUserEmail());
+        if (null != response) {
+            if (response.getmIsSuccessfull()) {
+                tvUserEmail.setText(mProductsViewModel.getUserEmail());
+            } else {
+                tvUserEmail.setText(getString(R.string.nav_header_email));
+            }
+        }
     }
 
     private boolean checkUserIsLoggedIn(){
@@ -310,6 +370,13 @@ public class MainActivity   extends     AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
                 intent.putExtra(getString(R.string.product_info_tag) ,
                         mBikesAdapter.getProductByPosition(adapterPosition));
+                startActivity(intent);
+                break;
+            }
+            case CAT_OTHER:{
+                Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);
+                intent.putExtra(getString(R.string.product_info_tag) ,
+                        mOtherProductsAdapter.getProductByPosition(adapterPosition));
                 startActivity(intent);
                 break;
             }

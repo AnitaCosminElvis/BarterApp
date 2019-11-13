@@ -24,6 +24,7 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 import com.google.firebase.database.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
     private RatingBar                                           mNegativeRatingBar;
     private RatingBar                                           mPozitiveRatingBar;
     private LinearLayout                                        mViewReviewsLinearLayout;
+    private DecimalFormat                                       mDecFormat = new DecimalFormat("#.##");
 
     private static volatile ProfileFragment     mInstance;
 
@@ -60,6 +62,12 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        mReviewViewModel.triggerGetReviewDataByUserId(mProfileViewModel.getUserID());
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -70,6 +78,7 @@ public class ProfileFragment extends Fragment {
 
         mUserProfileLiveData = mProfileViewModel.getUserProfileLiveData();
         mReviewAggregationLiveData = mReviewViewModel.getMutableLiveDataReviewAggregationData();
+
         mReviewViewModel.triggerGetReviewDataByUserId(mProfileViewModel.getUserID());
 
         mReviewAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
@@ -78,10 +87,10 @@ public class ProfileFragment extends Fragment {
                 if (null != userReviewAggregationData){
                     mFlagValueTextView.setText(String.valueOf(userReviewAggregationData.getmNoOfFlaggs()));
                     float ratingAvg = userReviewAggregationData.getmUserRatingAvg();
-                    mRatingValueTextView.setText(String.valueOf(ratingAvg));
+                    mRatingValueTextView.setText(mDecFormat.format(ratingAvg));
                     if (0 > ratingAvg) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(1 + ratingAvg);
+                        mNegativeRatingBar.setRating(2 + ratingAvg);
                     }else{
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(ratingAvg);
@@ -99,7 +108,6 @@ public class ProfileFragment extends Fragment {
                     mAliasTextView.setText(userProfile.getmAlias());
                     mTelNoTextView.setText(userProfile.getmTelNo());
                     mEmailTextView.setText(userProfile.getmEmail());
-                    //ToDo : populate profile
                 }
             }
         });

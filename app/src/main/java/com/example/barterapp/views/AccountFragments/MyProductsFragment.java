@@ -16,15 +16,12 @@ import android.view.ViewGroup;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
-import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.view_models.AccountViewModels.MyProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * A fragment representing a list of Items.
@@ -49,6 +46,12 @@ public class MyProductsFragment extends Fragment {
             mInstance = new MyProductsFragment();
         }
         return mInstance;
+    }
+
+    @Override
+    public void onResume() {
+        mMyProductsViewModel.triggerGetMyProducts();
+        super.onResume();
     }
 
     @Override

@@ -47,6 +47,7 @@ public class AddProductActivity extends AppCompatActivity {
     private float                                               mAvgRatingValue;
     private int                                                 mNoOfFlags;
     private boolean                                             mIsUserRestricted       = false;
+    private boolean                                             mIsInitialState         = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +80,12 @@ public class AddProductActivity extends AppCompatActivity {
         mAddProductResponseLiveData.observe(this, new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
-                if (null != response){
+                if (null != response && !mIsInitialState){
                     Toast.makeText(AddProductActivity.this,
                             response.getmResponseText() , Toast.LENGTH_LONG).show();
+
+                    mContinueBtn.setEnabled(true);
+                    if (response.getmIsSuccessfull()) finish();
                 }
             }
         });
@@ -144,9 +148,17 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
-                mProductViewModel.addProduct(new Product("","","",sTitle,sDescription,
-                        mCategorySpinner.getSelectedItem().toString(),"","",
-                        System.currentTimeMillis()), mImgUri, mVideoUri);
+                try {
+                    mIsInitialState = false;
+                    mContinueBtn.setEnabled(false);
+                    mProductViewModel.addProduct(new Product("","","",sTitle,sDescription,
+                            mCategorySpinner.getSelectedItem().toString(),"","",
+                            System.currentTimeMillis()), mImgUri, mVideoUri);
+                }catch(Exception ex){
+                    mContinueBtn.setEnabled(true);
+                    Toast.makeText(AddProductActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

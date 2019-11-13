@@ -3,10 +3,12 @@ package com.example.barterapp.views;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,11 +58,29 @@ public class ViewMyProductActivity extends AppCompatActivity {
         }
 
         if ((null != mProduct.getVidUriPath()) && (false == mProduct.getVidUriPath().isEmpty())) {
-            Uri vidUri = Uri.parse(mProduct.getVidUriPath());
-            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(mProduct.getVidUriPath(), new HashMap<String, String>());
-            mProductVidImageView.setImageBitmap(
-                    mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
+            mProductVidImageView.setImageResource(R.drawable.ic_view_video_violet_100dp);
         }
+
+        mProductPhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mProduct.getImgUriPath().isEmpty()) return;
+
+                Intent intent = new Intent(ViewMyProductActivity.this, ViewImageActivity.class);
+                intent.putExtra(getString(R.string.view_image_info_tag), mProduct.getImgUriPath());
+                startActivity(intent);
+            }
+        });
+
+        mProductVidImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mProduct.getVidUriPath().isEmpty()) return;
+
+                Intent intent = new Intent(ViewMyProductActivity.this, ViewVideoActivity.class);
+                intent.putExtra(getString(R.string.view_video_info_tag), mProduct.getVidUriPath());
+                startActivity(intent);
+            }
+        });
     }
 }

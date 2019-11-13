@@ -50,6 +50,7 @@ public class OffersFragment extends Fragment {
 
     @Override
     public void onResume() {
+        mMyOffersViewModel.triggerGetMyOffers();
         super.onResume();
     }
 

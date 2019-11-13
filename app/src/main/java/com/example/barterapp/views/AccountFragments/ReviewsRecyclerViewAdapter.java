@@ -67,7 +67,9 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         return mValues.size();
     }
 
-    public void setValues(ArrayList<Offer> values){ mValues = values;}
+    public void setValues(ArrayList<Offer> values){
+        mValues = values;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View           mView;
