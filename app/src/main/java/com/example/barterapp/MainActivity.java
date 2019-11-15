@@ -46,6 +46,8 @@ import javax.annotation.Nullable;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
+
+
 public class MainActivity   extends     AppCompatActivity
                             implements  ProductsAdapter.ItemClickListener,
                                         NavigationView.OnNavigationItemSelectedListener{
