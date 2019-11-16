@@ -45,6 +45,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private TextView                                    mTitleTextView;
     private TextView                                    mDescriptionTextView;
     private TextView                                    mUserReviewValue;
+    private TextView                                    mFlagValueTextView;
     private ImageView                                   mProductPhotoImageView;
     private ImageView                                   mProductVidImageView;
     private RatingBar                                   mNegativeRatingBar;
@@ -78,6 +79,7 @@ public class ViewProductActivity extends AppCompatActivity {
         mTitleTextView = findViewById(R.id.tv_view_product_title);
         mDescriptionTextView = findViewById(R.id.tv_view_product_description);
         mUserReviewValue = findViewById(R.id.tv_prod_view_user_value);
+        mFlagValueTextView = findViewById(R.id.tv_view_product_flag_value);
         mProductPhotoImageView = findViewById(R.id.ib_view_photo);
         mProductVidImageView = findViewById(R.id.ib_view_video);
         mNegativeRatingBar = findViewById(R.id.rb_prod_negative_val);
@@ -113,7 +115,8 @@ public class ViewProductActivity extends AppCompatActivity {
                     mAvgRatingValue = aggregationData.getmUserRatingAvg();
                     mNoOfFlags = aggregationData.getmNoOfFlaggs();
                     mUserReviewValue.setText(mDecFormat.format(mAvgRatingValue));
-
+                    mFlagValueTextView.setText(String.valueOf(mNoOfFlags));
+                    
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
                         mNegativeRatingBar.setRating(2 + mAvgRatingValue);
@@ -135,6 +138,11 @@ public class ViewProductActivity extends AppCompatActivity {
         mUserRatingLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if user isn't signed in return
+                if (!mProductsViewModel.isUserSignedIn()) {
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(ViewProductActivity.this, ReviewsActivity.class);
                 intent.putParcelableArrayListExtra(getString(R.string.view_reviews_info_tag),
                         mReviewAggregationLiveData.getValue().getmUserReviewsList());
@@ -145,6 +153,11 @@ public class ViewProductActivity extends AppCompatActivity {
         mViewUsersProductsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if user isn't signed in return
+                if (!mProductsViewModel.isUserSignedIn()) {
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(ViewProductActivity.this, UserProductsActivity.class);
                 intent.putExtra(getString(R.string.view_products_info_tag), mProduct.getmUserId());
                 startActivity(intent);
@@ -186,6 +199,12 @@ public class ViewProductActivity extends AppCompatActivity {
         mProductPhotoImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if user isn't signed in return
+                if (!mProductsViewModel.isUserSignedIn()) {
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (mProduct.getImgUriPath().isEmpty()) return;
 
                 Intent intent = new Intent(ViewProductActivity.this, ViewImageActivity.class);
@@ -197,6 +216,12 @@ public class ViewProductActivity extends AppCompatActivity {
         mProductVidImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if user isn't signed in return
+                if (!mProductsViewModel.isUserSignedIn()) {
+                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (mProduct.getVidUriPath().isEmpty()) return;
 
                 Intent intent = new Intent(ViewProductActivity.this, ViewVideoActivity.class);

@@ -14,9 +14,6 @@ import android.view.View;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.Product;
-import com.example.barterapp.data.ReviewsAdapter;
-import com.example.barterapp.data.UserProductsAdapter;
-import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 

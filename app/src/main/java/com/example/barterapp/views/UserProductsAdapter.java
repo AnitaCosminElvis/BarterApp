@@ -1,4 +1,4 @@
-package com.example.barterapp.data;
+package com.example.barterapp.views;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
+import com.example.barterapp.data.Product;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

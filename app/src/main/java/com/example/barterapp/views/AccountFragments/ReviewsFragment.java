@@ -67,8 +67,7 @@ public class ReviewsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<Offer> myOffers){
                 if (null != myOffers){
-                    // TODO: check if reallocation is better
-                    mAdapter.setValues(myOffers);// = new ReviewsRecyclerViewAdapter(myOffers,mListener);
+                    mAdapter.setValues(myOffers);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }

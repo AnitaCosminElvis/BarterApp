@@ -9,10 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.barterapp.R;
-import com.example.barterapp.data.ProductsAdapter;
-import com.example.barterapp.data.ReviewsAdapter;
 import com.example.barterapp.data.UserReview;
-import com.example.barterapp.utility.DefinesUtility;
 
 import java.util.ArrayList;
 

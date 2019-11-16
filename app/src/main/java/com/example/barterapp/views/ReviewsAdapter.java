@@ -1,4 +1,4 @@
-package com.example.barterapp.data;
+package com.example.barterapp.views;
 
 import android.content.Context;
 import android.text.method.ScrollingMovementMethod;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
+import com.example.barterapp.data.UserReview;
 
 import java.util.ArrayList;
 

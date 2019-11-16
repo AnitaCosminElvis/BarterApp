@@ -5,7 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.example.barterapp.data.Product;
-import com.example.barterapp.data.ProductsAdapter;
+import com.example.barterapp.views.ProductsAdapter;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ProductsViewModel;
