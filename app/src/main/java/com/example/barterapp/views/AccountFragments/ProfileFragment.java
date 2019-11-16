@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A placeholder fragment containing the user profile view.
  */
 public class ProfileFragment extends Fragment {
     private OnProfileInteractionListener                        mListener;

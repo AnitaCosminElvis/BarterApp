@@ -30,8 +30,6 @@ import com.example.barterapp.view_models.ViewReviewViewModel;
 import static com.example.barterapp.utility.DefinesUtility.*;
 
 public class AddProductActivity extends AppCompatActivity {
-    private static final int                                    PICK_IMG_REQUEST        = 1000;
-    private static final int                                    PICK_VIDEO_REQUEST      = 2000;
     private Uri                                                 mImgUri                 = null;
     private Uri                                                 mVideoUri               = null;
     private AddProductViewModel                                 mProductViewModel;
@@ -103,7 +101,7 @@ public class AddProductActivity extends AppCompatActivity {
                 Intent imgIntent = new Intent();
                 imgIntent.setType("image/*");
                 imgIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(imgIntent,PICK_IMG_REQUEST);
+                startActivityForResult(imgIntent, PICK_IMG_REQUEST);
             }
         });
 

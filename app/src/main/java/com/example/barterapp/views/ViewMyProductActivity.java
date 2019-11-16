@@ -21,7 +21,6 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 public class ViewMyProductActivity extends AppCompatActivity {
-    final String                DATE_FORMAT                     = "EEE MMM dd hh:mm:ss yyyy ";
     TextView                    mDateTextView;
     TextView                    mAliasTextView;
     TextView                    mTitleTextView;
@@ -45,7 +44,7 @@ public class ViewMyProductActivity extends AppCompatActivity {
 
         mProduct  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
-        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp(),DATE_FORMAT));
+        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp()));
         mAliasTextView.setText(mProduct.getAlias());
 
         mTitleTextView.setText(mProduct.getmTitle());

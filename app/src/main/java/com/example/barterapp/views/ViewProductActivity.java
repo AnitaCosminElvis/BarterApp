@@ -36,7 +36,6 @@ import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
 import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
 
 public class ViewProductActivity extends AppCompatActivity {
-    private final String                                DATE_FORMAT                 = "EEE MMM dd hh:mm:ss yyyy ";
     private ProductsViewModel                           mProductsViewModel;
     private ViewReviewViewModel                         mReviewsModel;
     private MutableLiveData<UserReviewAggregationData>  mReviewAggregationLiveData;
@@ -90,7 +89,7 @@ public class ViewProductActivity extends AppCompatActivity {
 
         mProduct = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
-        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp(), DATE_FORMAT));
+        mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp()));
         mAliasTextView.setText(mProduct.getAlias());
 
         mTitleTextView.setText(mProduct.getmTitle());
@@ -116,7 +115,7 @@ public class ViewProductActivity extends AppCompatActivity {
                     mNoOfFlags = aggregationData.getmNoOfFlaggs();
                     mUserReviewValue.setText(mDecFormat.format(mAvgRatingValue));
                     mFlagValueTextView.setText(String.valueOf(mNoOfFlags));
-                    
+
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
                         mNegativeRatingBar.setRating(2 + mAvgRatingValue);

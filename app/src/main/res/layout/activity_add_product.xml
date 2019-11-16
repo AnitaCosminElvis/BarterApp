@@ -110,7 +110,7 @@
         android:layout_marginBottom="@dimen/top"
         android:background="@color/colorAccent"
         android:enabled="true"
-        android:text="@string/action_continue"
+        android:text="@string/action_add"
         android:textColor="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

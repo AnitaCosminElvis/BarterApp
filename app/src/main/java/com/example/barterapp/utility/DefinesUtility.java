@@ -28,7 +28,12 @@ public class DefinesUtility {
     public static final String            CATEGORY_KEY              = "mCategory";
     public static final String            USER_ID_KEY               = "mUserId";
 
+    //Restricted user conditional checks
     public static final float             USER_MIN_RATING_VALUE     = 0;
     public static final int               USER_MAX_NO_OF_FLAGS      = 5;
+
+    //request id's for picking multimedia
+    public static final int               PICK_IMG_REQUEST        = 1000;
+    public static final int               PICK_VIDEO_REQUEST      = 2000;
 
 }
