@@ -107,7 +107,6 @@ public class AuthentificationModel {
                 });
     }
 
-    //ToDO: getUserProfile
     //Gets the Users Profile
     public boolean getUserProfile(){
 

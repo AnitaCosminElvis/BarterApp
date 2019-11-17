@@ -81,7 +81,6 @@ public class OffersModel {
                     public void onSuccess(Void aVoid) {
                         if (isOfferAccepted){
                             mDbProductsCollection.document(offer.getmProductId()).delete();
-                            //TODO do transaction
                         }
                         mSetOfferStateResponseLiveData.setValue(new Response("",true));
                     }
