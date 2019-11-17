@@ -16,20 +16,43 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * The type User products adapter.
+ */
 public class UserProductsAdapter extends RecyclerView.Adapter<UserProductsAdapter.UserProductsViewHolder>  {
     private Context                                     mContext;
     private ArrayList<Product>                          mProductList;
     private UserProductsAdapter.ItemClickListener       mClickListener;
 
+    /**
+     * Instantiates a new User products adapter.
+     *
+     * @param context      the context
+     * @param productsList the products list
+     */
     public UserProductsAdapter(Context context, ArrayList<Product> productsList){
         mContext = context;
         mProductList = productsList;
     }
 
+    /**
+     * The type User products view holder.
+     */
     public class UserProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        /**
+         * The M title text view.
+         */
         public TextView             mTitleTextView;
+        /**
+         * The M product photo image view.
+         */
         public ImageView            mProductPhotoImageView;
 
+        /**
+         * Instantiates a new User products view holder.
+         *
+         * @param itemView the item view
+         */
         public UserProductsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -64,21 +87,46 @@ public class UserProductsAdapter extends RecyclerView.Adapter<UserProductsAdapte
         return mProductList.size();
     }
 
+    /**
+     * Set products list.
+     *
+     * @param productsList the products list
+     */
     public void setProductsList(ArrayList<Product> productsList){
         mProductList = productsList;
     }
 
-    // sets the click listener
+    /**
+     * Sets click listener.
+     *
+     * @param itemClickListener the item click listener
+     */
+// sets the click listener
     public void setClickListener(UserProductsAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
+    /**
+     * Get product by position product.
+     *
+     * @param position the position
+     * @return the product
+     */
     public Product getProductByPosition(int position){
         return mProductList.get(position);
     }
 
-    // parent activity will implement this method to respond to click events
+    /**
+     * The interface Item click listener.
+     */
+// parent activity will implement this method to respond to click events
     public interface ItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param view    the view
+         * @param product the product
+         */
         void onItemClick(View view, Product product);
     }
 }

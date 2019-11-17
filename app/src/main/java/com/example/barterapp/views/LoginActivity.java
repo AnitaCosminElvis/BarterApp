@@ -26,6 +26,9 @@ import com.example.barterapp.view_models.*;
 
 import javax.annotation.Nullable;
 
+/**
+ * The type Login activity.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel              mLoginViewModel;
@@ -38,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button                      mGoogleAccountLoginButton;
     private boolean                     mIsInitialState                  = true;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

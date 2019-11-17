@@ -16,24 +16,56 @@ import com.example.barterapp.data.UserReview;
 
 import java.util.ArrayList;
 
+/**
+ * The type Reviews adapter.
+ */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private Context                                     mContext;
     private ArrayList<UserReview>                       mReviewsList;
     private ReviewsAdapter.ItemClickListener            mClickListener;
 
 
+    /**
+     * Instantiates a new Reviews adapter.
+     *
+     * @param context     the context
+     * @param reviewsList the reviews list
+     */
     public ReviewsAdapter(Context context, ArrayList<UserReview> reviewsList){
         mContext = context;
         mReviewsList = reviewsList;
     }
 
+    /**
+     * The type Review view holder.
+     */
     public class ReviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        /**
+         * The M rating value text view.
+         */
         public TextView             mRatingValueTextView;
+        /**
+         * The M review text view.
+         */
         public TextView             mReviewTextView;
+        /**
+         * The M from alias text view.
+         */
         public TextView             mFromAliasTextView;
+        /**
+         * The M negative rating bar.
+         */
         public RatingBar            mNegativeRatingBar;
+        /**
+         * The M positive rating bar.
+         */
         public RatingBar            mPositiveRatingBar;
 
+        /**
+         * Instantiates a new Review view holder.
+         *
+         * @param itemView the item view
+         */
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -79,21 +111,46 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         return mReviewsList.size();
     }
 
+    /**
+     * Set products list.
+     *
+     * @param reviewssList the reviewss list
+     */
     public void setProductsList(ArrayList<UserReview> reviewssList){
         mReviewsList = reviewssList;
     }
 
-    // sets the click listener
+    /**
+     * Sets click listener.
+     *
+     * @param itemClickListener the item click listener
+     */
+// sets the click listener
     public void setClickListener(ReviewsAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
+    /**
+     * Get product by position user review.
+     *
+     * @param position the position
+     * @return the user review
+     */
     public UserReview getProductByPosition(int position){
         return mReviewsList.get(position);
     }
 
-    // parent activity will implement this method to respond to click events
+    /**
+     * The interface Item click listener.
+     */
+// parent activity will implement this method to respond to click events
     public interface ItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param view            the view
+         * @param adapterPosition the adapter position
+         */
         void onItemClick(View view, int adapterPosition);
     }
 }

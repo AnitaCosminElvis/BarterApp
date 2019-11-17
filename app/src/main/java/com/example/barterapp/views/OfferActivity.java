@@ -23,6 +23,9 @@ import com.example.barterapp.view_models.ViewModelFactory;
 
 import javax.annotation.Nullable;
 
+/**
+ * The type Offer activity.
+ */
 public class OfferActivity extends AppCompatActivity {
     private EditText                            mEmailEditText;
     private EditText                            mMessageEditText;
@@ -34,6 +37,12 @@ public class OfferActivity extends AppCompatActivity {
     private String                              mProductImgUri;
     private boolean                             mInitialState               = true;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

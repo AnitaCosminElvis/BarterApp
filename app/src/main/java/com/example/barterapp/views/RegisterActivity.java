@@ -24,6 +24,9 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import javax.annotation.Nullable;
 
 
+/**
+ * The type Register activity.
+ */
 public class RegisterActivity extends AppCompatActivity {
     private RegisterViewModel   mRegisterViewModel;
     private MutableLiveData     mRegisterResponseLiveData;
@@ -38,6 +41,13 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText            mPassRetypeEdtTxt;
     private CheckBox            mAgreeCkBox;
     private boolean             mIsInitialState                 = true;
+
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * method is used for registering.
      *
-     * @param v
+     * @param v the v
      * @return void
      */
     public void onRegisterBtnClicked(View v) {

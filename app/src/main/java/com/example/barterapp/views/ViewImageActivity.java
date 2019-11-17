@@ -8,10 +8,25 @@ import android.widget.ImageView;
 import com.example.barterapp.R;
 import com.squareup.picasso.Picasso;
 
+/**
+ * The type View image activity.
+ */
 public class ViewImageActivity extends AppCompatActivity {
+    /**
+     * The M image uri.
+     */
     String              mImageUri;
+    /**
+     * The M image view.
+     */
     ImageView           mImageView;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

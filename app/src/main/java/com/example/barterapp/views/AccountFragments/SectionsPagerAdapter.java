@@ -24,6 +24,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private static final int        TAB_COUNT = 4;
     private final Context           mContext;
 
+    /**
+     * initializing class members
+     *
+     * @param context the context
+     * @param fm      the fm
+     * @return null
+     */
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
