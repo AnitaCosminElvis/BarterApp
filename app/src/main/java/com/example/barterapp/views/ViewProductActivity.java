@@ -35,6 +35,9 @@ import java.util.HashMap;
 import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
 import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
 
+/**
+ * The type View product activity.
+ */
 public class ViewProductActivity extends AppCompatActivity {
     private ProductsViewModel                           mProductsViewModel;
     private ViewReviewViewModel                         mReviewsModel;
@@ -58,6 +61,12 @@ public class ViewProductActivity extends AppCompatActivity {
     private boolean                                     mIsUserRestricted       = false;
     private DecimalFormat                               mDecFormat              = new DecimalFormat("#.##");
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

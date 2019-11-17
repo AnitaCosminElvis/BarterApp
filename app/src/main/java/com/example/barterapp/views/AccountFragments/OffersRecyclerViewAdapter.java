@@ -22,6 +22,12 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
     private ArrayList<Offer>                                mValues;
     private final OffersFragment.OnOfferInteractionListener mListener;
 
+    /**
+     * Instantiates a new Offers recycler view adapter.
+     *
+     * @param values   the values
+     * @param listener the listener
+     */
     public OffersRecyclerViewAdapter(ArrayList<Offer> values,OffersFragment.OnOfferInteractionListener listener) {
         mListener = listener;
         mValues = values;
@@ -63,14 +69,39 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
         return mValues.size();
     }
 
+    /**
+     * Set values.
+     *
+     * @param values the values
+     */
     public void setValues(ArrayList<Offer> values){ mValues = values;}
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The M view.
+         */
         public final View               mView;
+        /**
+         * The M alias text view.
+         */
         public final TextView           mAliasTextView;
+        /**
+         * The M product image view.
+         */
         public final ImageView          mProductImageView;
+        /**
+         * The M item.
+         */
         public Offer                    mItem;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param view the view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;

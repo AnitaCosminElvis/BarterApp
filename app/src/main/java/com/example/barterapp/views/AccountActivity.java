@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * The type Account activity.
+ */
 public class AccountActivity extends    AppCompatActivity
                              implements MyProductsFragment.OnMyProductInteractionListener,
                                         OffersFragment.OnOfferInteractionListener,
@@ -28,6 +31,12 @@ public class AccountActivity extends    AppCompatActivity
     private SectionsPagerAdapter    mSectionsPageAdapter;
     private ViewPager               mViewPager;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
