@@ -15,9 +15,6 @@ import java.util.ArrayList;
  * The type My products view model.
  */
 public class MyProductsViewModel extends ViewModel {
-    /**
-     * The M product model.
-     */
     ProductsModel               mProductModel;
 
     /**

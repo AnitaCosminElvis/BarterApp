@@ -26,29 +26,11 @@ import static com.example.barterapp.utility.DefinesUtility.*;
  */
 public class UserProductsActivity   extends AppCompatActivity
                                     implements UserProductsAdapter.ItemClickListener{
-    /**
-     * The M products view model.
-     */
     ProductsViewModel                               mProductsViewModel;
-    /**
-     * The M user products live data.
-     */
     MutableLiveData<ArrayList<Product>>             mUserProductsLiveData;
-    /**
-     * The M user products recycler view.
-     */
     RecyclerView                                    mUserProductsRecyclerView;
-    /**
-     * The M user products adapter.
-     */
     UserProductsAdapter                             mUserProductsAdapter;
-    /**
-     * The M user products.
-     */
     ArrayList<Product>                              mUserProducts           = new ArrayList<>();
-    /**
-     * The M user id.
-     */
     String                                          mUserId;
 
     /**

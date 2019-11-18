@@ -13,18 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.UserReview;
-import com.example.barterapp.utility.OperationsUtility;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import static com.example.barterapp.utility.OperationsUtility.*;
 
-=======
 /**
  * The type Reviews adapter.
  */
->>>>>>> parent of ffd48f8... Revert "Merge branch 'master' of https://github.com/AnitaCosminElvis/BarterApp"
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private Context                                     mContext;
     private ArrayList<UserReview>                       mReviewsList;

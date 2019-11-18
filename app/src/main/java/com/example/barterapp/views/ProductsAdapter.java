@@ -43,13 +43,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
      * The type Product view holder.
      */
     public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        /**
-         * The M title text view.
-         */
         public TextView     mTitleTextView;
-        /**
-         * The M product image view.
-         */
         public ImageView    mProductImageView;
 
         /**

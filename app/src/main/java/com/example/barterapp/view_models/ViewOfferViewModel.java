@@ -12,9 +12,6 @@ import com.example.barterapp.models.ProductsModel;
  * The type View offer view model.
  */
 public class ViewOfferViewModel extends ViewModel {
-    /**
-     * The M offer model.
-     */
     OffersModel                 mOfferModel;
 
     /**

@@ -24,33 +24,12 @@ import java.util.HashMap;
  * The type View my product activity.
  */
 public class ViewMyProductActivity extends AppCompatActivity {
-    /**
-     * The M date text view.
-     */
     TextView                    mDateTextView;
-    /**
-     * The M alias text view.
-     */
     TextView                    mAliasTextView;
-    /**
-     * The M title text view.
-     */
     TextView                    mTitleTextView;
-    /**
-     * The M description text view.
-     */
     TextView                    mDescriptionTextView;
-    /**
-     * The M product photo image view.
-     */
     ImageView                   mProductPhotoImageView;
-    /**
-     * The M product vid image view.
-     */
     ImageView                   mProductVidImageView;
-    /**
-     * The M product.
-     */
     Product                     mProduct;
 
     /**

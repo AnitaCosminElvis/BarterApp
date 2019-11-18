@@ -13,13 +13,7 @@ import com.example.barterapp.models.ReviewsModel;
  * The type View review view model.
  */
 public class ViewReviewViewModel extends ViewModel {
-    /**
-     * The M auth.
-     */
     AuthentificationModel           mAuth;
-    /**
-     * The M reviews model.
-     */
     ReviewsModel                    mReviewsModel;
 
     /**

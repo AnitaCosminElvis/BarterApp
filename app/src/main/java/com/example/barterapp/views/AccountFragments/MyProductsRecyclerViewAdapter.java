@@ -77,21 +77,9 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
      * The type View holder.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The M view.
-         */
         public final View       mView;
-        /**
-         * The M title text view.
-         */
         public final TextView   mTitleTextView;
-        /**
-         * The M image view.
-         */
         public final ImageView  mImageView;
-        /**
-         * The M item.
-         */
         public Product          mItem;
 
         /**

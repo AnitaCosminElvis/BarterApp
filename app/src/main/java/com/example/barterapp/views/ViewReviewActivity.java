@@ -48,10 +48,6 @@ public class ViewReviewActivity extends AppCompatActivity {
     private boolean                     mIsInitialState                         = true;
     private Offer                       mOffer;
     private String                      mReviewedUserId;
-<<<<<<< HEAD
-
-=======
-    private DecimalFormat               mDecFormat                              = new DecimalFormat("#.##");
 
     /**
      * initializing class members
@@ -59,7 +55,6 @@ public class ViewReviewActivity extends AppCompatActivity {
      * @param savedInstanceState
      * @return void
      */
->>>>>>> parent of ffd48f8... Revert "Merge branch 'master' of https://github.com/AnitaCosminElvis/BarterApp"
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

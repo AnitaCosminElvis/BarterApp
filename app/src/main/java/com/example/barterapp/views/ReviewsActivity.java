@@ -18,17 +18,8 @@ import java.util.ArrayList;
  */
 public class ReviewsActivity    extends AppCompatActivity
                                 implements  ReviewsAdapter.ItemClickListener{
-    /**
-     * The M reviews recycler view.
-     */
     RecyclerView                    mReviewsRecyclerView;
-    /**
-     * The M reviews adapter.
-     */
     ReviewsAdapter                  mReviewsAdapter;
-    /**
-     * The M reviews.
-     */
     ArrayList<UserReview>           mReviews;
 
     /**

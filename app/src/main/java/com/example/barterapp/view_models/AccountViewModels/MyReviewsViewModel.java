@@ -12,9 +12,6 @@ import java.util.ArrayList;
  * The type My reviews view model.
  */
 public class MyReviewsViewModel extends ViewModel {
-    /**
-     * The M offers model.
-     */
     OffersModel mOffersModel;
 
     /**

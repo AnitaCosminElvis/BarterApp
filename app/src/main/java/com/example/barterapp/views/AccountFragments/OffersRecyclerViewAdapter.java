@@ -80,21 +80,9 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
      * The type View holder.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The M view.
-         */
         public final View               mView;
-        /**
-         * The M alias text view.
-         */
         public final TextView           mAliasTextView;
-        /**
-         * The M product image view.
-         */
         public final ImageView          mProductImageView;
-        /**
-         * The M item.
-         */
         public Offer                    mItem;
 
         /**

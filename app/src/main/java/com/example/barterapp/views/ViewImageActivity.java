@@ -12,13 +12,7 @@ import com.squareup.picasso.Picasso;
  * The type View image activity.
  */
 public class ViewImageActivity extends AppCompatActivity {
-    /**
-     * The M image uri.
-     */
     String              mImageUri;
-    /**
-     * The M image view.
-     */
     ImageView           mImageView;
 
     /**

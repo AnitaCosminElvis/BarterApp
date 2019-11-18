@@ -16,17 +16,8 @@ import com.example.barterapp.R;
  * The type View video activity.
  */
 public class ViewVideoActivity extends AppCompatActivity {
-    /**
-     * The M video uri.
-     */
     String              mVideoUri;
-    /**
-     * The M video view.
-     */
     VideoView           mVideoView;
-    /**
-     * The M progress bar.
-     */
     ProgressBar         mProgressBar;
 
     /**

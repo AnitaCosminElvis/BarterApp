@@ -87,30 +87,11 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
      * The type View holder.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The M view.
-         */
         public final View           mView;
-        /**
-         * The M to alias.
-         */
         public final TextView       mToAlias;
-        /**
-         * The M from alias.
-         */
         public final TextView       mFromAlias;
-        /**
-         * The M product image view.
-         */
         public final ImageView      mProductImageView;
-        /**
-         * The M offer state image view.
-         */
         public final ImageView      mOfferStateImageView;
-
-        /**
-         * The M item.
-         */
         public Offer mItem;
 
         /**
