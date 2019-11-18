@@ -23,6 +23,7 @@ import com.example.barterapp.data.Product;
 import com.example.barterapp.data.UserReviewAggregationData;
 import com.example.barterapp.utility.DateUtility;
 import com.example.barterapp.utility.DefinesUtility;
+import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 
 import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
 import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
+import static com.example.barterapp.utility.OperationsUtility.getFormatedFloatText;
 
 public class ViewProductActivity extends AppCompatActivity {
     private ProductsViewModel                           mProductsViewModel;
@@ -56,7 +58,6 @@ public class ViewProductActivity extends AppCompatActivity {
     private float                                       mAvgRatingValue;
     private int                                         mNoOfFlags;
     private boolean                                     mIsUserRestricted       = false;
-    private DecimalFormat                               mDecFormat              = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,12 +114,12 @@ public class ViewProductActivity extends AppCompatActivity {
                 if (null != aggregationData) {
                     mAvgRatingValue = aggregationData.getmUserRatingAvg();
                     mNoOfFlags = aggregationData.getmNoOfFlaggs();
-                    mUserReviewValue.setText(mDecFormat.format(mAvgRatingValue));
+                    mUserReviewValue.setText(getFormatedFloatText(mAvgRatingValue));
                     mFlagValueTextView.setText(String.valueOf(mNoOfFlags));
 
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(2 + mAvgRatingValue);
+                        mNegativeRatingBar.setRating(OperationsUtility.inverseFloatValueSign(mAvgRatingValue));
                     } else {
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(mAvgRatingValue);

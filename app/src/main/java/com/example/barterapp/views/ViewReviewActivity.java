@@ -20,10 +20,13 @@ import com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserReview;
+import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 
 import java.text.DecimalFormat;
+
+import static com.example.barterapp.utility.OperationsUtility.*;
 
 
 public class ViewReviewActivity extends AppCompatActivity {
@@ -42,7 +45,7 @@ public class ViewReviewActivity extends AppCompatActivity {
     private boolean                     mIsInitialState                         = true;
     private Offer                       mOffer;
     private String                      mReviewedUserId;
-    private DecimalFormat               mDecFormat                              = new DecimalFormat("#.##");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,11 +87,11 @@ public class ViewReviewActivity extends AppCompatActivity {
                     if (!mOffer.getmProductId().equals(userReview.getmProductId())) return;
 
                     mRatingValue = userReview.getmRatingValue();
-                    mRatingValueTextView.setText(mDecFormat.format(mRatingValue));
+                    mRatingValueTextView.setText(getFormatedFloatText(mRatingValue));
 
                     if (0 > mRatingValue) {
                         mPositiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating((2 + mRatingValue));
+                        mNegativeRatingBar.setRating((inverseFloatValueSign(mRatingValue)));
                     }else{
                         mNegativeRatingBar.setRating(0);
                         mPositiveRatingBar.setRating(mRatingValue);

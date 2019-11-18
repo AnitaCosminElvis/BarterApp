@@ -19,6 +19,7 @@ import com.example.barterapp.R;
 import com.example.barterapp.data.UserProfile;
 import com.example.barterapp.data.UserReview;
 import com.example.barterapp.data.UserReviewAggregationData;
+import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
@@ -26,6 +27,8 @@ import com.google.firebase.database.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import static com.example.barterapp.utility.OperationsUtility.*;
 
 /**
  * A placeholder fragment containing the user profile view.
@@ -90,7 +93,7 @@ public class ProfileFragment extends Fragment {
                     mRatingValueTextView.setText(mDecFormat.format(ratingAvg));
                     if (0 > ratingAvg) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(2 + ratingAvg);
+                        mNegativeRatingBar.setRating(inverseFloatValueSign(ratingAvg));
                     }else{
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(ratingAvg);

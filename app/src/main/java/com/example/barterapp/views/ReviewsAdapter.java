@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.data.UserReview;
+import com.example.barterapp.utility.OperationsUtility;
 
 import java.util.ArrayList;
+
+import static com.example.barterapp.utility.OperationsUtility.*;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private Context                                     mContext;
@@ -67,7 +70,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         holder.mFromAliasTextView.setText(currentReview.getmFromAlias());
         if (0 > currentReview.getmRatingValue()) {
             holder.mPositiveRatingBar.setRating(0);
-            holder.mNegativeRatingBar.setRating(2 + currentReview.getmRatingValue());
+            holder.mNegativeRatingBar.setRating(inverseFloatValueSign(currentReview.getmRatingValue()));
         }else{
             holder.mNegativeRatingBar.setRating(0);
             holder.mPositiveRatingBar.setRating(currentReview.getmRatingValue());

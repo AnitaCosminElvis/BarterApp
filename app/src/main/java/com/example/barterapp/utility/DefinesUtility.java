@@ -36,4 +36,8 @@ public class DefinesUtility {
     public static final int               PICK_IMG_REQUEST        = 1000;
     public static final int               PICK_VIDEO_REQUEST      = 2000;
 
+    //general defines
+    public static final String            DEC_FORMAT              = "#.##";
+
+
 }
