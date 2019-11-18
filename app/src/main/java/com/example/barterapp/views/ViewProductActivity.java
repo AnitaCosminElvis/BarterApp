@@ -37,6 +37,9 @@ import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
 import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
 import static com.example.barterapp.utility.OperationsUtility.getFormatedFloatText;
 
+/**
+ * The type View product activity.
+ */
 public class ViewProductActivity extends AppCompatActivity {
     private ProductsViewModel                           mProductsViewModel;
     private ViewReviewViewModel                         mReviewsModel;
@@ -59,6 +62,12 @@ public class ViewProductActivity extends AppCompatActivity {
     private int                                         mNoOfFlags;
     private boolean                                     mIsUserRestricted       = false;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

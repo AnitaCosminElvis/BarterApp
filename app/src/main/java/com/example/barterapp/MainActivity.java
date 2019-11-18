@@ -47,7 +47,10 @@ import javax.annotation.Nullable;
 import static com.example.barterapp.utility.DefinesUtility.*;
 
 
-
+/**
+ * Main activity is the launcher activity, and it exposes the products categories
+ * through a Tab Layout in a two columns grid Recycler View
+ */
 public class MainActivity   extends     AppCompatActivity
                             implements  ProductsAdapter.ItemClickListener,
                                         NavigationView.OnNavigationItemSelectedListener{
@@ -73,13 +76,140 @@ public class MainActivity   extends     AppCompatActivity
     private TabLayout                               mProductsCatTabLayout;
     private int                                     mCurrentTabPosition             = 0;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        initProductAdaptersPerCategory();
+        initRecyclerView();
+        intiViewModels();
+        initLiveData();
+        createObserversForMutableLiveData();
+        setAddProductFloatingActionButtonOnClickListener();
+        initMainMenu();
+        setProductsTabLayoutListener();
 
+        //initialize the gadgets list
+        mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
+
+        //sign out from any logged account
+        mProductsViewModel.signOut();
+    }
+
+    /**
+     * Sets Products Tab Layout Listener
+     *
+     * @return void
+     */
+    private void setProductsTabLayoutListener() {
+        mProductsCatTabLayout = findViewById(R.id.tab_product_category);
+
+        mProductsCatTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override public void onTabSelected(TabLayout.Tab tab) {
+                mCurrentTabPosition = tab.getPosition();
+                refreshProductsAdapterByCurrentPosition();
+            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) { }
+            @Override public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    /**
+     * Initializes the Main Menu
+     *
+     * @return void
+     */
+    private void initMainMenu() {
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        mDrawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(
+                this, mDrawer, mToolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        mDrawer.setDrawerListener(toogle);
+        toogle.syncState();
+
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
+
+    /**
+     * Set the Add Product Floating Action Button On Click Listener
+     *
+     * @return void
+     */
+    private void setAddProductFloatingActionButtonOnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                startIntentActionWithUserLoggedInCheck(AddProductActivity.class);
+            }
+        });
+    }
+
+    /**
+     * Initializes the Live Data class members
+     *
+     * @return void
+     */
+    private void initLiveData() {
+        //getting products live data
+        mGadgetsLiveData = mProductsViewModel.getGadgetsLiveData();
+        mClothesLiveData = mProductsViewModel.getClothesLiveData();
+        mToolsLiveData = mProductsViewModel.getToolsLiveData();
+        mBikesLiveData = mProductsViewModel.getBikesLiveData();
+        mOtherLiveData = mProductsViewModel.getOtherProductsLiveData();
+
+        //get responses live data
+        mLoginResponseLiveData = mLoginViewModel.getLoginResponseLiveData();
+        mRegisterResposneLiveData = mRegisterViewModel.getRegisterResponseLiveData();
+    }
+
+    /**
+     * Initializes the view models
+     *
+     * @return void
+     */
+    private void intiViewModels() {
+        //create the view model
+        mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(ProductsViewModel.class);
+
+        //create login view model
+        mLoginViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(LoginViewModel.class);
+
+        //create register view model
+        mRegisterViewModel = ViewModelProviders.of(this, new ViewModelFactory())
+                .get(RegisterViewModel.class);
+    }
+
+    /**
+     * Initializes the Recycler View
+     *
+     * @return void
+     */
+    private void initRecyclerView() {
+        mProductsRecyclerView = findViewById(R.id.rv_products);
+        mProductsRecyclerView.setHasFixedSize(true);
+        mProductsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //set the default adapter
+        mProductsRecyclerView.setAdapter(mGadgetsAdapter);
+    }
+
+    /**
+     * Initializes the Product Adapters Per Category
+     *
+     * @return void
+     */
+    private void initProductAdaptersPerCategory() {
         //allocate the adapters
         mGadgetsAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_GADGETS);
         mClothesAdapter = new ProductsAdapter(this, new ArrayList<Product>(), CAT_CLOTHES);
@@ -93,74 +223,13 @@ public class MainActivity   extends     AppCompatActivity
         mClothesAdapter.setClickListener(this);
         mBikesAdapter.setClickListener(this);
         mOtherProductsAdapter.setClickListener(this);
-
-        mProductsRecyclerView = findViewById(R.id.rv_products);
-        mProductsRecyclerView.setHasFixedSize(true);
-        mProductsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        //set the default adapter
-        mProductsRecyclerView.setAdapter(mGadgetsAdapter);
-
-        //create the view model
-        mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(ProductsViewModel.class);
-
-        //create login view model
-        mLoginViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(LoginViewModel.class);
-
-        //create register view model
-        mRegisterViewModel = ViewModelProviders.of(this, new ViewModelFactory())
-                .get(RegisterViewModel.class);
-
-        //getting products live data
-        mGadgetsLiveData = mProductsViewModel.getGadgetsLiveData();
-        mClothesLiveData = mProductsViewModel.getClothesLiveData();
-        mToolsLiveData = mProductsViewModel.getToolsLiveData();
-        mBikesLiveData = mProductsViewModel.getBikesLiveData();
-        mOtherLiveData = mProductsViewModel.getOtherProductsLiveData();
-
-        mLoginResponseLiveData = mLoginViewModel.getLoginResponseLiveData();
-        mRegisterResposneLiveData = mRegisterViewModel.getRegisterResponseLiveData();
-
-        //initialize the gadgets list
-        mProductsViewModel.triggerGetProductsByCategory(CATEGORY_KEY, CAT_GADGETS);
-
-        createObserversForMutableLiveData();
-
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                startIntentActionWithUserLoggedInCheck(AddProductActivity.class);
-            }
-        });
-
-        mDrawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(
-                this, mDrawer, mToolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
-        mDrawer.setDrawerListener(toogle);
-        toogle.syncState();
-
-        mNavigationView = findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        mProductsCatTabLayout = findViewById(R.id.tab_product_category);
-
-        mProductsCatTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-            @Override public void onTabSelected(TabLayout.Tab tab) {
-                mCurrentTabPosition = tab.getPosition();
-                refreshProductsAdapterByCurrentPosition();
-            }
-            @Override public void onTabUnselected(TabLayout.Tab tab) { }
-            @Override public void onTabReselected(TabLayout.Tab tab) { }
-        });
-
-        //sign out from any logged account
-        mProductsViewModel.signOut();
     }
 
+    /**
+     * Refreshes Products Adapter By Current Position
+     *
+     * @return void
+     */
     private void refreshProductsAdapterByCurrentPosition() {
         switch (mCurrentTabPosition){
             case 0:{//Gadgets
@@ -193,12 +262,22 @@ public class MainActivity   extends     AppCompatActivity
         }
     }
 
+    /**
+     * On Resume triggers a refresh
+     *
+     * @return void
+     */
     @Override
     public void onResume() {
         refreshProductsAdapterByCurrentPosition();
         super.onResume();
     }
 
+    /**
+     * On Destroy automatically signs out
+     *
+     * @return void
+     */
     @Override
     public void onDestroy(){
         //sign out from any logged account
@@ -206,6 +285,11 @@ public class MainActivity   extends     AppCompatActivity
         super.onDestroy();
     }
 
+    /**
+     * On Back Pressed callback
+     *
+     * @return void
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -216,6 +300,11 @@ public class MainActivity   extends     AppCompatActivity
         }
     }
 
+    /**
+     * Creates Observers For MutableLiveData class members
+     *
+     * @return void
+     */
     private void createObserversForMutableLiveData() {
         //create observers for the products
         mGadgetsLiveData.observe(this, new Observer<ArrayList<Product>>() {
@@ -226,7 +315,6 @@ public class MainActivity   extends     AppCompatActivity
                 }
             }
         });
-
         mClothesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList){
@@ -235,7 +323,6 @@ public class MainActivity   extends     AppCompatActivity
                 }
             }
         });
-
         mToolsLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList){
@@ -244,7 +331,6 @@ public class MainActivity   extends     AppCompatActivity
                 }
             }
         });
-
         mBikesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList) {
@@ -253,7 +339,6 @@ public class MainActivity   extends     AppCompatActivity
                 }
             }
         });
-
         mOtherLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList) {
@@ -262,14 +347,12 @@ public class MainActivity   extends     AppCompatActivity
                 }
             }
         });
-
         //create observer for login response
         mLoginResponseLiveData.observe(this, new Observer<Response>(){
             @Override public void onChanged(@Nullable Response response){
                 if (null != response){ setNavViewUserEmail(response);}
             }
         });
-
         //create observer for login response
         mRegisterResposneLiveData.observe(this, new Observer<Response>(){
             @Override public void onChanged(@Nullable Response response){
@@ -278,6 +361,11 @@ public class MainActivity   extends     AppCompatActivity
         });
     }
 
+    /**
+     * The main menu item selection triggers
+     *
+     * @return void
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -316,6 +404,13 @@ public class MainActivity   extends     AppCompatActivity
         return true;
     }
 
+
+    /**
+     * Sets the Navigation View tag with the User's Email
+     *
+     * @param response
+     * @return void
+     */
     private void setNavViewUserEmail(Response response){
         TextView tvUserEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_alias);
         if (null != response) {
@@ -327,6 +422,11 @@ public class MainActivity   extends     AppCompatActivity
         }
     }
 
+    /**
+     * Checks if the User Is Logged In
+     *
+     * @return boolean
+     */
     private boolean checkUserIsLoggedIn(){
         boolean bIsSignedIn = mProductsViewModel.isUserSignedIn();
 
@@ -337,15 +437,26 @@ public class MainActivity   extends     AppCompatActivity
         return bIsSignedIn;
     }
 
+    /**
+     * Starts Intent Action With User Logged In Check
+     *
+     * @param destClass
+     * @return void
+     */
     private void startIntentActionWithUserLoggedInCheck(Class destClass){
         if (false == checkUserIsLoggedIn()) return;
 
         startActivity(new Intent(MainActivity.this, destClass));
     }
 
+    /**
+     * On Item click Listener for starting a new intent action to view the selected product
+     *
+     * @param view, adapterPosition, category
+     * @return void
+     */
     @Override
     public void onItemClick(View view, int adapterPosition, String category) {
-        //ToDo: inflate product description by category
         switch(category){
             case CAT_GADGETS:{
                 Intent intent = new Intent(MainActivity.this, ViewProductActivity.class);

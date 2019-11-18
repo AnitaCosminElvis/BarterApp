@@ -29,6 +29,9 @@ import com.example.barterapp.view_models.ViewReviewViewModel;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
+/**
+ * The type Add product activity.
+ */
 public class AddProductActivity extends AppCompatActivity {
     private Uri                                                 mImgUri                 = null;
     private Uri                                                 mVideoUri               = null;
@@ -47,6 +50,12 @@ public class AddProductActivity extends AppCompatActivity {
     private boolean                                             mIsUserRestricted       = false;
     private boolean                                             mIsInitialState         = true;
 
+    /**
+     * initializing class members
+     *
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
