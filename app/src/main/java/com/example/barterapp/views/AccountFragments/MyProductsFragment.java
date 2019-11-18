@@ -40,11 +40,6 @@ public class MyProductsFragment extends Fragment {
     private MyProductsFragment() {
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     @SuppressWarnings("unused")
     public static synchronized MyProductsFragment getInstance() {
         if (mInstance == null) {
@@ -59,12 +54,6 @@ public class MyProductsFragment extends Fragment {
         super.onResume();
     }
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,11 +120,6 @@ public class MyProductsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnMyProductInteractionListener {
-        /**
-         * On my product interaction listener.
-         *
-         * @param item the item
-         */
         void OnMyProductInteractionListener(Product item);
     }
 }

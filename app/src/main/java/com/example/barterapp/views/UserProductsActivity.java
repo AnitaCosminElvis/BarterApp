@@ -21,42 +21,15 @@ import java.util.ArrayList;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
-/**
- * The type User products activity.
- */
 public class UserProductsActivity   extends AppCompatActivity
                                     implements UserProductsAdapter.ItemClickListener{
-    /**
-     * The M products view model.
-     */
     ProductsViewModel                               mProductsViewModel;
-    /**
-     * The M user products live data.
-     */
     MutableLiveData<ArrayList<Product>>             mUserProductsLiveData;
-    /**
-     * The M user products recycler view.
-     */
     RecyclerView                                    mUserProductsRecyclerView;
-    /**
-     * The M user products adapter.
-     */
     UserProductsAdapter                             mUserProductsAdapter;
-    /**
-     * The M user products.
-     */
     ArrayList<Product>                              mUserProducts           = new ArrayList<>();
-    /**
-     * The M user id.
-     */
     String                                          mUserId;
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

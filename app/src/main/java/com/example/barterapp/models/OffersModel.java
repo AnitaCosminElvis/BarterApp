@@ -19,9 +19,6 @@ import java.util.ArrayList;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
-/**
- * The type Offers model.
- */
 public class OffersModel {
     private static volatile OffersModel         mInstance;
     private CollectionReference                 mDbOffersCollection;
@@ -42,11 +39,6 @@ public class OffersModel {
         mDbProductsCollection = FirebaseFirestore.getInstance().collection(PRODUCTS_COLLECTION);
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     public static synchronized OffersModel getInstance() {
         if (mInstance == null) {
             mInstance = new OffersModel();
@@ -54,39 +46,11 @@ public class OffersModel {
         return mInstance;
     }
 
-    /**
-     * Get mutable live data offer response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataOfferResponse(){ return mOfferResponseLiveData; }
-
-    /**
-     * Get mutable live data my offers list mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersList(){ return mMyOffersListLiveData; }
-
-    /**
-     * Get mutable live data my offers history list mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersHistoryList(){ return mMyOffersHistoryListLiveData; }
-
-    /**
-     * Gets offer state response live data.
-     *
-     * @return the offer state response live data
-     */
     public MutableLiveData<Response> getOfferStateResponseLiveData() { return mSetOfferStateResponseLiveData; }
 
-    /**
-     * Create offer.
-     *
-     * @param offer the offer
-     */
     public void createOffer(Offer offer) {
         offer.setmFromUserId(mAuth.getCurrentUser().getUid());
         offer.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
@@ -105,12 +69,6 @@ public class OffersModel {
         });
     }
 
-    /**
-     * Set offer state.
-     *
-     * @param offer           the offer
-     * @param isOfferAccepted the is offer accepted
-     */
     public void setOfferState(Offer offer, boolean isOfferAccepted){
         offer.setmIsPending(false);
         offer.setmIsAccepted(isOfferAccepted);
@@ -123,6 +81,7 @@ public class OffersModel {
                     public void onSuccess(Void aVoid) {
                         if (isOfferAccepted){
                             mDbProductsCollection.document(offer.getmProductId()).delete();
+                            //TODO do transaction
                         }
                         mSetOfferStateResponseLiveData.setValue(new Response("",true));
                     }
@@ -135,9 +94,6 @@ public class OffersModel {
                 });
     }
 
-    /**
-     * Trigger get my offers.
-     */
     public void triggerGetMyOffers(){
         if (null != mGetMyOffersTask && !mGetMyOffersTask.isComplete()) return;
 
@@ -157,9 +113,6 @@ public class OffersModel {
         });
     }
 
-    /**
-     * Trigger get my offers history.
-     */
     synchronized public void triggerGetMyOffersHistory(){
         if (null != mGetOffersHistoryTask && !mGetOffersHistoryTask.isComplete()) return;
 

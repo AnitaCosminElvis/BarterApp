@@ -19,9 +19,6 @@ import com.example.barterapp.view_models.ForgotPassViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.google.firebase.database.annotations.Nullable;
 
-/**
- * The type Forgot pass activity.
- */
 public class ForgotPassActivity extends AppCompatActivity {
     private ForgotPassViewModel         mForgotPassViewModel;
     private MutableLiveData<Response>   mResetPassResponseLiveData;
@@ -29,12 +26,6 @@ public class ForgotPassActivity extends AppCompatActivity {
     private Button                      mResetPassBtn;
     private boolean                     mIsInitialState = true;
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,9 +15,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * The type Authentification model.
- */
 public class AuthentificationModel {
     private static volatile AuthentificationModel   mInstance;
     private FirebaseAuth                            mAuth;
@@ -34,11 +31,6 @@ public class AuthentificationModel {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     public static synchronized AuthentificationModel getInstance() {
         if (mInstance == null) {
             mInstance = new AuthentificationModel();
@@ -46,40 +38,11 @@ public class AuthentificationModel {
         return mInstance;
     }
 
-    /**
-     * Get mutable live data login response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataLoginResponse(){ return mLoginResponseLiveData; }
-
-    /**
-     * Get mutable live data register response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataRegisterResponse(){ return mRegisterResponseLiveData; }
-
-    /**
-     * Get mutable live data reset pass mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataResetPass(){ return mResetPassResponseLiveData; }
-
-    /**
-     * Get mutable live data user profile mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<UserProfile> getMutableLiveDataUserProfile(){ return mUserProfileLiceData; }
 
-    /**
-     * Sign in.
-     *
-     * @param email the email
-     * @param pass  the pass
-     */
     public void signIn(String email, String pass) {
 
         mAuth.signInWithEmailAndPassword(email, pass)
@@ -98,13 +61,7 @@ public class AuthentificationModel {
                 });
     }
 
-    /**
-     * Sign up.
-     *
-     * @param userProfile the user profile
-     * @param pass        the pass
-     */
-//Registers the a new user according to the profile and password
+    //Registers the a new user according to the profile and password
     public void signUp(UserProfile userProfile, String pass) {
         mAuth.createUserWithEmailAndPassword(userProfile.getmEmail(), pass)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -134,12 +91,7 @@ public class AuthentificationModel {
         });
     }
 
-    /**
-     * Reset password.
-     *
-     * @param email the email
-     */
-//Resets the password on the desired email address
+    //Resets the password on the desired email address
     public void resetPassword(String email){
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -155,12 +107,8 @@ public class AuthentificationModel {
                 });
     }
 
-    /**
-     * Get user profile boolean.
-     *
-     * @return the boolean
-     */
-//Gets the Users Profile
+    //ToDO: getUserProfile
+    //Gets the Users Profile
     public boolean getUserProfile(){
 
         //if not signed in, no use of continuing
@@ -182,21 +130,13 @@ public class AuthentificationModel {
         return true;
     }
 
-    /**
-     * Sign out.
-     */
-//Signs out from the current user
+    //Signs out from the current user
     public void signOut(){
         if (null != mAuth) {
             mAuth.signOut();
         }
     }
 
-    /**
-     * Get user email string.
-     *
-     * @return the string
-     */
     public String getUserEmail(){
         String userEmail = "anonymous@user.com";
 
@@ -207,11 +147,6 @@ public class AuthentificationModel {
         return userEmail;
     }
 
-    /**
-     * Get user alias string.
-     *
-     * @return the string
-     */
     public String getUserAlias(){
         String userAlias = "anonymous";
 
@@ -222,20 +157,10 @@ public class AuthentificationModel {
         return userAlias;
     }
 
-    /**
-     * Is user signed in boolean.
-     *
-     * @return the boolean
-     */
     public boolean isUserSignedIn(){
         if (null != mAuth.getCurrentUser()) return true;
         else return false;
     }
 
-    /**
-     * Gets current user id.
-     *
-     * @return the current user id
-     */
     public String getCurrentUserId() { return mAuth.getCurrentUser().getUid(); }
 }

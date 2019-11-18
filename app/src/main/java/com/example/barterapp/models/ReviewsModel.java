@@ -20,9 +20,6 @@ import java.util.ArrayList;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
-/**
- * The type Reviews model.
- */
 public class ReviewsModel {
     private static volatile ReviewsModel                mInstance;
     private final CollectionReference                   mDbReviewsCollection;
@@ -36,11 +33,6 @@ public class ReviewsModel {
         mDbReviewsCollection = FirebaseFirestore.getInstance().collection(REVIEWS_COLLECTION);
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     public static synchronized ReviewsModel getInstance() {
         if (mInstance == null) {
             mInstance = new ReviewsModel();
@@ -48,35 +40,12 @@ public class ReviewsModel {
         return mInstance;
     }
 
-    /**
-     * Get mutable live set review response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveSetReviewResponse(){ return mSetReviewResponseLiveData; }
-
-    /**
-     * Gets mutable live data user reviews.
-     *
-     * @return the mutable live data user reviews
-     */
     public MutableLiveData<UserReview> getMutableLiveDataUserReviews() { return mUserReviewsLiveData; }
-
-    /**
-     * Gets mutable live data user review aggregation data.
-     *
-     * @return the mutable live data user review aggregation data
-     */
     public MutableLiveData<UserReviewAggregationData> getMutableLiveDataUserReviewAggregationData() {
         return mUserReviewsAggregationData;
     }
 
-    /**
-     * Trigger get review by user id and product id.
-     *
-     * @param userId    the user id
-     * @param productId the product id
-     */
     public void triggerGetReviewByUserIdAndProductId(String userId, String productId){
         mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION)
         .whereEqualTo(PRODUCT_ID,productId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -96,13 +65,6 @@ public class ReviewsModel {
         });
     }
 
-    /**
-     * Sets user review by user id and product id.
-     *
-     * @param userRev the user rev
-     * @param userId  the user id
-     * @param prodId  the prod id
-     */
     public void setUserReviewByUserIdAndProductId(UserReview userRev, String userId, String prodId) {
         userRev.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
         mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION).document(prodId)
@@ -120,11 +82,6 @@ public class ReviewsModel {
         });
     }
 
-    /**
-     * Trigger get user review data.
-     *
-     * @param userId the user id
-     */
     public void triggerGetUserReviewData(String userId) {
         mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION)
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

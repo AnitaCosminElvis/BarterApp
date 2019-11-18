@@ -19,9 +19,6 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewOfferViewModel;
 import com.squareup.picasso.Picasso;
 
-/**
- * The type View offer activity.
- */
 public class ViewOfferActivity extends AppCompatActivity {
     private MutableLiveData<Response>   mSetOfferStateResponseLiveData;
     private ViewOfferViewModel          mViewOfferViewModel;
@@ -34,12 +31,6 @@ public class ViewOfferActivity extends AppCompatActivity {
     private Button                      mAcceptBtn;
     private boolean                     mCanFinish                            = false;
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

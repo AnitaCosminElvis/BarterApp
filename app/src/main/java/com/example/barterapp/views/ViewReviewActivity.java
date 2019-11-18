@@ -26,9 +26,6 @@ import com.example.barterapp.view_models.ViewReviewViewModel;
 import java.text.DecimalFormat;
 
 
-/**
- * The type View review activity.
- */
 public class ViewReviewActivity extends AppCompatActivity {
     private ViewReviewViewModel         mViewReviewViewModel;
     private MutableLiveData<Response>   mSetReviewResponseLiveData;
@@ -46,13 +43,6 @@ public class ViewReviewActivity extends AppCompatActivity {
     private Offer                       mOffer;
     private String                      mReviewedUserId;
     private DecimalFormat               mDecFormat                              = new DecimalFormat("#.##");
-
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

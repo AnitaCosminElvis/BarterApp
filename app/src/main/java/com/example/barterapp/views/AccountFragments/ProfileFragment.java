@@ -53,11 +53,6 @@ public class ProfileFragment extends Fragment {
     private ProfileFragment() {
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     @SuppressWarnings("unused")
     public static synchronized ProfileFragment getInstance() {
         if (mInstance == null) {
@@ -72,12 +67,6 @@ public class ProfileFragment extends Fragment {
         super.onResume();
     }
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,15 +158,7 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * The interface On profile interaction listener.
-     */
     public interface OnProfileInteractionListener {
-        /**
-         * On profile interaction listener.
-         *
-         * @param reviews the reviews
-         */
         void OnProfileInteractionListener(ArrayList<UserReview> reviews);
     }
 }

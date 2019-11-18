@@ -24,13 +24,6 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
     private ArrayList<Offer>                        mValues;
     private final OnHistoryInteractionListener      mListener;
 
-    /**
-     * initializing class members
-     *
-     * @param values   the values
-     * @param listener the listener
-     * @return void
-     */
     public ReviewsRecyclerViewAdapter(ArrayList<Offer> values, OnHistoryInteractionListener listener) {
         mListener = listener;
         mValues = values;
@@ -74,50 +67,19 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         return mValues.size();
     }
 
-    /**
-     * Set values.
-     *
-     * @param values the values
-     */
     public void setValues(ArrayList<Offer> values){
         mValues = values;
     }
 
-    /**
-     * The type View holder.
-     */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The M view.
-         */
         public final View           mView;
-        /**
-         * The M to alias.
-         */
         public final TextView       mToAlias;
-        /**
-         * The M from alias.
-         */
         public final TextView       mFromAlias;
-        /**
-         * The M product image view.
-         */
         public final ImageView      mProductImageView;
-        /**
-         * The M offer state image view.
-         */
         public final ImageView      mOfferStateImageView;
 
-        /**
-         * The M item.
-         */
         public Offer mItem;
 
-        /**
-         * Instantiates a new View holder.
-         *
-         * @param view the view
-         */
         public ViewHolder(View view) {
             super(view);
             mView = view;

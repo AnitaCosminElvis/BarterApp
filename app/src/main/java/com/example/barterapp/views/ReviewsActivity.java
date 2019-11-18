@@ -13,30 +13,11 @@ import com.example.barterapp.data.UserReview;
 
 import java.util.ArrayList;
 
-/**
- * The type Reviews activity.
- */
 public class ReviewsActivity    extends AppCompatActivity
                                 implements  ReviewsAdapter.ItemClickListener{
-    /**
-     * The M reviews recycler view.
-     */
     RecyclerView                    mReviewsRecyclerView;
-    /**
-     * The M reviews adapter.
-     */
     ReviewsAdapter                  mReviewsAdapter;
-    /**
-     * The M reviews.
-     */
     ArrayList<UserReview>           mReviews;
-
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

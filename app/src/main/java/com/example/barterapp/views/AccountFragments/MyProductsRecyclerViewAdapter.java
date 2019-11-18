@@ -23,11 +23,6 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
     private ArrayList<Product> mValues         = new ArrayList<>();
     private final MyProductsFragment.OnMyProductInteractionListener mListener;
 
-    /**
-     * Instantiates a new My products recycler view adapter.
-     *
-     * @param listener the listener
-     */
     public MyProductsRecyclerViewAdapter(MyProductsFragment.OnMyProductInteractionListener listener) {
         mListener = listener;
     }
@@ -64,41 +59,16 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
         return mValues.size();
     }
 
-    /**
-     * Sets values.
-     *
-     * @param myProducts the my products
-     */
     public void setValues(ArrayList<Product> myProducts) {
         mValues = myProducts;
     }
 
-    /**
-     * The type View holder.
-     */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The M view.
-         */
         public final View       mView;
-        /**
-         * The M title text view.
-         */
         public final TextView   mTitleTextView;
-        /**
-         * The M image view.
-         */
         public final ImageView  mImageView;
-        /**
-         * The M item.
-         */
         public Product          mItem;
 
-        /**
-         * Instantiates a new View holder.
-         *
-         * @param view the view
-         */
         public ViewHolder(View view) {
             super(view);
             mView = view;

@@ -28,9 +28,6 @@ import java.util.ArrayList;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
-/**
- * The type Products model.
- */
 public class ProductsModel {
     private static volatile ProductsModel       mInstance;
     private FirebaseAuth                        mAuth;
@@ -48,67 +45,14 @@ public class ProductsModel {
     private MutableLiveData<ArrayList<Product>> mUserProductsLiveData              = new MutableLiveData<>();
 
 
-    /**
-     * Get mutable live data add product response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataAddProductResponse(){ return mAddProductResponseLiveData; }
-
-    /**
-     * Get mutable live data list products response mutable live data.
-     *
-     * @return the mutable live data
-     */
     public MutableLiveData<Response> getMutableLiveDataListProductsResponse(){ return mListProductsResponseLiveData; }
-
-    /**
-     * Gets mutable live data gadgets changed.
-     *
-     * @return the mutable live data gadgets changed
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataGadgetsChanged() { return mGadgetsLiveData; }
-
-    /**
-     * Gets mutable live data clothes changed.
-     *
-     * @return the mutable live data clothes changed
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() { return mClothesLiveData; }
-
-    /**
-     * Gets mutable live data tools changed.
-     *
-     * @return the mutable live data tools changed
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() { return mToolsLiveData; }
-
-    /**
-     * Gets mutable live data bikes changed.
-     *
-     * @return the mutable live data bikes changed
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() { return mBikesLiveData; }
-
-    /**
-     * Gets mutable live data other changed.
-     *
-     * @return the mutable live data other changed
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataOtherChanged() { return mOtherProductsLiveData; }
-
-    /**
-     * Gets mutable live data my products.
-     *
-     * @return the mutable live data my products
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataMyProducts() { return mMyProductsLiveData; }
-
-    /**
-     * Gets mutable live data user products.
-     *
-     * @return the mutable live data user products
-     */
     public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProducts() { return mUserProductsLiveData; }
 
     // private constructor : singleton access
@@ -128,11 +72,6 @@ public class ProductsModel {
 
     }
 
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     public static synchronized ProductsModel getInstance() {
         if (mInstance == null) {
             mInstance = new ProductsModel();
@@ -140,9 +79,6 @@ public class ProductsModel {
         return mInstance;
     }
 
-    /**
-     * Trigger get my products.
-     */
     public void triggerGetMyProducts(){
         mDbProductsCollection.whereEqualTo(USER_ID_KEY, mAuth.getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -162,12 +98,6 @@ public class ProductsModel {
         });
     }
 
-    /**
-     * Trigger get products by user id.
-     *
-     * @param userIdKey the user id key
-     * @param userId    the user id
-     */
     public void triggerGetProductsByUserId(String userIdKey, String userId){
         mDbProductsCollection.whereEqualTo(userIdKey, userId)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -188,13 +118,7 @@ public class ProductsModel {
     }
 
 
-    /**
-     * Trigger get products by category.
-     *
-     * @param key       the key
-     * @param filterVal the filter val
-     */
-    public void triggerGetProductsByCategory(String key, String filterVal){
+        public void triggerGetProductsByCategory(String key, String filterVal){
         mDbProductsCollection.whereEqualTo(key, filterVal)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -238,13 +162,6 @@ public class ProductsModel {
         }
     }
 
-    /**
-     * Add product with multimedia.
-     *
-     * @param product the product
-     * @param imgUri  the img uri
-     * @param vidUri  the vid uri
-     */
     public void addProductWithMultimedia(Product product, Uri imgUri, Uri vidUri){
         //return if task in progress
         if ((null != mUploadTask) && (true == mUploadTask.isInProgress())) return;
@@ -397,11 +314,6 @@ public class ProductsModel {
                 });
     }
 
-    /**
-     * Delete product by id.
-     *
-     * @param getmProductId the getm product id
-     */
     public void deleteProductById(String getmProductId) {
         mDbProductsCollection.document(getmProductId).delete();
     }

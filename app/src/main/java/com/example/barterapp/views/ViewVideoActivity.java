@@ -12,29 +12,10 @@ import android.widget.VideoView;
 
 import com.example.barterapp.R;
 
-/**
- * The type View video activity.
- */
 public class ViewVideoActivity extends AppCompatActivity {
-    /**
-     * The M video uri.
-     */
     String              mVideoUri;
-    /**
-     * The M video view.
-     */
     VideoView           mVideoView;
-    /**
-     * The M progress bar.
-     */
     ProgressBar         mProgressBar;
-
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

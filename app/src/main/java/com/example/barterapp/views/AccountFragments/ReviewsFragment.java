@@ -37,14 +37,9 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView                            mRecyclerView;
     private ReviewsRecyclerViewAdapter              mAdapter;
 
+    private ReviewsFragment() {
+    }
 
-    private ReviewsFragment() {}
-
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
     @SuppressWarnings("unused")
     public static synchronized ReviewsFragment getInstance() {
         if (mInstance == null) {
@@ -59,12 +54,6 @@ public class ReviewsFragment extends Fragment {
         super.onResume();
     }
 
-    /**
-     * initializing class members
-     *
-     * @param savedInstanceState
-     * @return void
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,11 +122,6 @@ public class ReviewsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnHistoryInteractionListener {
-        /**
-         * On history interaction listener.
-         *
-         * @param item the item
-         */
         void OnHistoryInteractionListener(Offer item);
     }
 }
