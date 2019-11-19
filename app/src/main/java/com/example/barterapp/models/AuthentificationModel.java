@@ -16,11 +16,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * The type Authentification model.
+ * The Authentification model handles the requests and responses for FirebaseAuth and FirebaseFirestore
  */
-public class AuthentificationModel {
-    private static volatile AuthentificationModel   mInstance;
-    private FirebaseAuth                            mAuth;
+    public class AuthentificationModel {
+        private static volatile AuthentificationModel   mInstance;
+        private FirebaseAuth                            mAuth;
     private FirebaseUser                            mCurrentUser;
     private FirebaseFirestore                       mDatabase;
     private MutableLiveData<Response>               mLoginResponseLiveData          = new MutableLiveData<>();

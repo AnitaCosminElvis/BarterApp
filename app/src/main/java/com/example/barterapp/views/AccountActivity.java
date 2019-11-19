@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 /**
- * The type Account activity.
+ * The Account activity manages the fragments and listens for events
  */
 public class AccountActivity extends    AppCompatActivity
                              implements MyProductsFragment.OnMyProductInteractionListener,
@@ -41,9 +41,9 @@ public class AccountActivity extends    AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //set section pager for managing fragments into the tab layout
         mSectionsPageAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         mViewPager = findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPageAdapter);

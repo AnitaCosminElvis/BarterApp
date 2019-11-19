@@ -24,7 +24,7 @@ import com.example.barterapp.view_models.ViewModelFactory;
 import javax.annotation.Nullable;
 
 /**
- * The type Offer activity.
+ * The Offer activity is used to send the offering message to the owner of the product
  */
 public class OfferActivity extends AppCompatActivity {
     private EditText                            mEmailEditText;
@@ -47,18 +47,20 @@ public class OfferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //get strings from intent
         Intent intent = getIntent();
         mUserId = intent.getStringExtra(getString(R.string.offer_user_id_tag));
         mProductId = intent.getStringExtra(getString(R.string.offer_product_id_tag));
         mProductImgUri = intent.getStringExtra(getString(R.string.offer_product_img__uri_tag));
 
+        //inti UI elements
         mEmailEditText = findViewById(R.id.et_offer_email);
         mMessageEditText = findViewById(R.id.et_offer_message);
         mMakeOfferBtn = findViewById(R.id.btn_make_offer);
 
+        //create the view model
         mMakeOfferViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(MakeOfferViewModel.class);
 
@@ -83,17 +85,20 @@ public class OfferActivity extends AppCompatActivity {
                 String sMessage = mMessageEditText.getText().toString();
 
                 if (sEmail.isEmpty()){
-                    Toast.makeText(OfferActivity.this, "Empty email." , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OfferActivity.this, "Empty email." ,
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (false == AuthentificationUtility.isEmailValid(sEmail)){
-                    Toast.makeText(OfferActivity.this, "Invalid email." , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OfferActivity.this, "Invalid email." ,
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (sMessage.isEmpty()){
-                    Toast.makeText(OfferActivity.this, "Empty message." , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OfferActivity.this, "Empty message." ,
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 

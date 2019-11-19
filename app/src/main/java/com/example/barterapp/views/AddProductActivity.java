@@ -30,7 +30,7 @@ import com.example.barterapp.view_models.ViewReviewViewModel;
 import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
- * The type Add product activity.
+ * Used for Adding products
  */
 public class AddProductActivity extends AppCompatActivity {
     private Uri                                                 mImgUri                 = null;
@@ -53,22 +53,26 @@ public class AddProductActivity extends AppCompatActivity {
     /**
      * initializing class members
      *
-     * @param savedInstanceState
+     * @params savedInstanceState
      * @return void
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mProductViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(AddProductViewModel.class);
-        mReviewViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(ViewReviewViewModel.class);
+        //create the view models
+        mProductViewModel = ViewModelProviders.of(this, new ViewModelFactory()).
+                get(AddProductViewModel.class);
+        mReviewViewModel = ViewModelProviders.of(this, new ViewModelFactory()).
+                get(ViewReviewViewModel.class);
 
+        //get live data references
         mRatingAggregationLiveData = mReviewViewModel.getMutableLiveDataReviewAggregationData();
         mAddProductResponseLiveData = mProductViewModel.getAddProductResponseLiveData();
 
+        //add observers for the live data
         mRatingAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
             @Override
             public void onChanged(UserReviewAggregationData userReviewAggregationData) {
@@ -97,6 +101,7 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
+        //init UI elements
         mTitleEdtText = findViewById(R.id.et_title);
         mDescriptionText = findViewById(R.id.ed_description);
         mImageView = findViewById(R.id.ib_load_photo);
@@ -104,11 +109,12 @@ public class AddProductActivity extends AppCompatActivity {
         mContinueBtn = findViewById(R.id.btn_add_product);
         mCategorySpinner = findViewById(R.id.spinner_category);
 
+        //set on click listeners
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent imgIntent = new Intent();
-                imgIntent.setType("image/*");
+                imgIntent.setType(getString(R.string.type_img));
                 imgIntent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(imgIntent, PICK_IMG_REQUEST);
             }
@@ -118,7 +124,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent vidIntent = new Intent();
-                vidIntent.setType("video/*");
+                vidIntent.setType(getString(R.string.type_vid));
                 vidIntent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(vidIntent,PICK_VIDEO_REQUEST);
             }
@@ -137,7 +143,7 @@ public class AddProductActivity extends AppCompatActivity {
 
                 if (sTitle.isEmpty()) {
                     Toast.makeText(AddProductActivity.this,
-                            "Empty title.", Toast.LENGTH_SHORT).show();
+                            getString(R.string.empty_title), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -145,31 +151,38 @@ public class AddProductActivity extends AppCompatActivity {
 
                 if (sDescription.isEmpty()){
                     Toast.makeText(AddProductActivity.this,
-                            "Empty description.", Toast.LENGTH_SHORT).show();
+                            getString(R.string.empty_desc), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (null == mImgUri) {
                     Toast.makeText(AddProductActivity.this,
-                            "Please select a image for your product.", Toast.LENGTH_SHORT).show();
+                            getString(R.string.select_img), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 try {
                     mIsInitialState = false;
                     mContinueBtn.setEnabled(false);
-                    mProductViewModel.addProduct(new Product("","","",sTitle,sDescription,
-                            mCategorySpinner.getSelectedItem().toString(),"","",
-                            System.currentTimeMillis()), mImgUri, mVideoUri);
+                    mProductViewModel.addProduct(new Product("","","",
+                            sTitle,sDescription, mCategorySpinner.getSelectedItem().toString(),
+                            "","", System.currentTimeMillis()), mImgUri, mVideoUri);
                 }catch(Exception ex){
                     mContinueBtn.setEnabled(true);
-                    Toast.makeText(AddProductActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, ex.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
     }
 
+    /**
+     * handles the requests id's after picking a image or a video and sets them as thumbnails
+     *
+     * @params requestCode, resultCode, data
+     * @return void
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -191,7 +204,8 @@ public class AddProductActivity extends AppCompatActivity {
                         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                         mediaMetadataRetriever.setDataSource(this,mVideoUri);
                         mVideoView.setImageBitmap(
-                                mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST));
+                                mediaMetadataRetriever.getFrameAtTime(1,
+                                        MediaMetadataRetriever.OPTION_CLOSEST));
                     }
                 }
                 break;

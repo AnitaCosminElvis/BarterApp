@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">BarterApp</string>
-
-    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-    <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
-    <!-- Twitter consumer key and secret -->
-    <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
-    <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="action_sign_in">Sign In</string>
@@ -27,25 +20,20 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_email">anonymous@user.com</string>
     <string name="nav_header_desc">Navigation header</string>
-
     <string name="nav_drawer_open">Open</string>
     <string name="nav_drawer_close">Close</string>
-
     <string name="menu_account">My Account</string>
     <string name="menu_add">Add Product</string>
     <string name="menu_sign_in">Sign In</string>
     <string name="menu_sign_up">Sign Up</string>
-
     <string name="menu_sign_out">Sign Out</string>
     <string name="menu_about">About</string>
     <string name="menu_contact">Contact</string>
-
     <string name="filter_all">All</string>
     <string name="filter_gadgets">Gadgets</string>
     <string name="filter_clothes">Clothes</string>
     <string name="filter_tools">Tools</string>
     <string name="filter_bikes">Bikes</string>
-
     <string name="prompt_title">Title</string>
     <string name="prompt_alias">Alias</string>
     <string name="prompt_first_name">First Name</string>
@@ -81,6 +69,26 @@
     <string name="cat_other">Other</string>
     <string name="user_restricted_access">Restricted Access!</string>
     <string name="barter_same_user">Can\'t barter with yourself!</string>
+    <string name="not_available">Not Available!</string>
+    <string name="empty_email">Empty email.</string>
+    <string name="invalid_email">Invalid email.</string>
+    <string name="empty_pass">Empty password.</string>
+    <string name="short_pass">The password must have at least 6 characters.</string>
+    <string name="empty_firstN">First Name Empty!</string>
+    <string name="empty_surname">Surname Empty!</string>
+    <string name="empty_tel">Telephone No Empty!</string>
+    <string name="empty_alias">Alias Empty!</string>
+    <string name="empty_pass1">First Pass Empty!</string>
+    <string name="empty_pass2">Retyped Pass Empty!</string>
+    <string name="diff_pass">Different Passwords!</string>
+    <string name="check_agree">Please check the Agree terms and conditions!</string>
+    <string name="sign_in">Please Sign in.</string>
+    <string name="signed_out">Signed out.</string>
+    <string name="type_img">image/*</string>
+    <string name="type_vid">video/*</string>
+    <string name="empty_title">Empty title.</string>
+    <string name="empty_desc">Empty description.</string>
+    <string name="select_img">Please select a image for your product.</string>
     <string-array name="category_arrays">
         <item>@string/cat_gadgets</item>
         <item>@string/cat_clothes</item>
@@ -88,6 +96,4 @@
         <item>@string/cat_bikes</item>
         <item>@string/cat_other</item>
     </string-array>
-
-
 </resources>

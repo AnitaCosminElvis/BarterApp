@@ -69,6 +69,7 @@ public class ReviewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //create the view
         mMyReviewsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(MyReviewsViewModel.class);
 

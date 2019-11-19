@@ -388,7 +388,8 @@ public class MainActivity   extends     AppCompatActivity
             case R.id.nav_signout: {
                 mProductsViewModel.signOut();
                 setNavViewUserEmail(new Response("", false));
-                Toast.makeText(MainActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.signed_out)
+                        , Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.nav_about: {
@@ -431,7 +432,7 @@ public class MainActivity   extends     AppCompatActivity
         boolean bIsSignedIn = mProductsViewModel.isUserSignedIn();
 
         if (!bIsSignedIn) {
-            Toast.makeText(MainActivity.this, "Please Sign in." , Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sign_in) , Toast.LENGTH_SHORT).show();
         }
 
         return bIsSignedIn;

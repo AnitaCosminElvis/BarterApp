@@ -69,6 +69,7 @@ public class OffersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //create the view model
         mMyOffersViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(MyOffersViewModel.class);
 

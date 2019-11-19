@@ -45,13 +45,16 @@ public class ViewOfferActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_offer);
 
+        //create the view model
         mViewOfferViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ViewOfferViewModel.class);
+        //get live data reference
         mSetOfferStateResponseLiveData = mViewOfferViewModel.getOfferStateResponseLiveData();
-        mSetOfferStateResponseLiveData.removeObservers(this);
 
+        //get object from intent
         mOffer = getIntent().getParcelableExtra(getString(R.string.view_offer_info_tag));
 
+        //init ui elements
         mMessageTextView = findViewById(R.id.tv_view_offer_message);
         mAliasTextView = findViewById(R.id.tv_view_offer_alias);
         mContactMailTextView = findViewById(R.id.tv_view_offer_contact_email);
@@ -63,10 +66,12 @@ public class ViewOfferActivity extends AppCompatActivity {
         mAliasTextView.setText(mOffer.getmFromAlias());
         mContactMailTextView.setText(mOffer.getmContactEmail());
 
+        //sets the product's image from URI
         String uri = mOffer.getmProductImgUri();
         if (!uri.isEmpty())
             Picasso.get().load(uri).fit().centerCrop().tag(this).into(mProductPhotoImageView);
 
+        //creates observer
         mSetOfferStateResponseLiveData.observe(this, new Observer<Response>() {
             @Override
             public void onChanged(Response setOfferStateresponse) {
@@ -82,6 +87,7 @@ public class ViewOfferActivity extends AppCompatActivity {
             }
         });
 
+        //sets listeners
         mRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 mCanFinish = true;
@@ -99,9 +105,14 @@ public class ViewOfferActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * sets the buttons state as enabled/disabled for preventing click floods
+     *
+     * @param bValue
+     * @return void
+     */
     private void setButtonsEnabled(boolean bValue){
         mRejectBtn.setEnabled(bValue);
         mAcceptBtn.setEnabled(bValue);
     }
-
 }

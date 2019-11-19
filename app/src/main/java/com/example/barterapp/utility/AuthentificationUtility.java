@@ -1,7 +1,7 @@
 package com.example.barterapp.utility;
 
 /**
- * The type Authentification utility.
+ * The Authentification utility.
  */
 public final class AuthentificationUtility {
 
@@ -24,6 +24,6 @@ public final class AuthentificationUtility {
      * @return boolean true for valid false for invalid
      */
     public static boolean isPasswordValid(String password) {
-        return ((password != null) && (password.trim().length() > 6));
+        return ((password != null) && (password.trim().length() >= 6));
     }
 }

@@ -59,28 +59,36 @@ public class OffersModel {
      *
      * @return the mutable live data
      */
-    public MutableLiveData<Response> getMutableLiveDataOfferResponse(){ return mOfferResponseLiveData; }
+    public MutableLiveData<Response> getMutableLiveDataOfferResponse(){
+        return mOfferResponseLiveData;
+    }
 
     /**
      * Get mutable live data my offers list mutable live data.
      *
      * @return the mutable live data
      */
-    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersList(){ return mMyOffersListLiveData; }
+    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersList(){
+        return mMyOffersListLiveData;
+    }
 
     /**
      * Get mutable live data my offers history list mutable live data.
      *
      * @return the mutable live data
      */
-    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersHistoryList(){ return mMyOffersHistoryListLiveData; }
+    public MutableLiveData<ArrayList<Offer>> getMutableLiveDataMyOffersHistoryList(){
+        return mMyOffersHistoryListLiveData;
+    }
 
     /**
      * Gets offer state response live data.
      *
      * @return the offer state response live data
      */
-    public MutableLiveData<Response> getOfferStateResponseLiveData() { return mSetOfferStateResponseLiveData; }
+    public MutableLiveData<Response> getOfferStateResponseLiveData() {
+        return mSetOfferStateResponseLiveData;
+    }
 
     /**
      * Create offer.
@@ -95,12 +103,14 @@ public class OffersModel {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        mOfferResponseLiveData.setValue(new Response("Offer sent successfully.",true));
+                        mOfferResponseLiveData.setValue(
+                                new Response(SUCC_SENT_OFFER,true));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                mOfferResponseLiveData.setValue(new Response(e.getMessage(),false));
+                mOfferResponseLiveData.setValue(
+                        new Response(e.getMessage(),false));
             }
         });
     }
@@ -124,13 +134,15 @@ public class OffersModel {
                         if (isOfferAccepted){
                             mDbProductsCollection.document(offer.getmProductId()).delete();
                         }
-                        mSetOfferStateResponseLiveData.setValue(new Response("",true));
+                        mSetOfferStateResponseLiveData.setValue(
+                                new Response("",true));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        mSetOfferStateResponseLiveData.setValue(new Response(e.getMessage(),false));
+                        mSetOfferStateResponseLiveData.setValue(
+                                new Response(e.getMessage(),false));
                     }
                 });
     }
@@ -141,8 +153,9 @@ public class OffersModel {
     public void triggerGetMyOffers(){
         if (null != mGetMyOffersTask && !mGetMyOffersTask.isComplete()) return;
 
-        mGetMyOffersTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
-                            .whereEqualTo(IS_PENDING_KEY, true)
+        mGetMyOffersTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY,
+                mAuth.getCurrentUser().getUid())
+        .whereEqualTo(IS_PENDING_KEY, true)
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -163,8 +176,9 @@ public class OffersModel {
     synchronized public void triggerGetMyOffersHistory(){
         if (null != mGetOffersHistoryTask && !mGetOffersHistoryTask.isComplete()) return;
 
-        mGetOffersHistoryTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY, mAuth.getCurrentUser().getUid())
-                            .whereEqualTo(IS_PENDING_KEY, false)
+        mGetOffersHistoryTask = mDbOffersCollection.whereEqualTo(TO_USER_ID_KEY,
+                mAuth.getCurrentUser().getUid())
+        .whereEqualTo(IS_PENDING_KEY, false)
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

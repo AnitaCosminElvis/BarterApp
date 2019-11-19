@@ -44,7 +44,7 @@ public class ViewMyProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_my_product);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
+        //init UI elements
         mDateTextView = findViewById(R.id.tv_product_view_date);
         mAliasTextView = findViewById(R.id.tv_product_view_user);
         mTitleTextView = findViewById(R.id.tv_view_product_title);
@@ -52,6 +52,7 @@ public class ViewMyProductActivity extends AppCompatActivity {
         mProductPhotoImageView  = findViewById(R.id.ib_view_photo);
         mProductVidImageView = findViewById(R.id.ib_view_video);
 
+        //get object from intent
         mProduct  = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
         mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp()));

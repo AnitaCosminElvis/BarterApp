@@ -32,9 +32,9 @@ public class ReviewsActivity    extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //get objects from intent
         mReviews = getIntent().getParcelableArrayListExtra(getString(R.string.view_reviews_info_tag));
 
         mReviewsRecyclerView = findViewById(R.id.rv_reviews_list);

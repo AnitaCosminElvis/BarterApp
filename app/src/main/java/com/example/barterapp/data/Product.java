@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * The type Product.
+ * The Product entity.
  */
 public class Product  implements Parcelable {
     private String      mUserId;

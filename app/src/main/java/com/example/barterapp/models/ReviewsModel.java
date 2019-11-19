@@ -90,7 +90,6 @@ public class ReviewsModel {
                         userReviews = document.toObject(UserReview.class);
                         mUserReviewsLiveData.setValue(userReviews);
                     }
-                } else {
                 }
             }
         });
@@ -105,7 +104,8 @@ public class ReviewsModel {
     public void setUserReviewByUserIdAndOfferId(UserReview userRev, String userId) {
         userRev.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
         mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION)
-            .document(userRev.getmOfferId()).set(userRev).addOnSuccessListener(new OnSuccessListener<Void>() {
+            .document(userRev.getmOfferId()).set(userRev)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 mSetReviewResponseLiveData.setValue(new Response("",true));
@@ -147,8 +147,6 @@ public class ReviewsModel {
                     aggregationData.setmUserRatingAvg(ratingsAvg);
                     aggregationData.setmUserReviewsList(userReviewsList);
                     mUserReviewsAggregationData.setValue(aggregationData);
-                } else {
-                    String s = task.getException().getMessage();
                 }
             }
         });

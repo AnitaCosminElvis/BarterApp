@@ -75,14 +75,15 @@ public class ViewProductActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //create the view models
         mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProductsViewModel.class);
-
         mReviewsModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ViewReviewViewModel.class);
-
+        //get live data reference
         mReviewAggregationLiveData = mReviewsModel.getMutableLiveDataReviewAggregationData();
 
+        //inti ui elements
         mDateTextView = findViewById(R.id.tv_product_view_date);
         mAliasTextView = findViewById(R.id.tv_product_view_user);
         mTitleTextView = findViewById(R.id.tv_view_product_title);
@@ -97,6 +98,7 @@ public class ViewProductActivity extends AppCompatActivity {
         mBarterButton = findViewById(R.id.btn_barter);
         mViewUsersProductsButton = findViewById(R.id.btn_other_products);
 
+        //get the product object from the intent
         mProduct = getIntent().getParcelableExtra(getText(R.string.product_info_tag).toString());
 
         mDateTextView.setText(DateUtility.getDateFromTimestampByFormat(mProduct.getmTimeStamp()));
@@ -105,18 +107,22 @@ public class ViewProductActivity extends AppCompatActivity {
         mTitleTextView.setText(mProduct.getmTitle());
         mDescriptionTextView.setText(mProduct.getmDescription());
 
+        //triggers event
         mReviewsModel.triggerGetReviewDataByUserId(mProduct.getmUserId());
 
+        //if image URI is valid loads the image
         if ((null != mProduct.getImgUriPath()) && (false == mProduct.getImgUriPath().isEmpty())) {
             Picasso.get().load(mProduct.getImgUriPath()).fit().centerCrop().
                     tag(this).into(mProductPhotoImageView);
             mProductPhotoImageView.setPadding(1, 1, 1, 1);
         }
 
+        //if video URI is valid loads the image
         if ((null != mProduct.getVidUriPath()) && (false == mProduct.getVidUriPath().isEmpty())) {
             mProductVidImageView.setImageResource(R.drawable.ic_view_video_violet_100dp);
         }
 
+        //create observer for live data
         mReviewAggregationLiveData.observe(this, new Observer<UserReviewAggregationData>() {
             @Override
             public void onChanged(UserReviewAggregationData aggregationData) {
@@ -126,9 +132,11 @@ public class ViewProductActivity extends AppCompatActivity {
                     mUserReviewValue.setText(getFormatedFloatText(mAvgRatingValue));
                     mFlagValueTextView.setText(String.valueOf(mNoOfFlags));
 
+                    //sets the rating bars
                     if (0 > mAvgRatingValue) {
                         mPozitiveRatingBar.setRating(0);
-                        mNegativeRatingBar.setRating(OperationsUtility.inverseFloatValueSign(mAvgRatingValue));
+                        mNegativeRatingBar.setRating(OperationsUtility.
+                                inverseFloatValueSign(mAvgRatingValue));
                     } else {
                         mNegativeRatingBar.setRating(0);
                         mPozitiveRatingBar.setRating(mAvgRatingValue);
@@ -143,13 +151,14 @@ public class ViewProductActivity extends AppCompatActivity {
             }
         });
 
-
+        //set listeners
         mUserRatingLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewProductActivity.this,getString(R.string.sign_in),
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(ViewProductActivity.this, ReviewsActivity.class);
@@ -164,7 +173,7 @@ public class ViewProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewProductActivity.this, getString(R.string.sign_in), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(ViewProductActivity.this, UserProductsActivity.class);
@@ -178,7 +187,8 @@ public class ViewProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewProductActivity.this,getString(R.string.sign_in),
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -210,7 +220,8 @@ public class ViewProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewProductActivity.this,getString(R.string.sign_in),
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -227,7 +238,8 @@ public class ViewProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if user isn't signed in return
                 if (!mProductsViewModel.isUserSignedIn()) {
-                    Toast.makeText(ViewProductActivity.this, "Please Sign in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewProductActivity.this,getString(R.string.sign_in),
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 

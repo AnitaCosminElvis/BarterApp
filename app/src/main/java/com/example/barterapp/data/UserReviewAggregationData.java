@@ -3,25 +3,12 @@ package com.example.barterapp.data;
 import java.util.ArrayList;
 
 /**
- * The type User review aggregation data.
+ * The entity User review aggregation data.
  */
 public class UserReviewAggregationData {
-    /**
-     * The M user rating avg.
-     */
     float                   mUserRatingAvg;
-    /**
-     * The M no of flaggs.
-     */
     int                     mNoOfFlaggs;
-    /**
-     * The M user reviews list.
-     */
     ArrayList<UserReview>   mUserReviewsList;
-
-    /**
-     * Instantiates a new User review aggregation data.
-     */
     public UserReviewAggregationData(){}
 
     /**

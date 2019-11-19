@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * The type User review.
+ * The entity User review.
  */
 public class UserReview implements Parcelable {
     private String      mOfferId;

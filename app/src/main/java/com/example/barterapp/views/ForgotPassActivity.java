@@ -39,12 +39,13 @@ public class ForgotPassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_pass);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //create the view model
         mForgotPassViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ForgotPassViewModel.class);
 
+        //get live data reference
         mResetPassResponseLiveData = mForgotPassViewModel.getForgotPassResponseLiveData();
         mResetPassResponseLiveData.observe(this, new Observer<Response>(){
             @Override
@@ -58,6 +59,7 @@ public class ForgotPassActivity extends AppCompatActivity {
             }
         });
 
+        //init UI elements
         mEmailEdtTxt = findViewById(R.id.et_email);
         mResetPassBtn = findViewById(R.id.btn_reset_password);
 

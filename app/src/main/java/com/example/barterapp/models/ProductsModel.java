@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
+import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,42 +54,54 @@ public class ProductsModel {
      *
      * @return the mutable live data
      */
-    public MutableLiveData<Response> getMutableLiveDataAddProductResponse(){ return mAddProductResponseLiveData; }
+    public MutableLiveData<Response> getMutableLiveDataAddProductResponse(){
+        return mAddProductResponseLiveData;
+    }
 
     /**
      * Get mutable live data list products response mutable live data.
      *
      * @return the mutable live data
      */
-    public MutableLiveData<Response> getMutableLiveDataListProductsResponse(){ return mListProductsResponseLiveData; }
+    public MutableLiveData<Response> getMutableLiveDataListProductsResponse(){
+        return mListProductsResponseLiveData;
+    }
 
     /**
      * Gets mutable live data gadgets changed.
      *
      * @return the mutable live data gadgets changed
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataGadgetsChanged() { return mGadgetsLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataGadgetsChanged() {
+        return mGadgetsLiveData;
+    }
 
     /**
      * Gets mutable live data clothes changed.
      *
      * @return the mutable live data clothes changed
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() { return mClothesLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataClothesChanged() {
+        return mClothesLiveData;
+    }
 
     /**
      * Gets mutable live data tools changed.
      *
      * @return the mutable live data tools changed
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() { return mToolsLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataToolsChanged() {
+        return mToolsLiveData;
+    }
 
     /**
      * Gets mutable live data bikes changed.
      *
      * @return the mutable live data bikes changed
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() { return mBikesLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataBikesChanged() {
+        return mBikesLiveData;
+    }
 
     /**
      * Gets mutable live data other changed.
@@ -102,14 +115,18 @@ public class ProductsModel {
      *
      * @return the mutable live data my products
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataMyProducts() { return mMyProductsLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataMyProducts() { return
+            mMyProductsLiveData;
+    }
 
     /**
      * Gets mutable live data user products.
      *
      * @return the mutable live data user products
      */
-    public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProducts() { return mUserProductsLiveData; }
+    public MutableLiveData<ArrayList<Product>> getMutableLiveDataUserProducts() {
+        return mUserProductsLiveData;
+    }
 
     // private constructor : singleton access
     private ProductsModel() {
@@ -307,7 +324,7 @@ public class ProductsModel {
                                     public void onFailure(@NonNull Exception exception) {
                                         // Handle unsuccessful video upload
                                         mAddProductResponseLiveData.setValue(
-                                                new Response("Unable to upload video.",false));
+                                        new Response("Unable to upload video.",false));
                                     }
                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
@@ -315,9 +332,11 @@ public class ProductsModel {
                                         //video has successfully uploaded
 
                                         //Get the download URI
-                                        mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                        mUploadTask.
+                                        continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                             @Override
-                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
+                                            throws Exception {
                                                 if (!task.isSuccessful()) {
                                                     throw task.getException();
                                                 }
@@ -338,7 +357,7 @@ public class ProductsModel {
                                                 } else {
                                                     //skip saving the product if there is no video uri
                                                     mAddProductResponseLiveData.setValue(
-                                                            new Response("Unable to upload video, product inserted only with image.",
+                                                            new Response(ERR_UPLOAD_VID,
                                                             false));
                                                     saveProductIntoDatabase(key,product);
 
@@ -354,15 +373,13 @@ public class ProductsModel {
                         } else {
                             //skip saving the product if there is no img uri
                             mAddProductResponseLiveData.setValue(
-                                    new Response("Img url not found, product was not inserted.",
+                                    new Response(ERR_PROD_NOT_ADDED,
                                             false));
                         }
                     }
                 });
             }
         });
-
-        //ToDo: set other product dependencies
     }
 
     private void saveProductIntoDatabase(String key, Product product){
@@ -371,12 +388,14 @@ public class ProductsModel {
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    mAddProductResponseLiveData.setValue(new Response("Product added successfully.",true));
+                    mAddProductResponseLiveData.setValue(
+                            new Response(SUCC_PROD_ADDED,true));
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    mAddProductResponseLiveData.setValue(new Response(e.getMessage(),false));
+                    mAddProductResponseLiveData.setValue(
+                            new Response(e.getMessage(),false));
                 }
         });
     }

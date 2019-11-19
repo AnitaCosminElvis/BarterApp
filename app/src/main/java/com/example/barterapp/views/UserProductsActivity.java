@@ -56,6 +56,7 @@ public class UserProductsActivity   extends AppCompatActivity
         //set the default adapter
         mUserProductsRecyclerView.setAdapter(mUserProductsAdapter);
 
+        //create the view model
         mProductsViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProductsViewModel.class);
 

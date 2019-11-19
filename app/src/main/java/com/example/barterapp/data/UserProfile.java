@@ -3,7 +3,7 @@ package com.example.barterapp.data;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
- * The type User profile.
+ * The entity User profile.
  */
 @IgnoreExtraProperties
 public class UserProfile {

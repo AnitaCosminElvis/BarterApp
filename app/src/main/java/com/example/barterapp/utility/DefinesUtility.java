@@ -39,8 +39,14 @@ public class DefinesUtility {
     public static final int               PICK_IMG_REQUEST        = 1000;
     public static final int               PICK_VIDEO_REQUEST      = 2000;
 
-    //general defines
+//general defines
     public static final String            DEC_FORMAT              = "#.##";
 
+//error msgs
+    public static final String            ERR_UPLOAD_VID          = "Unable to upload video, product inserted only with image.";
+    public static final String            ERR_PROD_NOT_ADDED      = "Img url not found, product was not inserted.";
 
+//successful msgs
+    public static final String            SUCC_PROD_ADDED         = "Product added successfully.";
+    public static final String            SUCC_SENT_OFFER         = "Offer sent successfully.";
 }

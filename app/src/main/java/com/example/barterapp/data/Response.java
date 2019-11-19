@@ -1,7 +1,7 @@
 package com.example.barterapp.data;
 
 /**
- * The type Response.
+ * The entity Response.
  */
 public class Response {
     private String      mResponseText;

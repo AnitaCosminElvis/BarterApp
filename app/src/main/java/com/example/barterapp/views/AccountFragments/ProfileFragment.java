@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //create the view model
         mProfileViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ProfileViewModel.class);
         mReviewViewModel = ViewModelProviders.of(this, new ViewModelFactory())

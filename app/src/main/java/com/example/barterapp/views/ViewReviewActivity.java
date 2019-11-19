@@ -60,8 +60,10 @@ public class ViewReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_review);
 
+        //create the view model
         mViewReviewViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(ViewReviewViewModel.class);
+        //get live data references
         mSetReviewResponseLiveData = mViewReviewViewModel.getMutableLiveSetReviewResponse();
         mUserReviewLiveData = mViewReviewViewModel.getMutableLiveDataUserReviews();
 

@@ -2,6 +2,7 @@ package com.example.barterapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -9,7 +10,7 @@ import com.example.barterapp.R;
 import com.squareup.picasso.Picasso;
 
 /**
- * The type View image activity.
+ * The View the product's image.
  */
 public class ViewImageActivity extends AppCompatActivity {
     String              mImageUri;
@@ -25,13 +26,16 @@ public class ViewImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_image);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //get image URI string
         mImageUri = getIntent().getStringExtra(getString(R.string.view_image_info_tag));
 
+        //init ImageView
         mImageView = findViewById(R.id.iv_view_image);
 
+        //if image Uri is valid
         if ((null != mImageUri) && (!mImageUri.isEmpty()))
             Picasso.get().load(mImageUri).fit().centerCrop().tag(this).into(mImageView);
-
     }
 }

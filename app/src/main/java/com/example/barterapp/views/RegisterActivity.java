@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 
 /**
- * The type Register activity.
+ * Used for getting user's information and create a new account
  */
 public class RegisterActivity extends AppCompatActivity {
     private RegisterViewModel   mRegisterViewModel;
@@ -52,12 +52,15 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //create view model
         mRegisterViewModel = ViewModelProviders.of(this, new ViewModelFactory())
                 .get(RegisterViewModel.class);
+        //get live data
         mRegisterResponseLiveData = mRegisterViewModel.getRegisterResponseLiveData();
+
+        //add observer to the live data
         mRegisterResponseLiveData.observe(this, new Observer<Response>(){
             @Override
             public void onChanged(@Nullable Response registerResponse){
@@ -70,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //init UI elements
         mRegisterBtn = findViewById(R.id.btn_register);
         mFirstNameEdtTxt = findViewById(R.id.edt_txt_first_name);
         mSurnameEdtTxt = findViewById(R.id.edt_txt_surname);
@@ -81,6 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAgreeCkBox = findViewById(R.id.chk_box_agree);
         mTermsAndConditions = findViewById(R.id.btn_terms);
 
+        //set on click listeners for the buttons
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,39 +111,39 @@ public class RegisterActivity extends AppCompatActivity {
         String sFirstName = mFirstNameEdtTxt.getText().toString();
 
         if (sFirstName.isEmpty()){
-            Toast.makeText(this, "First Name Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_firstN), Toast.LENGTH_LONG).show();
             return;
         }
 
         String sSurname = mSurnameEdtTxt.getText().toString();
 
         if (sSurname.isEmpty()){
-            Toast.makeText(this, "Surname Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_surname), Toast.LENGTH_LONG).show();
             return;
         }
 
         String sTelNo = mTelNoEdtTxt.getText().toString();
 
         if (sTelNo.isEmpty()){
-            Toast.makeText(this, "Telephone No Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_tel), Toast.LENGTH_LONG).show();
             return;
         }
 
         String sAlias = mAliasEdtTxt.getText().toString();
 
         if (sAlias.isEmpty()){
-            Toast.makeText(this, "Alias Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_alias), Toast.LENGTH_LONG).show();
             return;
         }
 
         String sEmail = mEmailEdtTxt.getText().toString();
 
         if (sEmail.isEmpty()){
-            Toast.makeText(this, "Email Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_email), Toast.LENGTH_LONG).show();
             return;
         }else{
             if (false == AuthentificationUtility.isEmailValid(sEmail)){
-                Toast.makeText(this, "Invalid Email!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.invalid_email), Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -147,33 +152,35 @@ public class RegisterActivity extends AppCompatActivity {
         String sPassRe = mPassRetypeEdtTxt.getText().toString();
 
         if (true == sPass.isEmpty()){
-            Toast.makeText(this, "First Pass Empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.empty_pass1), Toast.LENGTH_LONG).show();
             return;
         }else{
             if (true == sPassRe.isEmpty()){
-                Toast.makeText(this, "Retyped Pass Empty!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.empty_pass2), Toast.LENGTH_LONG).show();
                 return;
             }else {
                 if (false == sPass.equals(sPassRe)){
-                    Toast.makeText(this, "Your retyped pass is different from the password!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.diff_pass), Toast.LENGTH_LONG).show();
                     return;
                 }
             }
         }
 
         if (false == AuthentificationUtility.isPasswordValid(sPass)){
-            Toast.makeText(this, "The password must have at least 6 characters." ,
+            Toast.makeText(this, getString(R.string.short_pass) ,
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!mAgreeCkBox.isChecked()){
-            Toast.makeText(this, "Please check the agree to terms and conditions!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.check_agree), Toast.LENGTH_LONG).show();
             return;
         }
 
+        //create new user profile entity with the data gathered from the form
         UserProfile userProfile = new UserProfile(sFirstName,sSurname,sTelNo,sAlias,sEmail);
 
+        //register the new user
         try {
             mIsInitialState = false;
             mRegisterBtn.setEnabled(false);
