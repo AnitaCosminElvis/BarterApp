@@ -87,13 +87,13 @@ public class ViewReviewActivity extends AppCompatActivity {
             mReviewedUserId = mOffer.getmToUserId();
         }
 
-        mViewReviewViewModel.triggerGetUserReviewByUserIdAndProductId(mReviewedUserId,mOffer.getmProductId());
+        mViewReviewViewModel.triggerGetUserReviewByUserIdAndOfferId(mReviewedUserId,mOffer.getOfferId());
 
         mUserReviewLiveData.observe(this, new Observer<UserReview>() {
             @Override
             public void onChanged(UserReview userReview) {
                 if (null != userReview){
-                    if (!mOffer.getmProductId().equals(userReview.getmProductId())) return;
+                    if (!mOffer.getOfferId().equals(userReview.getmOfferId())) return;
 
                     mRatingValue = userReview.getmRatingValue();
                     mRatingValueTextView.setText(getFormatedFloatText(mRatingValue));
@@ -163,11 +163,11 @@ public class ViewReviewActivity extends AppCompatActivity {
         mApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserReview userRev = new UserReview("", mOffer.getmProductId(),mOffer.getmProductImgUri(),
+                UserReview userRev = new UserReview(mOffer.getOfferId(), "",
+                                                    mOffer.getmProductId(),mOffer.getmProductImgUri(),
                                                     mRatingValue, mTextReviewEditText.getText().toString(),
                                                     mSetFlagSwitch.isChecked());
-                mViewReviewViewModel.setUserReviewByUserIdAndProductId(userRev,mReviewedUserId,
-                                                                        mOffer.getmProductId());
+                mViewReviewViewModel.setUserReviewByUserIdAndOfferId(userRev,mReviewedUserId);
                 mIsInitialState = false;
             }
         });

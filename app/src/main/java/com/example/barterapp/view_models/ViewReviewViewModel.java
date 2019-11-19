@@ -61,10 +61,10 @@ public class ViewReviewViewModel extends ViewModel {
      * Trigger get user review by user id and product id.
      *
      * @param userID the user id
-     * @param prodId the prod id
+     * @param offerId the offer id
      */
-    public void triggerGetUserReviewByUserIdAndProductId(String userID, String prodId) {
-        mReviewsModel.triggerGetReviewByUserIdAndProductId(userID,prodId);
+    public void triggerGetUserReviewByUserIdAndOfferId(String userID, String offerId) {
+        mReviewsModel.triggerGetUserReviewByUserIdAndOfferId(userID,offerId);
     }
 
     /**
@@ -72,10 +72,9 @@ public class ViewReviewViewModel extends ViewModel {
      *
      * @param userRev the user rev
      * @param userId  the user id
-     * @param prodId  the prod id
      */
-    public void setUserReviewByUserIdAndProductId(UserReview userRev, String userId, String prodId) {
-        mReviewsModel.setUserReviewByUserIdAndProductId(userRev,userId,prodId);
+    public void setUserReviewByUserIdAndOfferId(UserReview userRev, String userId) {
+        mReviewsModel.setUserReviewByUserIdAndOfferId(userRev,userId);
     }
 
     /**

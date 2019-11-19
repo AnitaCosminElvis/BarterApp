@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -75,38 +76,36 @@ public class ReviewsModel {
      * Trigger get review by user id and product id.
      *
      * @param userId    the user id
-     * @param productId the product id
+     * @param offerId the product id
      */
-    public void triggerGetReviewByUserIdAndProductId(String userId, String productId){
-        mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION)
-        .whereEqualTo(PRODUCT_ID,productId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void triggerGetUserReviewByUserIdAndOfferId(String userId, String offerId){
+        mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION).document(offerId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    UserReview userReviews = null;
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        UserReview userReviews = null;
                         userReviews = document.toObject(UserReview.class);
+                        mUserReviewsLiveData.setValue(userReviews);
                     }
-
-                    mUserReviewsLiveData.setValue(userReviews);
                 } else {
-                    String s = task.getException().getMessage();
                 }
             }
         });
     }
 
     /**
-     * Sets user review by user id and product id.
+     * Sets user review by user id and offer id.
      *
      * @param userRev the user rev
      * @param userId  the user id
-     * @param prodId  the prod id
      */
-    public void setUserReviewByUserIdAndProductId(UserReview userRev, String userId, String prodId) {
+    public void setUserReviewByUserIdAndOfferId(UserReview userRev, String userId) {
         userRev.setmFromAlias(mAuth.getCurrentUser().getDisplayName());
-        mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION).document(prodId)
-        .set(userRev).addOnSuccessListener(new OnSuccessListener<Void>() {
+        mDbReviewsCollection.document(userId).collection(USER_REVIEWS_COLLECTION)
+            .document(userRev.getmOfferId()).set(userRev).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 mSetReviewResponseLiveData.setValue(new Response("",true));

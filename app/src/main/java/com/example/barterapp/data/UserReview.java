@@ -7,6 +7,7 @@ import android.os.Parcelable;
  * The type User review.
  */
 public class UserReview implements Parcelable {
+    private String      mOfferId;
     private String      mFromAlias;
     private String      mProductId;
     private String      mProductImgUri;
@@ -21,7 +22,7 @@ public class UserReview implements Parcelable {
 
     /**
      * Instantiates a new User review.
-     *
+     * @param mOfferId       the m from offerId
      * @param mFromAlias     the m from alias
      * @param mProductId     the m product id
      * @param mProductImgUri the m product img uri
@@ -29,8 +30,9 @@ public class UserReview implements Parcelable {
      * @param mReviewText    the m review text
      * @param mIsFlagged     the m is flagged
      */
-    public UserReview(String mFromAlias, String mProductId, String mProductImgUri,
+    public UserReview(String mOfferId, String mFromAlias, String mProductId, String mProductImgUri,
                       float mRatingValue, String mReviewText, boolean mIsFlagged) {
+        this.mOfferId = mOfferId;
         this.mFromAlias = mFromAlias;
         this.mProductId = mProductId;
         this.mProductImgUri = mProductImgUri;
@@ -45,6 +47,7 @@ public class UserReview implements Parcelable {
      * @param in the in
      */
     public UserReview(Parcel in) {
+        mOfferId = in.readString();
         mFromAlias = in.readString();
         mProductId = in.readString();
         mProductImgUri = in.readString();
@@ -63,6 +66,26 @@ public class UserReview implements Parcelable {
         @Override
         public UserReview[] newArray(int size) { return new UserReview[size]; }
     };
+
+
+    /**
+     * Gets offerId.
+     *
+     * @return the offerId
+     */
+    public String getmOfferId() {
+        return mOfferId;
+    }
+
+    /**
+     * Sets offerId.
+     *
+     * @param mOfferId the offerId
+     */
+    public void setmOfferId(String mOfferId) {
+        this.mOfferId = mOfferId;
+    }
+
 
     /**
      * Gets from alias.
@@ -179,6 +202,7 @@ public class UserReview implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mOfferId);
         parcel.writeString(mFromAlias);
         parcel.writeString(mProductId);
         parcel.writeString(mProductImgUri);
