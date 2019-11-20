@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     mIsInitialState = false;
-                    mLoadingProgressBar.setVisibility(View.VISIBLE);
+                    mLoadingProgressBar.setVisibility(View.INVISIBLE);
                     //ToDO : implement the Google authentification
                     Toast.makeText(LoginActivity.this, getString(R.string.not_available),
                             Toast.LENGTH_SHORT).show();
