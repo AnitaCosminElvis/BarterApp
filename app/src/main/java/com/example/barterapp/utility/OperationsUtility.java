@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 
 import static com.example.barterapp.utility.DefinesUtility.*;
 
+/**
+ * The OperationsUtility utility.
+ */
 public class OperationsUtility {
 
     public static float inverseFloatValueSign(float value){

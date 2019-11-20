@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
- * The type Reviews model.
+ * The Reviews model handles user reviews, and data aggregation.
  */
 public class ReviewsModel {
     private static volatile ReviewsModel                mInstance;

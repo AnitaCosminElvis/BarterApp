@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * The type Date utility.
+ * The Date utility.
  */
 public class DateUtility {
 

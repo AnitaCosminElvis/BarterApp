@@ -46,7 +46,7 @@ public class ProductsModel {
     private MutableLiveData<ArrayList<Product>> mBikesLiveData                      = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mOtherProductsLiveData              = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Product>> mMyProductsLiveData                 = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Product>> mUserProductsLiveData              = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Product>> mUserProductsLiveData               = new MutableLiveData<>();
 
 
     /**
@@ -204,7 +204,6 @@ public class ProductsModel {
         });
     }
 
-
     /**
      * Trigger get products by category.
      *
@@ -276,7 +275,7 @@ public class ProductsModel {
         product.setProductId(key);
 
         //use the unique to create path for image
-        StorageReference imgRef = mStorageRef.child(key).child("img");
+        StorageReference imgRef = mStorageRef.child(key).child(MULTIMEDIA_IMG);
 
         // upload image
         mUploadTask = imgRef.putFile(imgUri);
@@ -286,7 +285,7 @@ public class ProductsModel {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 mAddProductResponseLiveData.setValue(
-                        new Response("Unable to upload image.",false));
+                        new Response(ERR_UPLOAD_IMG,false));
             }
 
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -315,7 +314,7 @@ public class ProductsModel {
                             product.setImgUriPath(imgDownloadUri.toString());
 
                             if (null != vidUri) {// if the video exists continue and upload it
-                                StorageReference vidRef = mStorageRef.child(key).child("vid");
+                                StorageReference vidRef = mStorageRef.child(key).child(MULTIMEDIA_VID);
                                 mUploadTask = vidRef.putFile(vidUri);
 
                                 // add listeners to the upload video action
@@ -324,7 +323,7 @@ public class ProductsModel {
                                     public void onFailure(@NonNull Exception exception) {
                                         // Handle unsuccessful video upload
                                         mAddProductResponseLiveData.setValue(
-                                        new Response("Unable to upload video.",false));
+                                        new Response(ERR_UPLOAD_VID,false));
                                     }
                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
@@ -385,35 +384,35 @@ public class ProductsModel {
     private void saveProductIntoDatabase(String key, Product product){
 
         mDbProductsCollection.document(key).set(product)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    mAddProductResponseLiveData.setValue(
-                            new Response(SUCC_PROD_ADDED,true));
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    mAddProductResponseLiveData.setValue(
-                            new Response(e.getMessage(),false));
-                }
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mAddProductResponseLiveData.setValue(
+                        new Response(SUCC_PROD_ADDED,true));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                mAddProductResponseLiveData.setValue(
+                        new Response(e.getMessage(),false));
+            }
         });
     }
 
     private void setListenerForProductsByKey(String key, String filterVal) {
 
         mDbProductsCollection.whereEqualTo(key, filterVal)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) return;
+        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) return;
 
-                        ArrayList<Product> products = new ArrayList<>();
-                        products = (ArrayList<Product>)value.toObjects(Product.class);
-                        setLiveDataByFilter(products,key);
-                    }
-                });
+                ArrayList<Product> products = new ArrayList<>();
+                products = (ArrayList<Product>)value.toObjects(Product.class);
+                setLiveDataByFilter(products,key);
+            }
+        });
     }
 
     /**

@@ -1,18 +1,21 @@
 package com.example.barterapp.utility;
 
 /**
- * The type Defines utility.
+ * The Defines utility.
  */
 public class DefinesUtility {
 
 //Images and Videos paths
     public static final String            MULTIMEDIA_PATH           = "ProductsMultimedia/";
+    public static final String            MULTIMEDIA_IMG            = "img";
+    public static final String            MULTIMEDIA_VID            = "vid";
 
 //Firestore collection names
     public static final String            OFFERS_COLLECTION         = "Offers";
     public static final String            PRODUCTS_COLLECTION       = "Products";
     public static final String            REVIEWS_COLLECTION        = "Reviews";
     public static final String            USER_REVIEWS_COLLECTION   = "UserReviews";
+    public static final String            USERS_COLLECTION          = "Users";
 
 
 //Offers/History keys
@@ -44,9 +47,15 @@ public class DefinesUtility {
 
 //error msgs
     public static final String            ERR_UPLOAD_VID          = "Unable to upload video, product inserted only with image.";
+    public static final String            ERR_UPLOAD_IMG          = "Unable to upload image.";
     public static final String            ERR_PROD_NOT_ADDED      = "Img url not found, product was not inserted.";
+    public static final String            ERR_LOGIN               = "Logging failed.";
+    public static final String            ERR_REGISTER            = "Signed up failed.";
 
-//successful msgs
+    //successful msgs
     public static final String            SUCC_PROD_ADDED         = "Product added successfully.";
     public static final String            SUCC_SENT_OFFER         = "Offer sent successfully.";
+    public static final String            SUCC_LOGIN              = "Logged in successfully.";
+    public static final String            SUCC_REGISTER           = "Signed up successfully.";
+    public static final String            SUCC_RESET_PASS         = "Email was sent successfully.";
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserProfile;
+import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * The Authentification model handles the requests and responses for FirebaseAuth and FirebaseFirestore
@@ -89,10 +92,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
                         if (task.isSuccessful()) {
                             // Sign in success
                             mCurrentUser = mAuth.getCurrentUser();
-                            mLoginResponseLiveData.setValue(new Response("Logged in successfully.",true));
+                            mLoginResponseLiveData.setValue(new Response(SUCC_LOGIN,true));
                         } else {
                             // Sign in failed
-                            mLoginResponseLiveData.setValue(new Response("Logging failed.",false));
+                            mLoginResponseLiveData.setValue(new Response(ERR_LOGIN,false));
                         }
                     }
                 });
@@ -115,11 +118,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
                     mCurrentUser = mAuth.getCurrentUser();
 
                     mRegisterResponseLiveData.setValue(
-                            new Response("Signed up successfully.",true));
+                            new Response(SUCC_REGISTER,true));
 
                     String uId = mCurrentUser.getUid();
                     // Populate the user's profile
-                    mDatabase.collection("Users").document(uId).set(userProfile);
+                    mDatabase.collection(USERS_COLLECTION).document(uId).set(userProfile);
 
                     //set the display name for the user in
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -128,7 +131,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
                 } else {
                     // Sign up failed
                     mRegisterResponseLiveData.setValue(
-                            new Response("Signed up failed.",false));
+                            new Response(ERR_REGISTER,false));
                 }
             }
         });
@@ -147,9 +150,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // mail was sent successfully.
-                            mResetPassResponseLiveData.setValue(new Response("Email was sent successfully.",true));
+                            mResetPassResponseLiveData
+                                    .setValue(new Response(SUCC_RESET_PASS,true));
                         } else {
-                            mResetPassResponseLiveData.setValue(new Response(task.getException().getMessage(),true));
+                            mResetPassResponseLiveData
+                                    .setValue(new Response(task.getException().getMessage(),true));
                         }
                     }
                 });
@@ -166,7 +171,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
         //if not signed in, no use of continuing
         if (!isUserSignedIn()) return false;
 
-        DocumentReference docRef = mDatabase.collection("Users").document(mCurrentUser.getUid());
+        DocumentReference docRef = mDatabase.collection(USERS_COLLECTION).document(mCurrentUser.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
