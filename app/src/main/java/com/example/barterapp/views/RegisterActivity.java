@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void addEditorFieldsFilters() {
         InputFilter onlyLettersfilter = (source, start, end, dest, dstart, dend) -> {
 
-            if(source.toString().matches("[\\p{Alpha}]*")) {
+            if(source.toString().matches("[\\p{Alpha}]*'*-*")) {
                 return source;
             }
 
