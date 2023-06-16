@@ -146,6 +146,11 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (sTelNo.length() < 4){
+            Toast.makeText(this, getString(R.string.min_tel), Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String sAlias = mAliasEdtTxt.getText().toString();
 
         if (sAlias.isEmpty()){
