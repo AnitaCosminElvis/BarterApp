@@ -52,6 +52,7 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/top"
             android:layout_marginEnd="@dimen/margin"
+            android:digits="0123456789"
             android:hint="@string/prompt_tel"
             android:inputType="phone"
             android:maxLength="15"
