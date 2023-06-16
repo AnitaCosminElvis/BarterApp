@@ -71,7 +71,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:hint="@string/prompt_alias"
             android:inputType="text"
-            android:maxLength="20"
+            android:maxLength="50"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
