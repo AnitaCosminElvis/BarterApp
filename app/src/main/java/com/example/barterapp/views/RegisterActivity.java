@@ -105,8 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void addEditorFieldsFilters() {
+        InputFilter maxInputFilter = new InputFilter.LengthFilter(50);
         InputFilter onlyLettersfilter = (source, start, end, dest, dstart, dend) -> {
-
             if(source.toString().matches("[\\p{Alpha}]*'*-*")) {
                 return source;
             }
@@ -114,8 +114,8 @@ public class RegisterActivity extends AppCompatActivity {
             return "";
         };
 
-        mFirstNameEdtTxt.setFilters(new InputFilter[]{onlyLettersfilter});
-        mSurnameEdtTxt.setFilters(new InputFilter[]{onlyLettersfilter});
+        mFirstNameEdtTxt.setFilters(new InputFilter[]{onlyLettersfilter, maxInputFilter});
+        mSurnameEdtTxt.setFilters(new InputFilter[]{onlyLettersfilter, maxInputFilter});
     }
 
     /**
