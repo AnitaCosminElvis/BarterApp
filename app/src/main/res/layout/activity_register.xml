@@ -54,6 +54,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:hint="@string/prompt_tel"
             android:inputType="phone"
+            android:maxLength="15"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
