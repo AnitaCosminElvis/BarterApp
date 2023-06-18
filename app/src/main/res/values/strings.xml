@@ -76,7 +76,8 @@
     <string name="short_pass">The password must have at least 6 characters.</string>
     <string name="empty_firstN">First Name Empty!</string>
     <string name="empty_surname">Surname Empty!</string>
-    <string name="empty_tel">Telephone No Empty!</string>
+    <string name="empty_tel">Telephone No. Empty!</string>
+    <string name="min_tel">Telephone No. must have at least 4 digits!</string>
     <string name="empty_alias">Alias Empty!</string>
     <string name="empty_pass1">First Pass Empty!</string>
     <string name="empty_pass2">Retyped Pass Empty!</string>
