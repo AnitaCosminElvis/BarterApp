@@ -13,7 +13,6 @@
     <string name="action_add">Add</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_main">Products</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -73,7 +72,11 @@
     <string name="empty_email">Empty email.</string>
     <string name="invalid_email">Invalid email.</string>
     <string name="empty_pass">Empty password.</string>
-    <string name="short_pass">The password must have at least 6 characters.</string>
+    <string name="short_pass">The password\'s minimum size must be 8.</string>
+    <string name="no_digit_pass">The password must have at least one digit.</string>
+    <string name="no_upper_pass">The password must have at least one uppercase letter.</string>
+    <string name="no_lower_pass">The password must have at least one lowercase letter.</string>
+    <string name="no_special_char_pass">The password must have at least one special character.</string>
     <string name="empty_firstN">First Name Empty!</string>
     <string name="empty_surname">Surname Empty!</string>
     <string name="empty_tel">Telephone No. Empty!</string>

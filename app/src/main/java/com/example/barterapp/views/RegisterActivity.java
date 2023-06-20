@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.barterapp.R;
+import com.example.barterapp.data.EPassState;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserProfile;
 import com.example.barterapp.utility.AuthentificationUtility;
@@ -188,9 +189,30 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        if (false == AuthentificationUtility.isPasswordValid(sPass)){
-            Toast.makeText(this, getString(R.string.short_pass) ,
-                    Toast.LENGTH_SHORT).show();
+        EPassState passState = AuthentificationUtility.isPasswordValid(sPass);
+        if (EPassState.VALID != passState){
+            String passErr;
+            switch (passState){
+                case SHORT:
+                    passErr = getString(R.string.short_pass);
+                    break;
+                case NO_DIGIT:
+                    passErr = getString(R.string.no_digit_pass);
+                    break;
+                case NO_UPPER:
+                    passErr = getString(R.string.no_upper_pass);
+                    break;
+                case NO_LOWER:
+                    passErr = getString(R.string.no_lower_pass);
+                    break;
+                case NO_SPECIAL_CHARS:
+                    passErr = getString(R.string.no_special_char_pass);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + passState);
+            }
+
+            Toast.makeText(this, passErr , Toast.LENGTH_SHORT).show();
             return;
         }
 
