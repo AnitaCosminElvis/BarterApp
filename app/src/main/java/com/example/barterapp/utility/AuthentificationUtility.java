@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
  * The Authentification utility.
  */
 public final class AuthentificationUtility {
-
     private static final Pattern LOWER_CASE = Pattern.compile("[a-z]");
     private static final Pattern UPPER_CASE = Pattern.compile("[A-Z]");
     private static final Pattern DECIMAL_DIGIT = Pattern.compile("[0-9]");
