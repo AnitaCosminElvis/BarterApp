@@ -17,6 +17,7 @@ public class DefinesUtility {
     public static final String            USER_REVIEWS_COLLECTION   = "UserReviews";
     public static final String            USERS_COLLECTION          = "Users";
 
+    public static final String            ALIASES_COLLECTION          = "Aliases";
 
 //Offers/History keys
     public static final String            TO_USER_ID_KEY            = "mToUserId";
@@ -51,6 +52,7 @@ public class DefinesUtility {
     public static final String            ERR_PROD_NOT_ADDED      = "Img url not found, product was not inserted.";
     public static final String            ERR_LOGIN               = "Logging failed.";
     public static final String            ERR_REGISTER            = "Signed up failed.";
+    public static final String            ERR_ALIAS               = "Alias already exists.";
 
     //successful msgs
     public static final String            SUCC_PROD_ADDED         = "Product added successfully.";

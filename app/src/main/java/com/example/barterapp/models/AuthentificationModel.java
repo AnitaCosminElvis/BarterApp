@@ -3,10 +3,13 @@ package com.example.barterapp.models;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.barterapp.data.Alias;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserProfile;
 import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,14 +25,14 @@ import static com.example.barterapp.utility.DefinesUtility.*;
  * The Authentification model handles the requests and responses for FirebaseAuth and FirebaseFirestore
  */
     public class AuthentificationModel {
-        private static volatile AuthentificationModel   mInstance;
-        private FirebaseAuth                            mAuth;
-    private FirebaseUser                            mCurrentUser;
-    private FirebaseFirestore                       mDatabase;
-    private MutableLiveData<Response>               mLoginResponseLiveData          = new MutableLiveData<>();
-    private MutableLiveData<Response>               mRegisterResponseLiveData       = new MutableLiveData<>();
-    private MutableLiveData<Response>               mResetPassResponseLiveData      = new MutableLiveData<>();
-    private MutableLiveData<UserProfile>            mUserProfileLiceData            = new MutableLiveData<>();
+        private static volatile AuthentificationModel mInstance;
+        private FirebaseAuth mAuth;
+        private FirebaseUser mCurrentUser;
+        private FirebaseFirestore mDatabase;
+        private MutableLiveData<Response> mLoginResponseLiveData = new MutableLiveData<>();
+        private MutableLiveData<Response> mRegisterResponseLiveData = new MutableLiveData<>();
+        private MutableLiveData<Response> mResetPassResponseLiveData = new MutableLiveData<>();
+        private MutableLiveData<UserProfile> mUserProfileLiceData = new MutableLiveData<>();
 
     // private constructor : singleton access
     private AuthentificationModel() {
@@ -109,30 +112,57 @@ import static com.example.barterapp.utility.DefinesUtility.*;
      */
 //Registers the a new user according to the profile and password
     public void signUp(UserProfile userProfile, String pass) {
-        mAuth.createUserWithEmailAndPassword(userProfile.getmEmail(), pass)
-        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mDatabase.collection(ALIASES_COLLECTION).document(userProfile.getmAlias()).get()
+        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    // Sign up success
-                    mCurrentUser = mAuth.getCurrentUser();
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //Alias exists -> not creating a new user
+                        mRegisterResponseLiveData.setValue(new Response(ERR_ALIAS,false));
+                    } else {
+                        mAuth.createUserWithEmailAndPassword(userProfile.getmEmail(), pass)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign up success
+                                    mCurrentUser = mAuth.getCurrentUser();
+                                    String uId = mCurrentUser.getUid();
 
-                    mRegisterResponseLiveData.setValue(
-                            new Response(SUCC_REGISTER,true));
+                                    // Populate the user's profile
+                                    mDatabase.collection(USERS_COLLECTION)
+                                            .document(uId)
+                                            .set(userProfile);
+                                    mDatabase.collection(ALIASES_COLLECTION)
+                                            .document(userProfile.getmAlias())
+                                            .set(new Alias(userProfile.getmAlias()));
 
-                    String uId = mCurrentUser.getUid();
-                    // Populate the user's profile
-                    mDatabase.collection(USERS_COLLECTION).document(uId).set(userProfile);
+                                    //set the display name for the user in
+                                    UserProfileChangeRequest profileUpdates =
+                                            new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(userProfile.getmAlias()).build();
+                                    mCurrentUser.updateProfile(profileUpdates);
 
-                    //set the display name for the user in
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(userProfile.getmAlias()).build();
-                    mCurrentUser.updateProfile(profileUpdates);
+                                    // Sign up failed succeeded
+                                    mRegisterResponseLiveData.setValue(
+                                            new Response(SUCC_REGISTER,true));
+                                } else {
+                                    // Sign up failed
+                                    mRegisterResponseLiveData.setValue(
+                                            new Response(ERR_REGISTER,false));
+                                }
+                            }
+                        });
+                    }
                 } else {
-                    // Sign up failed
+                    // Rare exception
                     mRegisterResponseLiveData.setValue(
-                            new Response(ERR_REGISTER,false));
+                            new Response(task.getException().toString(),false));
                 }
+
+
             }
         });
     }
