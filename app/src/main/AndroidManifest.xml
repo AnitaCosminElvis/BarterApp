@@ -14,8 +14,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".views.TermsAndConditionsActivity"></activity>
+        android:theme="@style/BarterTheme.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:theme="@style/BarterTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".views.TermsAndConditionsActivity" />
         <activity
             android:name=".views.AboutActivity"
             android:label="About" />
@@ -55,7 +66,7 @@
         <activity
             android:name=".views.AccountActivity"
             android:label="My Account"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/BarterTheme" />
         <activity
             android:name=".views.ForgotPassActivity"
             android:label="Password Reset" />
@@ -65,17 +76,6 @@
         <activity
             android:name=".views.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

@@ -4,19 +4,19 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.UserReview;
-import com.example.barterapp.views.AccountFragments.ProfileFragment;
-import com.example.barterapp.views.AccountFragments.ReviewsFragment;
 import com.example.barterapp.views.AccountFragments.MyProductsFragment;
 import com.example.barterapp.views.AccountFragments.OffersFragment;
+import com.example.barterapp.views.AccountFragments.ProfileFragment;
+import com.example.barterapp.views.AccountFragments.ReviewsFragment;
 import com.example.barterapp.views.AccountFragments.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 

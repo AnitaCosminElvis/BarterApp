@@ -1,16 +1,16 @@
 package com.example.barterapp.view_models;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
 
 import com.example.barterapp.models.AuthentificationModel;
 import com.example.barterapp.models.OffersModel;
 import com.example.barterapp.models.ProductsModel;
 import com.example.barterapp.models.ReviewsModel;
-import com.example.barterapp.view_models.AccountViewModels.MyReviewsViewModel;
 import com.example.barterapp.view_models.AccountViewModels.MyOffersViewModel;
 import com.example.barterapp.view_models.AccountViewModels.MyProductsViewModel;
+import com.example.barterapp.view_models.AccountViewModels.MyReviewsViewModel;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
 
 /**

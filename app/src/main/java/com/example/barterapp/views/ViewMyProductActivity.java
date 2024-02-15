@@ -1,24 +1,18 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.utility.DateUtility;
-import com.example.barterapp.view_models.ViewModelFactory;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
 
 /**
  * The type View my product activity.

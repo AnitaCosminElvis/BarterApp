@@ -1,8 +1,8 @@
 package com.example.barterapp.utility;
 
-import java.text.DecimalFormat;
-
 import static com.example.barterapp.utility.DefinesUtility.*;
+
+import java.text.DecimalFormat;
 
 /**
  * The OperationsUtility utility.

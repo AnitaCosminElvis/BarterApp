@@ -1,18 +1,18 @@
 package com.example.barterapp.views.AccountFragments;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import com.example.barterapp.R;
-import com.squareup.picasso.Picasso;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Offer} and makes a call to the

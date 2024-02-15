@@ -1,10 +1,5 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.view_models.ViewModelFactory;

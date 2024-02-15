@@ -1,5 +1,7 @@
 package com.example.barterapp.views;
 
+import static com.example.barterapp.utility.OperationsUtility.*;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,17 +18,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Offer;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserReview;
-import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
-
-import java.text.DecimalFormat;
-
-import static com.example.barterapp.utility.OperationsUtility.*;
 
 
 /**

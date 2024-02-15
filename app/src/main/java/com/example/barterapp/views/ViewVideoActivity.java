@@ -1,7 +1,5 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,7 +9,9 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+ import  com.example.barterapp.R;
 
 /**
  * Used to View the product's video.

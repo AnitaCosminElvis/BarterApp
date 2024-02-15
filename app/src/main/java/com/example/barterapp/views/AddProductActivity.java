@@ -1,10 +1,6 @@
 package com.example.barterapp.views;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import static com.example.barterapp.utility.DefinesUtility.*;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -18,16 +14,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.barterapp.R;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.data.UserReviewAggregationData;
-import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.view_models.AddProductViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * Used for Adding products

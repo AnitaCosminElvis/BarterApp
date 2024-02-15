@@ -1,5 +1,12 @@
 package com.example.barterapp.views;
 
+import static com.example.barterapp.utility.DefinesUtility.*;
+
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -7,19 +14,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
-import android.view.View;
-
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 
 import java.util.ArrayList;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * The type User products activity.

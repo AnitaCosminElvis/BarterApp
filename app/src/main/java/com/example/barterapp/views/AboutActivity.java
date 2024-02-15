@@ -1,10 +1,10 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+ import  com.example.barterapp.R;
 
 /**
  * The type About activity.

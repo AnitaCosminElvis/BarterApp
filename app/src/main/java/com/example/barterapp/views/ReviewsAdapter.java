@@ -1,5 +1,7 @@
 package com.example.barterapp.views;
 
+import static com.example.barterapp.utility.OperationsUtility.*;
+
 import android.content.Context;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -11,12 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.UserReview;
 
 import java.util.ArrayList;
-
-import static com.example.barterapp.utility.OperationsUtility.*;
 
 /**
  * The type Reviews adapter.
@@ -24,7 +24,7 @@ import static com.example.barterapp.utility.OperationsUtility.*;
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private Context                                     mContext;
     private ArrayList<UserReview>                       mReviewsList;
-    private ReviewsAdapter.ItemClickListener            mClickListener;
+    private ItemClickListener            mClickListener;
 
 
     /**
@@ -87,13 +87,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     @NonNull
     @Override
-    public ReviewsAdapter.ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.user_review_item, parent, false);
-        return new ReviewsAdapter.ReviewViewHolder(view);
+        return new ReviewViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewsAdapter.ReviewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         UserReview currentReview = mReviewsList.get(position);
         float userRatingValue = currentReview.getmRatingValue();
         holder.mRatingValueTextView.setText(String.valueOf(userRatingValue));
@@ -128,7 +128,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
      * @param itemClickListener the item click listener
      */
 // sets the click listener
-    public void setClickListener(ReviewsAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

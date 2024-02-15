@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class UserProductsAdapter extends RecyclerView.Adapter<UserProductsAdapter.UserProductsViewHolder>  {
     private Context                                     mContext;
     private ArrayList<Product>                          mProductList;
-    private UserProductsAdapter.ItemClickListener       mClickListener;
+    private ItemClickListener       mClickListener;
 
     /**
      * Instantiates a new User products adapter.
@@ -62,13 +62,13 @@ public class UserProductsAdapter extends RecyclerView.Adapter<UserProductsAdapte
 
     @NonNull
     @Override
-    public UserProductsAdapter.UserProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.my_product_item, parent, false);
-        return new UserProductsAdapter.UserProductsViewHolder(view);
+        return new UserProductsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserProductsAdapter.UserProductsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserProductsViewHolder holder, int position) {
         Product currentProduct = mProductList.get(position);
         holder.mTitleTextView.setText(currentProduct.getmTitle());
         String imgUri = currentProduct.getImgUriPath();
@@ -96,7 +96,7 @@ public class UserProductsAdapter extends RecyclerView.Adapter<UserProductsAdapte
      * @param itemClickListener the item click listener
      */
 // sets the click listener
-    public void setClickListener(UserProductsAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

@@ -1,5 +1,7 @@
 package com.example.barterapp.views.AccountFragments;
 
+import static com.example.barterapp.utility.OperationsUtility.*;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,11 +17,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.UserProfile;
 import com.example.barterapp.data.UserReview;
 import com.example.barterapp.data.UserReviewAggregationData;
-import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.AccountViewModels.ProfileViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
@@ -27,8 +28,6 @@ import com.google.firebase.database.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import static com.example.barterapp.utility.OperationsUtility.*;
 
 /**
  * A placeholder fragment containing the user profile view.

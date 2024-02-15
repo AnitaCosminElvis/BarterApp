@@ -1,11 +1,44 @@
 package com.example.barterapp;
 
+import static com.example.barterapp.utility.DefinesUtility.CATEGORY_KEY;
+import static com.example.barterapp.utility.DefinesUtility.CAT_BIKES;
+import static com.example.barterapp.utility.DefinesUtility.CAT_CLOTHES;
+import static com.example.barterapp.utility.DefinesUtility.CAT_GADGETS;
+import static com.example.barterapp.utility.DefinesUtility.CAT_OTHER;
+import static com.example.barterapp.utility.DefinesUtility.CAT_TOOLS;
+
+import com.example.barterapp.R;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 import com.example.barterapp.data.Product;
-import com.example.barterapp.views.ProductsAdapter;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.view_models.LoginViewModel;
 import com.example.barterapp.view_models.ProductsViewModel;
@@ -16,35 +49,9 @@ import com.example.barterapp.views.AccountActivity;
 import com.example.barterapp.views.AddProductActivity;
 import com.example.barterapp.views.ContactsActivity;
 import com.example.barterapp.views.LoginActivity;
+import com.example.barterapp.views.ProductsAdapter;
 import com.example.barterapp.views.RegisterActivity;
 import com.example.barterapp.views.ViewProductActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import android.view.MenuItem;
-import android.view.View;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
-import javax.annotation.Nullable;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 
 /**
@@ -366,6 +373,7 @@ public class MainActivity   extends     AppCompatActivity
      *
      * @return void
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -400,6 +408,8 @@ public class MainActivity   extends     AppCompatActivity
                 startActivity(new Intent(MainActivity.this, ContactsActivity.class));
                 break;
             }
+            default:
+                throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
         }
 
         return true;

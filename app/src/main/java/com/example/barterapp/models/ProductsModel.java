@@ -1,5 +1,7 @@
 package com.example.barterapp.models;
 
+import static com.example.barterapp.utility.DefinesUtility.*;
+
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -7,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.Response;
-import com.example.barterapp.utility.DefinesUtility;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,8 +27,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * The type Products model.

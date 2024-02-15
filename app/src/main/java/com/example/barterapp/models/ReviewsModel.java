@@ -1,5 +1,7 @@
 package com.example.barterapp.models;
 
+import static com.example.barterapp.utility.DefinesUtility.*;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -18,8 +20,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-import static com.example.barterapp.utility.DefinesUtility.*;
 
 /**
  * The Reviews model handles user reviews, and data aggregation.

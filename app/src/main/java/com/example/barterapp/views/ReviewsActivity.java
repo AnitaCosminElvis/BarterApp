@@ -1,14 +1,14 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.UserReview;
 
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+ import  com.example.barterapp.R;
 import com.squareup.picasso.Picasso;
 
 /**

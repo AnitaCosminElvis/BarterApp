@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.barterapp.R;
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.squareup.picasso.Picasso;
 

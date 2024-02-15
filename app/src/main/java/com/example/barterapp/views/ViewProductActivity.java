@@ -1,14 +1,11 @@
 package com.example.barterapp.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
+import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
+import static com.example.barterapp.utility.OperationsUtility.getFormatedFloatText;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,24 +15,20 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+ import  com.example.barterapp.R;
 import com.example.barterapp.data.Product;
 import com.example.barterapp.data.UserReviewAggregationData;
 import com.example.barterapp.utility.DateUtility;
-import com.example.barterapp.utility.DefinesUtility;
 import com.example.barterapp.utility.OperationsUtility;
 import com.example.barterapp.view_models.ProductsViewModel;
 import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.view_models.ViewReviewViewModel;
 import com.squareup.picasso.Picasso;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static com.example.barterapp.utility.DefinesUtility.USER_MAX_NO_OF_FLAGS;
-import static com.example.barterapp.utility.DefinesUtility.USER_MIN_RATING_VALUE;
-import static com.example.barterapp.utility.OperationsUtility.getFormatedFloatText;
 
 /**
  * The type View product activity.

@@ -1,7 +1,10 @@
 package com.example.barterapp.data;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**

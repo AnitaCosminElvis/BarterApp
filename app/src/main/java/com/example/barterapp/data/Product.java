@@ -69,7 +69,7 @@ public class Product  implements Parcelable {
      * The constant CREATOR.
      */
 // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
-    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
         public Product createFromParcel(Parcel in) {
             return new Product(in);
         }

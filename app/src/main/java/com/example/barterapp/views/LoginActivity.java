@@ -1,25 +1,23 @@
 package com.example.barterapp.views;
 
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.barterapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+ import  com.example.barterapp.R;
+import com.example.barterapp.view_models.LoginViewModel;
+import com.example.barterapp.view_models.ViewModelFactory;
 import com.example.barterapp.data.EPassState;
 import com.example.barterapp.data.Response;
 import com.example.barterapp.utility.AuthentificationUtility;
@@ -33,7 +31,7 @@ import javax.annotation.Nullable;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel              mLoginViewModel;
+    private LoginViewModel mLoginViewModel;
     private MutableLiveData<Response>   mLoginResponseLiveData;
     private EditText                    mEmailEditText;
     private EditText                    mPasswordEditText;
