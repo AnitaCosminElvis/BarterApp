@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,6 +109,8 @@ public class AddProductActivity extends AppCompatActivity {
         mContinueBtn = findViewById(R.id.btn_add_product);
         mCategorySpinner = findViewById(R.id.spinner_category);
 
+        addEditorFieldsFilters();
+
         //set on click listeners
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +177,22 @@ public class AddProductActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void addEditorFieldsFilters() {
+        InputFilter maxTitleFilter = new InputFilter.LengthFilter(50);
+        InputFilter maxDescriptionFilter = new InputFilter.LengthFilter(250);
+
+        InputFilter lettersAndNoFilter = (source, start, end, dest, dstart, dend) -> {
+            if(source.toString().matches("^[a-zA-Z0-9]+$")) {
+                return source;
+            }
+
+            return "";
+        };
+
+        mTitleEdtText.setFilters(new InputFilter[]{maxTitleFilter, lettersAndNoFilter});
+        mDescriptionText.setFilters(new InputFilter[]{maxDescriptionFilter, lettersAndNoFilter});
     }
 
     /**
