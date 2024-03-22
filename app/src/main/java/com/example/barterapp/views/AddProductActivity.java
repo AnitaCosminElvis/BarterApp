@@ -163,6 +163,13 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (mCategorySpinner.getSelectedItem().toString()
+                                    .equals(getString(R.string.cat_select))){
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.select_cat), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try {
                     mIsInitialState = false;
                     mContinueBtn.setEnabled(false);

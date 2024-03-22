@@ -61,6 +61,7 @@
     <string name="offer_product_id_tag">OFFER_PRODUCT_ID</string>
     <string name="offer_product_img__uri_tag">OFFER_PRODUCT_IMG_URI</string>
     <string name="category_prompt">Choose a category</string>
+    <string name="cat_select">Select Category</string>
     <string name="cat_gadgets">Gadgets</string>
     <string name="cat_clothes">Clothes</string>
     <string name="cat_tools">Tools</string>
@@ -93,7 +94,9 @@
     <string name="empty_title">Empty title.</string>
     <string name="empty_desc">Empty description.</string>
     <string name="select_img">Please select a image for your product.</string>
+    <string name="select_cat">Please select a category for your product.</string>
     <string-array name="category_arrays">
+        <item>@string/cat_select</item>
         <item>@string/cat_gadgets</item>
         <item>@string/cat_clothes</item>
         <item>@string/cat_tools</item>
