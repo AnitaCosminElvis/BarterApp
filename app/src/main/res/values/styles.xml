@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorWhiteText</item>
+        <item name="android:textColorHint">@color/colorWhiteText</item>
     </style>
 
     <style name="BarterTheme.NoActionBar">
