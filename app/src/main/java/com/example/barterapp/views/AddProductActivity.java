@@ -203,7 +203,15 @@ public class AddProductActivity extends AppCompatActivity {
         InputFilter maxDescriptionFilter = new InputFilter.LengthFilter(250);
 
         InputFilter lettersAndNoFilter = (source, start, end, dest, dstart, dend) -> {
-            if(source.toString().matches("^[a-zA-Z0-9-']+$")) {
+            if (dest.toString().isEmpty()) {
+                if (source.toString().matches("^[a-zA-Z0-9]$")) return source;
+            } else if(source.toString().matches("^[a-zA-Z0-9 '-]$")) {
+                if (source.toString().matches("^[ '-]$")) {
+                    if (dest.toString().endsWith(source.toString()) ||
+                        dest.toString().matches(".*[^a-zA-Z0-9]"))
+                        return "";
+                }
+
                 return source;
             }
 
