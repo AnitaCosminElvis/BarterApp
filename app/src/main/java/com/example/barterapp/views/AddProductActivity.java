@@ -149,11 +149,23 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (sTitle.length() < 3) {
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.min_title), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String sDescription = mDescriptionText.getText().toString();
 
                 if (sDescription.isEmpty()){
                     Toast.makeText(AddProductActivity.this,
                             getString(R.string.empty_desc), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (sDescription.length() < 10) {
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.min_desc), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -191,7 +203,7 @@ public class AddProductActivity extends AppCompatActivity {
         InputFilter maxDescriptionFilter = new InputFilter.LengthFilter(250);
 
         InputFilter lettersAndNoFilter = (source, start, end, dest, dstart, dend) -> {
-            if(source.toString().matches("^[a-zA-Z0-9]+$")) {
+            if(source.toString().matches("^[a-zA-Z0-9-']+$")) {
                 return source;
             }
 

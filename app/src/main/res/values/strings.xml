@@ -92,7 +92,9 @@
     <string name="type_img">image/*</string>
     <string name="type_vid">video/*</string>
     <string name="empty_title">Empty title.</string>
+    <string name="min_title">Title is too small.</string>
     <string name="empty_desc">Empty description.</string>
+    <string name="min_desc">Description is too small.</string>
     <string name="select_img">Please select a image for your product.</string>
     <string name="select_cat">Please select a category for your product.</string>
     <string-array name="category_arrays">
