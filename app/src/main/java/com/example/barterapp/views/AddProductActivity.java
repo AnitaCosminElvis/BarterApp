@@ -155,6 +155,12 @@ public class AddProductActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (!sTitle.matches(".*[a-zA-Z]+.*")){
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.miss_title), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String sDescription = mDescriptionText.getText().toString();
 
                 if (sDescription.isEmpty()){
@@ -166,6 +172,12 @@ public class AddProductActivity extends AppCompatActivity {
                 if (sDescription.length() < 10) {
                     Toast.makeText(AddProductActivity.this,
                             getString(R.string.min_desc), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!sDescription.matches(".*[a-zA-Z]+.*")){
+                    Toast.makeText(AddProductActivity.this,
+                            getString(R.string.miss_desc), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
