@@ -15,6 +15,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,7 @@ public class MainActivity   extends     AppCompatActivity
     private RecyclerView                            mProductsRecyclerView;
     private Toolbar                                 mToolbar                        = null;
     private TabLayout                               mProductsCatTabLayout;
+    private SearchView                              mSearchView;
     private int                                     mCurrentTabPosition             = 0;
 
     /**
@@ -145,6 +147,24 @@ public class MainActivity   extends     AppCompatActivity
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        mSearchView = findViewById(R.id.sv_find_products);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String arg0) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String arg0) {
+                if(arg0.length() > 50){
+                    mSearchView.setQuery(arg0.substring(0,49), false);
+                }
+                return false;
+            }
+        });
     }
 
     /**
