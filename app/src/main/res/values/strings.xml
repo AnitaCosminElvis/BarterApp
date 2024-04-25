@@ -47,7 +47,7 @@
     <string name="reset_email_info">Please enter your email address and press the button in order to change your password. If successful go into your email account and follow the link to verify email address.</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="tab_text_profile">Profile</string>
-    <string name="tab_text_products">Products</string>
+    <string name="tab_text_products">My Products</string>
     <string name="tab_text_offers">Offers</string>
     <string name="tab_text_review">Reviews</string>
     <string name="product_info_tag">PRODUCT_INFORMATION</string>
