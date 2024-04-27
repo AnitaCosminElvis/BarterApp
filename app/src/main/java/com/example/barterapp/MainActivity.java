@@ -77,6 +77,11 @@ public class MainActivity   extends     AppCompatActivity
     private ProductsAdapter                         mToolsAdapter;
     private ProductsAdapter                         mBikesAdapter;
     private ProductsAdapter                         mOtherProductsAdapter;
+    private ArrayList<Product>                      mGadgetsList = new ArrayList<>();
+    private ArrayList<Product>                      mClothesList = new ArrayList<>();
+    private ArrayList<Product>                      mToolsList = new ArrayList<>();
+    private ArrayList<Product>                      mBikesList = new ArrayList<>();
+    private ArrayList<Product>                      mOtherList = new ArrayList<>();
     private DrawerLayout                            mDrawer;
     private NavigationView                          mNavigationView;
     private RecyclerView                            mProductsRecyclerView;
@@ -123,6 +128,7 @@ public class MainActivity   extends     AppCompatActivity
         mProductsCatTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override public void onTabSelected(TabLayout.Tab tab) {
                 mCurrentTabPosition = tab.getPosition();
+                mSearchView.setQuery("", false);
                 refreshProductsAdapterByCurrentPosition();
             }
             @Override public void onTabUnselected(TabLayout.Tab tab) { }
@@ -162,6 +168,56 @@ public class MainActivity   extends     AppCompatActivity
                 if(arg0.length() > 50){
                     mSearchView.setQuery(arg0.substring(0,49), false);
                 }
+
+                switch (mCurrentTabPosition){
+                    case 0:{//Gadgets
+                        mProductsViewModel.triggerFilterProductsByKeyAndCategory(
+                                mGadgetsList,
+                                String.valueOf(mSearchView.getQuery()),
+                                CAT_GADGETS
+                        );
+                        mProductsRecyclerView.setAdapter(mGadgetsAdapter);
+                        break;
+                    }
+                    case 1:{//Clothes
+                        mProductsViewModel.triggerFilterProductsByKeyAndCategory(
+                                mClothesList,
+                                String.valueOf(mSearchView.getQuery()),
+                                CAT_CLOTHES
+                        );
+                        mProductsRecyclerView.setAdapter(mClothesAdapter);
+                        break;
+                    }
+                    case 2:{//Tools
+                        mProductsViewModel.triggerFilterProductsByKeyAndCategory(
+                                mToolsList,
+                                String.valueOf(mSearchView.getQuery()),
+                                CAT_TOOLS
+                        );
+                        mProductsRecyclerView.setAdapter(mToolsAdapter);
+                        break;
+                    }
+                    case 3:{//Bikes
+                        mProductsViewModel.triggerFilterProductsByKeyAndCategory(
+                                mBikesList,
+                                String.valueOf(mSearchView.getQuery()),
+                                CAT_BIKES
+                        );
+                        mProductsRecyclerView.setAdapter(mBikesAdapter);
+                        break;
+                    }
+                    case 4:{//Other
+                        mProductsViewModel.triggerFilterProductsByKeyAndCategory(
+                                mOtherList,
+                                String.valueOf(mSearchView.getQuery()),
+                                CAT_OTHER
+                        );
+                        mProductsRecyclerView.setAdapter(mOtherProductsAdapter);
+                        break;
+                    }
+                    default: break;
+                }
+
                 return false;
             }
         });
@@ -333,10 +389,14 @@ public class MainActivity   extends     AppCompatActivity
      * @return void
      */
     private void createObserversForMutableLiveData() {
+
         //create observers for the products
         mGadgetsLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList) {
+                    if (mSearchView.getQuery().toString().isEmpty()) {
+                        mGadgetsList = productsList;
+                    }
                     mGadgetsAdapter.setProductsList(productsList);
                     mProductsRecyclerView.setAdapter(mGadgetsAdapter);
                 }
@@ -345,6 +405,9 @@ public class MainActivity   extends     AppCompatActivity
         mClothesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList){
+                    if (mSearchView.getQuery().toString().isEmpty()) {
+                        mClothesList = productsList;
+                    }
                     mClothesAdapter.setProductsList(productsList);
                     mProductsRecyclerView.setAdapter(mClothesAdapter);
                 }
@@ -353,6 +416,9 @@ public class MainActivity   extends     AppCompatActivity
         mToolsLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList){
+                    if (mSearchView.getQuery().toString().isEmpty()) {
+                        mToolsList = productsList;
+                    }
                     mToolsAdapter.setProductsList(productsList);
                     mProductsRecyclerView.setAdapter(mToolsAdapter);
                 }
@@ -361,6 +427,9 @@ public class MainActivity   extends     AppCompatActivity
         mBikesLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList) {
+                    if (mSearchView.getQuery().toString().isEmpty()) {
+                        mBikesList = productsList;
+                    }
                     mBikesAdapter.setProductsList(productsList);
                     mProductsRecyclerView.setAdapter(mBikesAdapter);
                 }
@@ -369,6 +438,9 @@ public class MainActivity   extends     AppCompatActivity
         mOtherLiveData.observe(this, new Observer<ArrayList<Product>>() {
             @Override public void onChanged(ArrayList<Product> productsList) {
                 if (null != productsList) {
+                    if (mSearchView.getQuery().toString().isEmpty()) {
+                        mOtherList = productsList;
+                    }
                     mOtherProductsAdapter.setProductsList(productsList);
                     mProductsRecyclerView.setAdapter(mOtherProductsAdapter);
                 }

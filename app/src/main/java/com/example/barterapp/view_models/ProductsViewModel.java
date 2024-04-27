@@ -137,4 +137,15 @@ public class ProductsViewModel extends ViewModel {
         mProdModel.triggerGetProductsByCategory(categoryKey,category);
     }
 
+    /**
+     * Trigger get products by category.
+     *
+     * @param currList the current list to be filtered
+     * @param filterKey the filter value
+     * @param category  the category
+     */
+    public void triggerFilterProductsByKeyAndCategory(ArrayList<Product>currList, String filterKey, String category) {
+        mProdModel.triggerFilterProductsByKeyAndCategory(currList,filterKey,category);
+    }
+
 }

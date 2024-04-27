@@ -228,6 +228,23 @@ public class ProductsModel {
         });
     }
 
+    /**
+     * Trigger get products by category.
+     *
+     * @param currList
+     * @param filterKey the filter val
+     * @param category  the current category
+     */
+    public void triggerFilterProductsByKeyAndCategory(ArrayList<Product> currList, String filterKey, String category) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        for (Product prod : currList) {
+            if (prod.getmTitle().toLowerCase().contains(filterKey.toLowerCase())) {
+                filteredProducts.add(prod);
+            }
+        }
+        setLiveDataByFilter(filteredProducts,category);
+    }
+
     private void setLiveDataByFilter(ArrayList<Product> products, String key) {
         switch(key){
             case CAT_GADGETS:{
